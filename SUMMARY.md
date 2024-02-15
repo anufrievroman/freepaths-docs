@@ -2,8 +2,6 @@
 
 * [FreePATHS](README.md)
 
----
-
 ## Getting started
 
 * [Installation](getting-started/installation.md)
@@ -29,8 +27,8 @@
 ## Advanced Tutorials
 
 * [Themal conductivity calculation](advanced-tutorials/themal-conductivity-calculation.md)
-* [Adding your own Hole or Pillar](advanced-tutorials/Adding-your-own-Hole-or-Pillar.md)
+* [Adding your own Hole shapes](advanced-tutorials/Adding-your-own-Hole-or-Pillar.md)
 
----
+***
 
 * [References and credits](references-and-credits.md)

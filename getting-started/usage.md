@@ -4,12 +4,12 @@ description: How to run FreePATHS simulations
 
 # Usage
 
-FreePATHS is a command line application, so it runs inside Linux, MacOS, or Windows terminal. It takes an input file or config file from the user, which contains all the settings, and outputs the results in a new folder. For an extensive guide on creating config files please see  [config-file-creation-guide.md](../getting-started/config-file-creation-guide.md).
+FreePATHS is a command line application, so it runs inside Linux, MacOS, or Windows terminal. It takes an input file or config file from the user, which contains all the settings, and outputs the results in a new folder. For an extensive guide on creating config files, please see [config-file-creation-guide.md](config-file-creation-guide.md).
 
 There are two modes of using the program.
 
-* Main mode traces a large number of phonons through a structure and collects statistics about their paths. This mode calculates the thermal flux and Temperature profile of the sample and uses this to calculate effective thermal conductivity.
-* The MFP sampling mode measures phonon mean free paths using a small number of phonons and calculates the thermal conductivity by integrating phonon dispersion.
+* Main mode traces many phonons through a structure and collects statistics about their paths. This mode calculates the thermal flux and Temperature profile of the sample and uses this to calculate effective thermal conductivity.
+* The MFP sampling mode measures phonon mean free paths using a few phonons and calculates the thermal conductivity by integrating phonon dispersion.
 
 ### Demo
 
@@ -17,7 +17,7 @@ First, if you simply run `freepaths` without specifying an input file, the progr
 
 ### Main mode
 
-In the main mode, the program traces large number of phonons through a structure and calculates various statistical distributions and maps. In this mode, the thermal conductivity will be calculated via Fourier law. See [themal-conductivity-calculation.md](../advanced-tutorials/themal-conductivity-calculation.md) for more information on this.
+In the main mode, the program traces many phonons through a structure and calculates various statistical distributions and maps. In this mode, the thermal conductivity will be calculated via Fourier law. See [themal-conductivity-calculation.md](../advanced-tutorials/themal-conductivity-calculation.md) for more information on this.
 
 Run the program as:
 
@@ -55,5 +55,5 @@ where _k_ is the Boltzmann constant, ω(q) and _v_(q) are the frequency and grou
 
 * If simulations are too slow, try using [multiprocessing](../tutorials/basics.md#multiprocessing).
 * Rarely, phonons may enter a hole in the structure or break out of structure boundaries. To reduce the impact of this bug, reduce the `TIMESTEP` parameter. However, this usually happens once per thousands of collisions and has negligible impact on the final statistics.
-* If you have an error similar to `Cannot mix incompatible Qt library (5.15.7) with this library (5.15.8)` that likely means that you have a program like `qt5-styleplugins` that didn't upgrade to the latest Qt library with rest of the system.
-* If at the end of simulation the program report that less than 100% of phonons reached the cold side, you may need to increase `NUMBER_OF_TIMESTEPS` to allow more simulation time.
+* If you have an error similar to `Cannot mix incompatible Qt library (5.15.7) with this library (5.15.8)` that likely means that you have a program like `qt5-styleplugins` that didn't upgrade to the latest Qt library with the rest of the system.
+* If at the end of simulation, the program report that less than 100% of phonons reached the cold side, you may need to increase `NUMBER_OF_TIMESTEPS` to allow more simulation time.
