@@ -1,6 +1,6 @@
 # References and credits
 
-The code is being developed by [Roman Anufriev](https://anufrievroman.com) and other contributors in [Nomura lab](https://www.nlab.iis.u-tokyo.ac.jp/index-e.html) at the University of Tokyo since 2018. If you would like to use this code for your research, consider citing the papers below, if it is appropriate. If you need certain feature to be implemented for your research, we can consider a collaboration.
+The code is being developed by [Roman Anufriev](https://anufrievroman.com), Philipp Gassmann, and other contributors in [Nomura lab](https://www.nlab.iis.u-tokyo.ac.jp/index-e.html) at the University of Tokyo since 2018. If you would like to use this code for your research, consider citing the papers below, if it is appropriate. If you need certain feature to be implemented for your research, we can consider a collaboration.
 
 ### References
 
