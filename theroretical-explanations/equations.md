@@ -12,7 +12,7 @@ $$
 x = sin(\theta)·abs(cos(\phi)) \\y = cos(\theta)·abs(cos(\phi))\\\\z = sin(\phi)
 $$
 
-where θ is the angle between the projection to _x-y_ plane and _y_-axis, and φ is the angle to the horizontal plane. Thus, phonon moves step-by-step with the speed _v_ in the assigned direction according to the following equations:
+where θ is the angle between the projection to _x-y_ plane and _y_-axis, and φ is the angle to the horizontal plane. Thus, the phonon moves step-by-step with the speed _v_ in the assigned direction according to the following equations:
 
 $$
 \Delta x = sin(\theta)·abs(cos(\phi))·v·dt

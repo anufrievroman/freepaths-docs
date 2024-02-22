@@ -1,18 +1,18 @@
 # Config file creation guide
 
-Freepaths is used by providing a config file to the program that controls the simulation. This config file is in the form of a python script. In this python script you can either define the freepaths parameters directly like this `NUMBER_OF_PHONONS = 100`, or you can also use python code to set the freepaths parameters like this for example `TIMESTEP = 300e-9 / 10000`.
+FreePATHS is used by providing a config file to the program that controls the simulation. This config file is in the form of a python script. In this python script, you can either define the parameters directly like this `NUMBER_OF_PHONONS = 100`, or you can also use python code to set the parameters like this, for example `TIMESTEP = 300e-9 / 10000`.
 
-Each parameter has a default value which is defined in the [default\_config.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/default\_config.py) file. If you provide no config file freepaths will simply run the default config. And each parameter that you do not set will use the default value. If you input a non-existent parameter, it will be ignored and no error will be raised, so double-check the parameters.
+Each parameter has a default value, which is defined in the [default\_config.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/default\_config.py) file. If you provide no config file, FreePATHS will simply run the default config. And each parameter that you do not set will use the default value. If you input a non-existent parameter, it will be ignored and no error will be raised, so double-check the parameters.
 
-All freepaths parameters are explained on this site grouped in a logical way. For some parameters not only what they do but also some theoretical explanations and assumptions behind them are detailed.
+All the parameters are explained on this site, grouped logically. For some parameters, not only what they do but also some theoretical explanations and assumptions behind them are detailed.
 
-In the first section the most important parameters are explained, the second section is detailing some more in depth aspects of the simulation are presented and in the last section the parameters mainly used for adjusting the simulation outputs are shown.
+In the first section the most important parameters are explained, the second section details some more in-depth aspects of the simulation are presented and in the last section the parameters mainly used for adjusting the simulation outputs are shown.
 
-While the default values for the parameters, which are the ones shown on this page, are set to realistic values so that if a parameter is not given the default value should work fine i sill recommend you to read this entire page so that you are informed about all features freepaths has and do not overlook anything when setting up you simulation.
+While the default values for the parameters, which are the ones shown on this page, are set to realistic values so that if a parameter is not given, the default value should work fine. I still recommend you to read this entire page so that you are informed about all the features FreePATHS has and do not overlook anything when setting up your simulation.
 
-Please be advised that the information on this page might not be quite up to date.
+Please be advised that the information on this page might not be quite up-to-date.
 
-After learning about the parameters please have a look at the example files provided [here](https://github.com/anufrievroman/freepaths/tree/master/examples) some of which have further explanations on the wiki.
+After learning about the parameters, please look at the example files provided [here](https://github.com/anufrievroman/freepaths/tree/master/examples), some of which have further explanations on the wiki.
 
 ## Basic parameters
 
@@ -29,20 +29,20 @@ T                              = 300
 ```
 
 ➡️ `OUTPUT_FOLDER_NAME` : string\
-The outputs of the simulation will be saved in the Results folder. In this folder another folder with this name will be created which will contain the outputs files. So in this case the result files will be in `Results/Si nanowire at 300 K`. Keep in mind that the Results folder will be created in the folder you executed the freepaths command. Also pay attention that if the simulation is run again the results will be overwritten without warning.\
-A useful trick is to use f-strings to automatically name the output folders. For example if the same simulation is to be run at multiple temperatures using `OUTPUT_FOLDER_NAME = f'Simulation at {T}K'` will automatically put the simulation temperature in the output folder name. Just make sure to define the parameters (`T` in this case) before.
+The outputs of the simulation will be saved in the Results folder. In this folder, another folder with this name will be created, which will contain the output files. So, in this case, the result files will be in `Results/Si nanowire at 300 K`. Keep in mind that the Results folder will be created in the folder you executed the FreePATHS command. Also, pay attention that if the simulation is run again, the results will be overwritten without warning.\
+A useful trick is to use f-strings to automatically name the output folders. For example, if the same simulation is to be run at multiple temperatures, using `OUTPUT_FOLDER_NAME = f'Simulation at {T}K'` will automatically put the simulation temperature in the output folder name. Just make sure to define the parameters (`T` in this case) before.
 
 ➡️ `NUMBER_OF_PHONONS` : int\
-This will define how many phonons are simulated. Since the Monte Carlo simulation approach is inherently statistical more phonons should result in more stable results with less standard variation between the results of different simulations at the cost of more calculation time.
+This will define how many phonons are simulated. Since the Monte Carlo simulation approach is inherently statistical, more phonons should result in more stable results with less standard variation between the results of different simulations at the cost of more calculation time.
 
 ➡️ `TIMESTEP` : float\
-The phonons are not simulated in a continuous fashion but only every timestep. If the timestep is small the phonon behavior will be more realistic but the simulation time will increase. And vice versa for a large timestep. Because the phonons are only simulated every timestep the time between two scattering events of a particular phonon can not be smaller than the timestep so take this into account especially when simulating at high temperatures where scattering events are more frequent. If you experience wrong or unexpected phonon behavior reducing the timestep can also help with this.
+The phonons are not simulated in a continuous fashion but only every timestep. If the timestep is small, the phonon behavior will be more realistic, but the simulation time will increase. And vice versa for a large timestep. Because the phonons are only simulated every timestep the time between two scattering events of a particular phonon cannot be smaller than the timestep so take this into account, especially when simulating at high temperatures where scattering events are more frequent. If you experience wrong or unexpected phonon behavior, reducing the timestep can also help with this.
 
 ➡️ `NUMBER_OF_TIMESTEPS` : int\
-The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. At the end of the simulation the percentage of phonons that reach the cold side is displayed in the terminal. The number of timesteps should usually be high enough so that most (more than 90% or 95%) of phonons reach the cold side.
+The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. At the end of the simulation, the percentage of phonons that reach the cold side is displayed in the terminal. The number of timesteps should usually be high enough so that most (more than 90% or 95%) of phonons reach the cold side.
 
 ➡️ `T` : float\
-The temperature of the simulation in Kelvin. Since increasing the temperature increases the number of scattering events and phonons take longer to traverse the structure simulations at hight temperatures take significantly longer than at low temperatures.
+The temperature of the simulation in Kelvin. Since increasing the temperature increases the number of scattering events and phonons take longer to traverse the structure, simulations at high temperatures take significantly longer than at low temperatures.
 
 ### Simulation domain
 
@@ -65,7 +65,7 @@ Defines the length of the simulation domain in meters. This corresponds to the y
 
 ### Simulation boundaries
 
-Each side of the simulation domain can either be a wall that phonons scatter on, a cold side that phonons disappear on, a hot side where phonons rethermalize or empty so that phonons can fly through it. The floor and ceiling of the box are always physical walls. By default, the bottom is assumed to be hot, the top is assumed cold, and the left and right walls are just physical walls.
+Each side of the simulation domain can either be a wall that phonons scatter on, a cold side that phonons disappear on, a hot side where phonons re-thermalize or empty so that phonons can fly through it. The floor and ceiling of the box are always physical walls. By default, the bottom is assumed to be hot, the top is assumed cold, and the left and right walls are just physical walls.
 
 ```python
 # Walls:
@@ -145,7 +145,7 @@ To build any structure in freepaths holes are used. A hole has a certain shape a
 
 Note that `ParabolaBottom` and `ParabolaTop` are special because you cannot place them anywhere in the simulation domain. They will always appear at the top or bottom side of the structure. See the [parabolic\_lens\_focusing.py](https://github.com/anufrievroman/freepaths/blob/master/examples/parabolic\_lens\_focusing.py) example.
 
-To add holes to the simulation simply put them into the list. It is often very useful to generate these holes using some simple python code. For example, the following code will create a 5x6 square lattice of circular holes:
+To add holes to the simulation, simply put them into the list. It is often very useful to generate these holes using some simple python code. For example, the following code will create a 5x6 square lattice of circular holes:
 
 ```python
 HOLES = []
@@ -159,8 +159,8 @@ for row in range(5):
 
 There are multiple ways to add arbitrary shapes into the simulation. The simplest one is based on mathematical equations and requires practically no programming knowledge. Check out [this tutorial](../advanced-tutorials/creating-new-holes-the-easy-way.md).
 
-➡️ `PILLARS` : list  
-Pillars are a more experimental feature and the only pillar available at the time is `CircularPillar`. Pillars work the same way as holes but instead of preventing phonons to enter a certain area of the simulation domain they extend the simulation domain in z direction locally.
+➡️ `PILLARS` : list\
+Pillars are a more experimental feature, and the only pillar available at the time is `CircularPillar`. Pillars work the same way as holes but instead of preventing phonons from entering a certain area of the simulation domain they extend the simulation domain in _z_ direction locally.
 
 ### Multiprocessing parameter
 
@@ -169,7 +169,7 @@ NUMBER_OF_PROCESSES              = 10
 ```
 
 ➡️ `NUMBER_OF_PROCESSES` : int\
-Every phonon is simulated independently one after the other. To speed up the calculation the phonons should be distributed across multiple processes which will each simulate phonons independently. This value should be set to a value close to the amount of threads your processor has. Please take note that the progress percentage displayed in the terminal is the progress of a single process and that some processes will take longer than others to finish.
+Every phonon is simulated independently, one after the other. To speed up the calculation, the phonons should be distributed across multiple processes, which will each simulate phonons independently. This value should be set to a value close to the number of threads your processor has. Please take note that the progress percentage displayed in the terminal is the progress of a single process, and that some processes will take longer than others to finish.
 
 ## Advanced simulation parameters
 
@@ -301,7 +301,7 @@ NUMBER_OF_LENGTH_SEGMENTS        = 10
 ```
 
 ➡️ `NUMBER_OF_NODES` : int\
-This value affects the number of "buckets" for the histogram output plots like for example `Distribution of angles.pdf`.
+This value affects the number of bins for the histogram output plots like for example `Distribution of angles.pdf`.
 
 ➡️ `NUMBER_OF_LENGTH_SEGMENTS` : int\
 A few plots display information in segments along the y axis like `Scattering rates.pdf` and `Time spent in segments.pdf`. The number of segments for these plots can be adjusted with this parameter.

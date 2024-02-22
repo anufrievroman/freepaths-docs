@@ -1,18 +1,18 @@
-# Adding your own hole or pillar (the advanced way)
+# Adding your own hole shapes (the advanced way)
 
 This page will guide you through the process of adding and testing your own hole into FreePATHS (pillars work similarly to holes, but this page will focus on holes). Please note that you need some Python knowledge to do this. It is recommended to [fork the main repository ](https://github.com/anufrievroman/freepaths/fork)so you have your own version to work on.
 
-There is an alternative method for adding new shapes which is through using the very flexible `PointLineHole` or `FunctionLineHole`. See the [corresponding tutorial](creating-new-holes-the-easy-way.md) for more information. The advantage of adding the hole manually with this tutorial is that the computation can be optimized and made a lot faster. 
+There is an alternative method for adding new shapes by using the very flexible `PointLineHole` or `FunctionLineHole`. See the [corresponding tutorial](creating-new-holes-the-easy-way.md) for more information. The advantage of adding the hole manually with this tutorial is that the computation can be optimized and made a lot faster.
 
 ## Understanding the code structure
 
 All holes and pillars are defined in the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file. And each hole and pillar is defined as a class in this file. For the hole to work with FreePATHS, some requirements need to be fulfilled. (Pillars have an added requirement of needing to have both `x0` and `y0` as class attributes)
 
-I will walk you through the requirements step by step in the following sections. Please feel free to look at the other holes to see how they work if you need some inspiration.
+I will walk you through the requirements step by step in the following sections. Feel free to look at the other holes to see how they work if you need some inspiration.
 
 ## Creating a minimal example
 
-The class needs to have some predefined functions to work, and I will go through them one by one. Let's start by creating the class and it's `__init__` method:
+The class must have some predefined functions to work, and I will go through them one by one. Let's start by creating the class and it's `__init__` method:
 
 ```python
 class NewHole(Hole)
@@ -31,7 +31,7 @@ Let's continue by adding the `is_inside` method:
 
 Except for the `__init__` method, the arguments of all methods of the hole classes need to be exactly as specified to work and the methods need to return the correct object types.
 
-The `is_inside` method is used to check if a point is inside the hole or not. If the point is not inside the hole the method has to return nothing (`None`) but if the point is inside the method should return what surface of the hole the phonon will scatter off. This is later used in the `check_if_scattering` method. Let's add that one now:
+The `is_inside` method is used to check whether a point is inside the hole or not. If the point is not inside the hole the method has to return nothing (`None`) but if the point is inside the method should return what surface of the hole the phonon will scatter off. This is later used in the `check_if_scattering` method. Let's add that one now:
 
 ```python
 	def check_if_scattering(self, ph, scattering_types, x, y, z, cf):
@@ -54,7 +54,7 @@ Let's add the last method:
 
 This method is used to plot the hole onto the output plots, like the `Structure XY.pdf` output file. It needs to return a [matplotlib Patch object](https://matplotlib.org/stable/api/patches\_api.html) or an error will be thrown, so let's just put in a small circle at the origin as a placeholder.
 
-You now have a working hole that you can use in FreePATHS without it throwing any errors. But obviously it doesn't do anything yet, so let's start adding some functionality.
+You now have a working hole that you can use in FreePATHS without it throwing any errors. But obviously, it doesn't do anything yet, so let's start adding some functionality.
 
 ## Creating the hole shape
 
@@ -97,13 +97,13 @@ Now you can just run the simulation again and make sure your hole shows up corre
 
 ## Making the hole functional
 
-The last step is to add the scattering behavior in the `check_if_scattering` method. This is a bit more difficult and I will explain the basics here, but please take a look at how it is done in the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file.
+The last step is to add the scattering behavior in the `check_if_scattering` method. This is a bit more difficult, and I will explain the basics here, but please look at how it is done in the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file.
 
-In the `check_if_scattering` method, the first step is to check if the point is inside the hole with the `is_inside` method. Sometimes you only need to check for one area like in the `CircularHole` and sometimes it makes sense to check for multiple areas like the `TriangularUpHalfHole` for example. After you detected where the phonon will scatter, it's time to implement the scattering behavior. This usually means calculating the angle with which the phonon is striking the hole. After that usually a scattering function is called which will return a scattering event and put it into `scattering_types.holes` and it will change `ph.phi` and `ph.theta` to correspond to the direction after the scattering. Oftentimes, you don't need to create a new scattering function, but you can use one of the ones in the [scattering\_primitives.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/scattering\_primitives.py) file. One example of a hole that uses a scattering function is `CircularHole`. Some holes have their scattering behavior programmed in, like `ParabolaBottom` for example.
+In the `check_if_scattering` method, the first step is to check if the point is inside the hole with the `is_inside` method. Sometimes you only need to check for one area like in the `CircularHole` and sometimes it makes sense to check for multiple areas like the `TriangularUpHalfHole` for example. After you detected where the phonon will scatter, it's time to implement the scattering behavior. This usually means calculating the angle with which the phonon is striking the hole. After that, usually a scattering function is called which will return a scattering event and put it into `scattering_types.holes` and it will change `ph.phi` and `ph.theta` to correspond to the direction after the scattering. Oftentimes, you don't need to create a new scattering function, but you can use one of the ones in the [scattering\_primitives.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/scattering\_primitives.py) file. One example of a hole that uses a scattering function is `CircularHole`. Some holes have their scattering behavior programmed in, like `ParabolaBottom` for example.
 
 A small trick: If you have problems with phonons getting stuck inside the hole (especially at low temperatures) it can help to check if the phonon is traveling towards the hole. This can be done by comparing the current position of the hole (`ph.x`, `ph.y` and `ph.z`) and the next position (`x`, `y`, `z`). See `CircularHole` for an example.
 
-Now you can test the hole with the config provided below. Watch for stuff like phonons traveling through the hole or phonons scattering off the hole at weird angles. Also try to increase and decrease the `TIMESTEP` to see how it affects the scattering behavior. It is normal that the phonons do not all scatter exactly at the hole surface but close to the phonon surface. This is where the `get_patch` method comes in handy because you can see the actual border of the hole. Make sure that one is also correct while you're at it.
+Now you can test the hole with the config provided below. Watch for stuff like phonons traveling through the hole or phonons scattering off the hole at weird angles. Also try to increase and decrease the `TIMESTEP` to see how it affects the scattering behavior. It is normal that the phonons do not all scatter exactly at the hole surface but close to the phonon surface. This is where the `get_patch` method is helpful to see the actual border of the hole. Make sure that one is also correct while you're at it.
 
 Here is the example config you can use to test the scattering behavior:
 
@@ -143,4 +143,4 @@ PHONON_SOURCES                 = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0,
 
 ## Afterwards
 
-I hope you enjoyed this small tutorial and that you managed to make your hole work 😉. If the hole works well, feel free to make a pull request into the main repository so that other people can use it. But please make sure that the pull request is clean and does not contain temporary files or unrelated changes.
+I hope you enjoyed this small tutorial and that you managed to make your hole work 😉. If the hole works well, feel free to make a pull request into the main repository so that other people can use it. But please ensure that the pull request is clean and does not contain temporary files or unrelated changes.
