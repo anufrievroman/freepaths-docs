@@ -4,13 +4,13 @@ This tutorial explains how you can create new hole shapes using the very flexibl
 
 In simple words, you can use the `PointLineHole` to draw any line you want, which will then become a hole. It is easy to define these lines using math or python functions. How to do this is explained below with more detail. As an example of a hole defined with a mathematical function, here is a hole built using the function `sin(x)/x`.
 
-<figure><img src="../.gitbook/assets/sinxdivx.png" alt=""><figcaption><p>Example hole in the shape of sin(x)/x.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/sinxdivx.png" alt="" width="305"><figcaption><p>Example hole in the shape of sin(x)/x.</p></figcaption></figure>
 
 ## How does the PointLineHole work
 
 The `PointLineHole` creates many circular holes that are at closely spaced points along a line. If the circular holes are spaces closely enough, this will give the impression of a continuous line with a certain thickness. If there are not enough circles or points, the shape will become irregular, and the scattering will be inconsistent, as illustrated by the below image. So, make sure that the holes are spaced closely enough. But if you generate too many points, the execution time of the simulation might increase because the phonon position has to be checked against more points.
 
-<figure><img src="../.gitbook/assets/lowresolution.png" alt=""><figcaption><p>Example of low number of circles.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/lowresolution.png" alt="" width="375"><figcaption><p>Example of low number of circles.</p></figcaption></figure>
 
 The `FunctionLineHole` is just a wrapper for `PointLineHole` where you provide a mathematical function that is used to generate the holes.
 
@@ -31,7 +31,7 @@ Let's go through the arguments one by one:
 * The `resolution` is the distance in x between two adjacent points or circles. Pay attention that this is only the distance in x direction, so if the function is steep, the actual distance between the points will be significantly larger than this.
 * With `rotation` the function is rotated around its origin by the number of degrees specified.
 
-<figure><img src="../.gitbook/assets/asymmetric.png" alt=""><figcaption><p>Example with asymmetric range.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/asymmetric.png" alt="" width="375"><figcaption><p>Example with asymmetric range.</p></figcaption></figure>
 
 ### Addressing singularities
 
@@ -79,7 +79,7 @@ As mentioned, `FunctionLineHole` is just a wrapper for `PointLineHole`. This mea
 HOLES = [PointLineHole(x=0, y=200e-9, points=[(0,0), (25e-9, 150e-9)], thickness=30e-9, rotation=0)]
 ```
 
-<figure><img src="../.gitbook/assets/twopoints.png" alt=""><figcaption><p>Example with two points.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/twopoints.png" alt="" width="375"><figcaption><p>Example with two points.</p></figcaption></figure>
 
 This hole is best used with a python function to generate the list of points. Even with very basic programming knowledge, this hole can be a very versatile and powerful tool. This will be demonstrated through some following examples. You can also have a look at how `FunctionLineHole` in the code as another example.
 
@@ -105,7 +105,7 @@ def make_line_hole(dx, dy, resolution, x, y, thickness, rotation):
 HOLES = [make_line_hole(100e-9, 150e-9, 5e-9, 0e-9, 150e-9, 30e-9, 0)]
 ```
 
-<figure><img src="../.gitbook/assets/line.png" alt=""><figcaption><p>Simple line.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/line.png" alt="" width="375"><figcaption><p>Simple line.</p></figcaption></figure>
 
 The size of the line in x and y are defined through `dx` and `dy`, `resolution` is used to define the distance between points, `x` and `y` position the center of the line. `thickness` and `rotation` work as expected. Now multiple lines can be used to generate more complex structures like letters:
 
@@ -117,7 +117,7 @@ HOLES = [
     ]
 ```
 
-<figure><img src="../.gitbook/assets/letter.png" alt=""><figcaption><p>Letter built out of simple lines.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/letter.png" alt="" width="375"><figcaption><p>Letter built out of simple lines.</p></figcaption></figure>
 
 The problem is that if you try to rotate the structure using the `rotation` argument, you rotate each line individually instead of the whole structure:
 
@@ -190,7 +190,7 @@ def make_arc_hole(radius, start_angle, end_angle, resolution, x, y, thickness, r
 HOLES = [make_arc_hole(200e-9, 20, 90, 5e-9, -100e-9, 50e-9, 30e-9, 0)]
 ```
 
-<figure><img src="../.gitbook/assets/circulararc.png" alt=""><figcaption><p>Circular arc.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/circulararc.png" alt="" width="375"><figcaption><p>Circular arc.</p></figcaption></figure>
 
 ### Example 3 - Combining structures
 
@@ -230,7 +230,7 @@ HOLES = [
     ]
 ```
 
-<figure><img src="../.gitbook/assets/nlab.png" alt=""><figcaption><p>Word NLAB built with lines and arcs.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/nlab.png" alt="" width="563"><figcaption><p>Word NLAB built with lines and arcs.</p></figcaption></figure>
 
 ### Example 4 - Box with rounded corners
 
@@ -301,4 +301,4 @@ points = points_on_bezier((-100e-9, 0), (50e-9, 100e-9), (100e-9, 0), (-50e-9, -
 HOLES = [PointLineHole(0, 150e-9, points, thickness=30e-9)]
 ```
 
-<figure><img src="../.gitbook/assets/bezier.png" alt=""><figcaption><p>Simple bezier curve hole.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/bezier.png" alt="" width="356"><figcaption><p>Simple bezier curve hole.</p></figcaption></figure>

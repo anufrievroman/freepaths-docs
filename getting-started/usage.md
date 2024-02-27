@@ -8,8 +8,8 @@ FreePATHS is a command line application, so it runs inside Linux, MacOS, or Wind
 
 There are two modes of using the program.
 
-* The main mode traces many phonons through a structure and collects statistics about their paths. This mode calculates the thermal flux and Temperature profile of the sample and uses this to calculate effective thermal conductivity.
-* The MFP sampling mode measures phonon mean free paths using a few phonons and calculates the thermal conductivity by integrating phonon dispersion.
+* The **main mode** traces many phonons through a structure and collects statistics about their paths. This mode calculates the thermal flux and Temperature profile of the sample and uses this to calculate effective thermal conductivity.
+* The **MFP sampling mode** measures phonon mean free paths using a few phonons and calculates the thermal conductivity by integrating phonon dispersion.
 
 ### Demo
 
@@ -35,7 +35,7 @@ After the simulation, see the results in a newly created `Results` folder.
 
 ### MFP sampling mode
 
-Alternatively, you can run FreePATHS in the mean free path sampling mode, which is designed to calculate the thermal conductivity by integrating phonon dispersion, as explained below. To run the program in this mode, reduce the number of phonons to about 30 and add `-s` flag in the command:
+Alternatively, you can run FreePATHS in the mean free path sampling mode, which is designed to calculate the thermal conductivity by integrating phonon dispersion, as explained below. To run the program in this mode, reduce the number of phonons to about 30 and add the `-s` flag in the command:
 
 ```
 freepaths -s simple_nanowire.py
@@ -56,4 +56,3 @@ where _k_ is the Boltzmann constant, ω(q) and _v_(q) are the frequency and grou
 * If simulations are too slow, try using [multiprocessing](config-file-creation-guide.md#multiprocessing-parameter).
 * Rarely, phonons may enter a hole in the structure or break out of structure boundaries. To reduce the impact of this bug, reduce the `TIMESTEP` parameter. However, this usually happens once per thousands of collisions and has negligible impact on the final statistics.
 * If you have an error similar to `Cannot mix incompatible Qt library (5.15.7) with this library (5.15.8)` that likely means that you have a program like `qt5-styleplugins` that didn't upgrade to the latest Qt library with the rest of the system.
-* If at the end of simulation, the program report that less than 100% of phonons reached the cold side, you may need to increase `NUMBER_OF_TIMESTEPS` to allow more simulation time.

@@ -1,4 +1,4 @@
-# Themal conductivity calculation
+# Thermal conductivity calculation
 
 FreePATHS will calculate the thermal conductivity of the structure after the simulation. This page will give some additional information on this feature.
 
@@ -13,8 +13,13 @@ $$
 The thermal flux and temperature gradient are obtained through the temperature and heat flux profiles:
 
 <div>
+
 <figure><img src="../.gitbook/assets/thermal profile.jpg" alt=""><figcaption><p>Temperature profiles at different time instervals converge to the linear profile.</p></figcaption></figure>
+
+ 
+
 <figure><img src="../.gitbook/assets/heat flux (2).jpg" alt=""><figcaption><p>Heat flux profiles converge to the flat line.</p></figcaption></figure>
+
 </div>
 
 The temperature gradient is obtained by a linear regression and the heat flux value through the mean over the _y_ profile. As the simulation progresses, you can see the value for the thermal conductivity converge:
@@ -25,11 +30,11 @@ There are two heat flux profiles calculated in the simulation. The one called `H
 
 ## Useful tips
 
-* The software can currently only calculate the thermal conductivity in y direction. Also, make sure that the phonons are generated on the very side of the simulation.
+* The software can currently only calculate the thermal conductivity in the y direction. Also, make sure that the phonons are generated on the very side of the simulation.
 * The software does not give correct results if pillars are present in the simulation.
 * Because the calculation relies on the pixel grid to calculate the profiles, make sure that it is small enough and looks good (some discontinuities in the pixels adjacent to holes are expected and correct).
 * Make sure that you simulate enough phonons (at least a couple of thousand) to get good results.
-* Make sure that NUMBER\_OF\_VIRTUAL\_TIMESTEPS and INITIALIZATION\_TIMESTEPS are set correctly.
+* Make sure that `NUMBER_OF_VIRTUAL_TIMESTEPS` and `INITIALIZATION_TIMESTEPS` are set correctly.
 
 ## References
 

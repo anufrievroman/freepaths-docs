@@ -8,7 +8,7 @@ This example shows how to add hole to your structure and can be reproduced with 
 
 ```
 # Phonon source:
-PHONON_SOURCES = [Source(size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="random_up")]
+PHONON_SOURCES = [Source(size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="random")]
 
 # Lattice of holes:
 HOLES = []

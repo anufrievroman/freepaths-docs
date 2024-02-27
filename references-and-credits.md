@@ -4,7 +4,8 @@ The code is being developed by [Roman Anufriev](https://anufrievroman.com), Phil
 
 ### References
 
-* Singh _et al_. [Applied Physics Letters, (2023)](https://aip.scitation.org/doi/10.1063/5.0137221)
+* Anufriev _et al_. [Applied Physics Letters 124, 022202 (2024)](https://doi.org/10.1063/5.0180685)
+* Singh _et al_. [Applied Physics Letters, 122, 092203 (2023)](https://doi.org/10.1063/5.0137221)
 * Anufriev _et al_. [Materials Today Physics 15, 100272 (2021)](https://www.sciencedirect.com/science/article/pii/S2542529320300961)
 * Huang _et al_. [ACS Applied Materials & Interfaces 12, 25478 (2020)](https://pubs.acs.org/doi/10.1021/acsami.0c06030)
 * Anufriev _et al_. [Nanoscale, 11, 13407-13414 (2019)](https://pubs.rsc.org/en/content/articlehtml/2019/nr/c9nr03863a)

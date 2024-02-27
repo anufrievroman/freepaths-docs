@@ -25,31 +25,26 @@ The class inherits from the general Hole class (which does not do anything curre
 Let's continue by adding the `is_inside` method:
 
 ```python
-    def is_inside(self, x, y, z, cf):
-        pass
+def is_inside(self, x, y, z, cf):
+    pass
 ```
 
 Except for the `__init__` method, the arguments of all methods of the hole classes need to be exactly as specified to work and the methods need to return the correct object types.
 
-The `is_inside` method is used to check whether a point is inside the hole or not. If the point is not inside the hole the method has to return nothing (`None`) but if the point is inside the method should return what surface of the hole the phonon will scatter off. This is later used in the `check_if_scattering` method. Let's add that one now:
+The `is_inside` method is used to check whether a point is inside the hole or not. If the point is inside the hole, the method has to return `True` otherwise `False`.  The algorithm will check if the phonon is inside a hole and, if true, runs the `scatter()` method. Let's add that one now:
 
 ```python
-	def check_if_scattering(self, ph, scattering_types, x, y, z, cf):
-		if self.is_inside(x, y, z, cf):
-			pass
+def scatter(self, ph, scattering_types, x, y, z, cf):
+    pass
 ```
 
-This method will first use the `is_inside` method to check if a point is inside the hole and will then perform the scattering if it is. This function updates the `ph` and `scattering_types` objects it is given and as such returns nothing.
+This function updates the `ph` and `scattering_types` objects it is given and as such returns nothing.
 
 Let's add the last method:
 
 ```python
-	def get_patch(self, color_holes, cf):
-		return Circle(
-            (0, 0),
-            1e-8,
-            facecolor=color_holes,
-        )
+def get_patch(self, color_holes, cf):
+    return Circle((0, 0), 1e-8, facecolor=color_holes)
 ```
 
 This method is used to plot the hole onto the output plots, like the `Structure XY.pdf` output file. It needs to return a [matplotlib Patch object](https://matplotlib.org/stable/api/patches\_api.html) or an error will be thrown, so let's just put in a small circle at the origin as a placeholder.
@@ -60,9 +55,7 @@ You now have a working hole that you can use in FreePATHS without it throwing an
 
 The first step is to finish the `__init__` method to get and store things like the hole position or size and to do any preliminary calculations. I recommend avoiding using `x` and `y` as attribute names and to use `x0` and `y0` instead, since `x` and `y` and `z` are used in the other methods.
 
-After that, let's add the `is_inside` method. Remember that this method should evaluate if the given point is inside the hole and return what surface the phonon will scatter off (or you can see it as what region of the hole the phonon is in) if it is inside. But really, the `is_inside` method just needs to return anything if the point is inside and nothing if not, and you can do any further analysis in the `check_if_scattering` method.
-
-After you finished the `is_inside` method, you can test it by running any simulation and checking the `Pixel volumes.pdf` output file. It should show the shape of your hole in black. Make sure to increase `NUMBER_OF_PIXELS_X` and `NUMBER_OF_PIXELS_Y` to get a higher resolution image. Also, make sure to check if all parameters of the hole class (like the position and size) have the desired effect.
+After that, let's add the `is_inside` method. Remember that this method should evaluate if the given point is inside the hole and return a boolean. After you finished the `is_inside` method, you can test it by running any simulation and checking the `Pixel volumes.pdf` output file. It should show the shape of your hole in black. Make sure to increase `NUMBER_OF_PIXELS_X` and `NUMBER_OF_PIXELS_Y` to get a higher resolution image. Also, make sure to check if all parameters of the hole class (like the position and size) have the desired effect.
 
 Example config file you can use for testing:
 
@@ -99,7 +92,7 @@ Now you can just run the simulation again and make sure your hole shows up corre
 
 The last step is to add the scattering behavior in the `check_if_scattering` method. This is a bit more difficult, and I will explain the basics here, but please look at how it is done in the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file.
 
-In the `check_if_scattering` method, the first step is to check if the point is inside the hole with the `is_inside` method. Sometimes you only need to check for one area like in the `CircularHole` and sometimes it makes sense to check for multiple areas like the `TriangularUpHalfHole` for example. After you detected where the phonon will scatter, it's time to implement the scattering behavior. This usually means calculating the angle with which the phonon is striking the hole. After that, usually a scattering function is called which will return a scattering event and put it into `scattering_types.holes` and it will change `ph.phi` and `ph.theta` to correspond to the direction after the scattering. Oftentimes, you don't need to create a new scattering function, but you can use one of the ones in the [scattering\_primitives.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/scattering\_primitives.py) file. One example of a hole that uses a scattering function is `CircularHole`. Some holes have their scattering behavior programmed in, like `ParabolaBottom` for example.
+In the `scatter` method, we need to calculate the angle with which the phonon is striking the hole. After that, usually a scattering function is called which will return a scattering event and put it into `scattering_types.holes` and it will change `ph.phi` and `ph.theta` to correspond to the direction after the scattering. Oftentimes, you don't need to create a new scattering function, but you can use one of the ones in the [scattering\_primitives.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/scattering\_primitives.py) file. One example of a hole that uses a scattering function is `CircularHole`. Some holes have their scattering behavior programmed in, like `ParabolaBottom` for example.
 
 A small trick: If you have problems with phonons getting stuck inside the hole (especially at low temperatures) it can help to check if the phonon is traveling towards the hole. This can be done by comparing the current position of the hole (`ph.x`, `ph.y` and `ph.z`) and the next position (`x`, `y`, `z`). See `CircularHole` for an example.
 
@@ -141,6 +134,6 @@ HOLES                          = [NewHole(x=0, y=LENGTH/2, size_x=300e-9, size_y
 PHONON_SOURCES                 = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="random_up")]
 ```
 
-## Afterwards
+## Afterword
 
 I hope you enjoyed this small tutorial and that you managed to make your hole work 😉. If the hole works well, feel free to make a pull request into the main repository so that other people can use it. But please ensure that the pull request is clean and does not contain temporary files or unrelated changes.
