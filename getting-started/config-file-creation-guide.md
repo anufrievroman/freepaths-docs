@@ -1,4 +1,8 @@
-# Config file creation guide
+---
+description: How to make your own input files
+---
+
+# Input file creation
 
 FreePATHS is used by providing a config file to the program that controls the simulation. This config file is in the form of a python script. In this python script, you can either define the parameters directly like this `NUMBER_OF_PHONONS = 100`, or you can also use python code to set the parameters like this, for example `TIMESTEP = 300e-9 / 10000`.
 

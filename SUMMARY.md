@@ -6,27 +6,27 @@
 
 * [Installation](getting-started/installation.md)
 * [Usage](getting-started/usage.md)
-* [Config file creation guide](getting-started/config-file-creation-guide.md)
+* [Input file creation](getting-started/config-file-creation-guide.md)
   * [Basic parameters](getting-started/config-file-creation-guide.md#basic-parameters)
   * [Advanced simulation parameters](getting-started/config-file-creation-guide.md#advanced-simulation-parameters)
   * [Plotting/Output parameters](getting-started/config-file-creation-guide.md#plottingoutput-parameters)
 
-## Theoretical explanations
+## Theory
 
-* [Algorithm](theroretical-explanations/algorithm.md)
-* [Equations](theroretical-explanations/equations.md)
+* [Algorithm](theory/algorithm.md)
+* [Thermal conductivity](theory/themal-conductivity-calculation.md)
+* [Other equations](theory/equations.md)
 
-## Example file explanations
+## Basic tutorials
 
-* [Nanowire](tutorials/nanowire.md)
-* [Phononic crystal](tutorials/phononic-crystal.md)
-* [Parabolic lens](tutorials/parabolic-lens.md)
-* [Thermal gradients](tutorials/thermal-gradients.md)
-* [Animations](tutorials/animations.md)
+* [Nanowire](basic-tutorials/nanowire.md)
+* [Phononic crystal](basic-tutorials/phononic-crystal.md)
+* [Parabolic lens](basic-tutorials/parabolic-lens.md)
+* [Thermal gradients](basic-tutorials/thermal-gradients.md)
+* [Animations](basic-tutorials/animations.md)
 
 ## Advanced Tutorials
 
-* [Thermal conductivity calculation](advanced-tutorials/themal-conductivity-calculation.md)
 * [Creating new hole shapes (the easy way)](advanced-tutorials/creating-new-holes-the-easy-way.md)
 * [Adding your own hole shapes (the advanced way)](advanced-tutorials/adding-your-own-hole-or-pillar-the-advanced-way.md)
 

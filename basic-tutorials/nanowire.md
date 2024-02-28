@@ -14,8 +14,16 @@ The algorithm calculates the thermal profiles, heat flux, and the thermal conduc
 
 <figure><img src="../.gitbook/assets/image (17).png" alt="" width="375"><figcaption><p>Heat flux profiles converge to the flat line.</p></figcaption></figure>
 
-This can be used to estimate the [thermal conductivity](../advanced-tutorials/themal-conductivity-calculation.md) of the structure. The  plot of thermal conductivity shows us the convergence and the averaging:
+This can be used to estimate the [thermal conductivity](../theory/themal-conductivity-calculation.md) of the structure. The  plot of thermal conductivity shows us the convergence and the averaging:
 
 <figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity convergance and averaging over the steady state period.</p></figcaption></figure>
 
 For a simple nanowire, the material and effective thermal conductivities are identical and equal to about 54 W/m·K, which is consistent with experimental observations.
+
+## Useful tips for thermal conductivity calculations
+
+* The software can currently only calculate the thermal conductivity in the y direction. Also, make sure that the phonons are generated on the very side of the simulation.
+* The software does not give correct results if pillars are present in the simulation.
+* Because the calculation relies on the pixel grid to calculate the profiles, make sure that it is small enough and looks good (some discontinuities in the pixels adjacent to holes are expected and correct).
+* Make sure that you simulate enough phonons (> 5000) to get valid results.
+* Make sure that [time parameters](../getting-started/config-file-creation-guide.md#simulation-time-parameters) are set correctly.
