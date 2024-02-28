@@ -34,7 +34,7 @@ The temperature gradient is obtained by a linear regression and the heat flux va
 
 <figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity converges as the system reaches steady state.</p></figcaption></figure>
 
-There are two heat flux profiles calculated in the simulation. The one called `Heat flux profile effective.pdf` is calculated by averaging the heat flux over the entire simulation domain, and the `Heat flux profile material.pdf` only averages the heat flux where there is material, so not where there are holes. Then both the effective and material thermal conductivity are provided in `Thermal conductivity.pdf` (although in the example above they are the same).
+In this regime, two values of the thermal conductivity are calculated, the effective and material thermal conductivity. Although they are the same in this example, it is important to understand the difference, [which is explained below](themal-conductivity-calculation.md#effective-vs-material-thermal-conductivity).
 
 ## Mean free path approach
 
@@ -68,4 +68,6 @@ One must distinguish two different quantities, _material_ and _effective_ therma
 
 The **effective thermal conductivity** is essentially the conductivity of a "black box" structure with a given thickness, width, and length, regardless of how much material has been removed inside the box. This quantity is useful in engineering, but note that it can be physically misleading as one can achieve the effective conductivity even below the amorphous limit simply removing lots of material, for example by making dense holes.&#x20;
 
-The **material thermal conductivity** "takes into account" the volume reduction due to material removal and essentially represents the thermal conductivity of the material between the holes. This quantity typically reflects the reduction in thermal conductivity caused by phonon scattering on the holes.
+The **material thermal conductivity** takes into account the volume reduction due to material removal and essentially represents the thermal conductivity of the material between the holes. This quantity typically reflects the reduction in thermal conductivity caused by phonon scattering on the holes.
+
+Likewise, you'll see that there are profiles for effective and material heat flux, which follows the same logic that material heat flux is the flux that was corrected by the absent volume of the holes, which usually creates jumps of the heat flux around the holes.
