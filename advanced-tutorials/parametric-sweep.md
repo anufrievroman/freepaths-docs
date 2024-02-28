@@ -4,7 +4,7 @@ description: How to run multiple simulations with varied parameters
 
 # Parametric sweep
 
-The `examples/sweep_parameter_script.py`, shows an example of how one can run several simulations one after another so that the input file remains the same except for one parameter. In this example, we sweep the temperature parameter `T` in the input file called `point_line.py` as defined as `temperatures = [4, 100, 200, 300]` list.
+The `examples/sweep_parameter_script.py`, shows an example of how one can run several simulations one after another so that the input file remains the same except for one parameter. In this example, we sweep the temperature parameter `T` in the input file called `point_line.py` as defined as `temperatures = [4, 100, 200, 300]` list. Below, a typical script is provided:
 
 ```
 import subprocess
@@ -29,4 +29,10 @@ for temp in temperatures:
     subprocess.run(['python', '-m', 'freepaths', FILENAME])
 ```
 
-Essentially, for each temperature, the script changes and saves the input file, runs the simulation, and proceeds to the next temperature. As a result, several folders will appear in the `Results` folder with different temperatures.
+Essentially, for each temperature, the script changes and saves the input file, runs the simulation, and proceeds to the next temperature. Note, that this is not an input file, this is a separate python script that runs the simulations, so you must launch it as:
+
+```
+python sweep_parameter_script.py
+```
+
+As a result, several folders will appear in the `Results` folder for different temperatures.
