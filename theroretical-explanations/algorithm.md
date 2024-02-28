@@ -6,7 +6,7 @@ description: General flow of the simulation
 
 The algorithm runs the simulations step-by-step and phonon-by-phonon. For each phonon, the algorithm calculates a trajectory, with a time step _dt_ and for as many time steps as required for the phonon to reach the cold side or until a maximum number of time steps is reached.
 
-<figure><img src="../.gitbook/assets/MCscheme.png" alt=""><figcaption><p>Scheme of the simulated system, indicating some of the parameters set in the input files.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption><p>Scheme of the simulated system, indicating some of the parameters set in the input files.</p></figcaption></figure>
 
 ### Initialization
 

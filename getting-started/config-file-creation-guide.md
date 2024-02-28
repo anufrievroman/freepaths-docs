@@ -29,7 +29,7 @@ T                              = 300
 ```
 
 ➡️ `OUTPUT_FOLDER_NAME` : string\
-The outputs of the simulation will be saved in the Results folder. In this folder, another folder with this name will be created, which will contain the output files. So, in this case, the result files will be in `Results/Si nanowire at 300 K`. Keep in mind that the Results folder will be created in the folder you executed the FreePATHS command. Also, pay attention that if the simulation is run again, the results will be overwritten without warning.\
+The outputs of the simulation will be saved in the Results folder. In this folder, another folder with this name will be created, which will contain the output files. So, in this case, the result files will be in `Results/Si nanowire at 300 K`. Keep in mind that the the Results folder will be created in the folder you executed the FreePATHS command. Also, pay attention that if the simulation is run again, the results will be overwritten without a warning.\
 A useful trick is to use f-strings to automatically name the output folders. For example, if the same simulation is to be run at multiple temperatures, using `OUTPUT_FOLDER_NAME = f'Simulation at {T}K'` will automatically put the simulation temperature in the output folder name. Just make sure to define the parameters (`T` in this case) before.
 
 ➡️ `NUMBER_OF_PHONONS` : int\
@@ -39,7 +39,7 @@ This will define how many phonons are simulated. Since the Monte Carlo simulatio
 The phonons are not simulated in a continuous fashion but only every timestep. If the timestep is small, the phonon behavior will be more realistic, but the simulation time will increase. And vice versa for a large timestep. Because the phonons are only simulated every timestep the time between two scattering events of a particular phonon cannot be smaller than the timestep so take this into account, especially when simulating at high temperatures where scattering events are more frequent. If you experience wrong or unexpected phonon behavior, reducing the timestep can also help with this.
 
 ➡️ `NUMBER_OF_TIMESTEPS` : int\
-The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. At the end of the simulation, the percentage of phonons that reach the cold side is displayed in the terminal. The number of timesteps should usually be high enough so that most (more than 90% or 95%) of phonons reach the cold side.
+The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. Thus, this parameter should usually be high enough so that most phonons reach the cold side. Otherwise, you will see a warning at the end of the simulation.
 
 ➡️ `T` : float\
 The temperature of the simulation in Kelvin. Since increasing the temperature increases the number of scattering events and phonons take longer to traverse the structure, simulations at high temperatures take significantly longer than at low temperatures.
@@ -88,7 +88,7 @@ HOT_SIDE_POSITION_LEFT           = False
 ```
 
 There will not be a section for every parameter in this section because it would be redundant.\
-To set a wall to be solid set the corresponding `INCLUDE_X_SIDEWALL = True` and set `COLD_SIDE_POSITION_X = False` and `HOT_SIDE_POSITION_X = False`. The same goes if you want to set a wall to a hot or cold side. If a wall is assigned multiple functions an error will be thrown. And if you want a wall to be open set all three parameters to `False`.
+To set a wall to be solid, set the corresponding `INCLUDE_..._SIDEWALL = True` and set `COLD_SIDE_POSITION_... = False` and `HOT_SIDE_POSITION_... = False`. The same goes if you want to set a wall to a hot or cold side. If a wall is assigned multiple functions, an error will occur. And if you want a wall to be open, set all three parameters to `False`.
 
 <figure><img src="../.gitbook/assets/default_setup.png" alt="" width="249"><figcaption><p>Top view of a default simulation domain.</p></figcaption></figure>
 
@@ -162,7 +162,7 @@ Pillars are a more experimental feature, and the only pillar available at the ti
 ### Multiprocessing parameter
 
 ```python
-NUMBER_OF_PROCESSES              = 10
+NUMBER_OF_PROCESSES = 10
 ```
 
 ➡️ `NUMBER_OF_PROCESSES` : int\
@@ -173,8 +173,8 @@ Every phonon is simulated independently, one after the other. To speed up the ca
 ### Material parameters
 
 ```python
-MEDIA                            = "Si"
-IS_TWO_DIMENSIONAL_MATERIAL      = False
+MEDIA = "Si"
+IS_TWO_DIMENSIONAL_MATERIAL = False
 ```
 
 ➡️ `MEDIA` : str\
@@ -203,9 +203,9 @@ If the roughness is set to a very low value, the scattering will be mostly specu
 ### Phonon behavior parameters
 
 ```python
-INCLUDE_INTERNAL_SCATTERING      = True
-USE_GRAY_APPROXIMATION_MFP       = False
-GRAY_APPROXIMATION_MFP           = None
+INCLUDE_INTERNAL_SCATTERING = True
+USE_GRAY_APPROXIMATION_MFP = False
+GRAY_APPROXIMATION_MFP = None
 ```
 
 ➡️ `INCLUDE_INTERNAL_SCATTERING` : bool\
@@ -219,26 +219,28 @@ If `USE_GRAY_APPROXIMATION_MFP` is set to `True`, this needs to be set to the ph
 
 ### Simulation time parameters
 
-Please do not confuse the "virtual" timesteps discussed in this section with the timesteps discussed in the Most basic parameters section. The `NUMBER_OF_TIMESTEPS` parameter defines the maximum time a phonon has to travel through the structure, while the parameters of this section are used to make sure the simulation is in a steady state.
+Please do not confuse the "virtual" timesteps discussed in this section with the timesteps discussed in the Most basic parameters section. The `NUMBER_OF_TIMESTEPS` parameter defines the maximum time a phonon has to travel through the structure, while the parameters of this section are used to make sure the thermal simulation that is designed to reach the steady state.
+
+<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Scheme of times used in the simulation.</p></figcaption></figure>
 
 Considering the `Thermal map.pdf` and the resulting `Temperature profile.pdf` please consider that the physics of the entire simulation behaves with the temperature of the parameter `T` even if `Temperature profile.pdf` shows a significantly higher temperature. This is because the temperature in `Temperature profile.pdf` results from the amount of heat that enters the structure, which is dependent on `NUMBER_OF_PHONONS`. Thus, the temperatures in `Temperature profile.pdf` should not be taken at face value. For the thermal conductivity calculation, the gradient of this profile is used.
 
 ```python
-NUMBER_OF_VIRTUAL_TIMESTEPS      = 300000
-INITIALIZATION_TIMESTEPS         = 50000
-NUMBER_OF_INITIALIZATION_TIMEFRAMES = 3
+NUMBER_OF_VIRTUAL_TIMESTEPS = 3 * NUMBER_OF_TIMESTEPS
+NUMBER_OF_TIMEFRAMES = 7
+NUMBER_OF_STABILIZATION_TIMEFRAMES = 4
 ```
 
 ➡️ `NUMBER_OF_VIRTUAL_TIMESTEPS` : int\
 The phonons do not all enter the structure at the same time, but a virtual start time is assigned to each phonon randomly and the range of these start times is controlled with this parameter. This means that because no phonons are generated before the simulation starts that the first moments of the simulation are not useful because all phonons are at the beginning of the structure and none are towards the end of the structure. This also means that phonons that enter the structure towards the end of the simulation time and exit the structure after the simulation time are not considered for some calculations during their entire flight time. This is not a huge issue, but be aware that the shorter the simulation time is with respect to the time the phonons need to traverse the structure, the more information that is generated is not considered. So this parameter should at least be a couple of times larger than the time it takes phonons to traverse the structure. The time it takes phonons to traverse the structure can be determined with `Distribution of travel times.pdf` (Determining the 95% or 99% quantile by eye should be sufficient).
 
-➡️ `INITIALIZATION_TIMESTEPS` : int\
-To address the issue of the start of the simulation not being useful, the amount of timesteps entered here will not be considered for the final calculation. This value should be about one or two times the time it takes phonons to traverse the structure.
+➡️ `NUMBER_OF_TIMEFRAMES` : int\
+The simulation time determined by `NUMBER_OF_VIRTUAL_TIMESTEPS` is divided into several timeframes to observe the evolution of the system with time. The number of the timeframes should be around 8 for reasonable output.
 
-➡️ `NUMBER_OF_INITIALIZATION_TIMEFRAMES` : int\
-The temperature profile, heat flux profile ant thermal conductivity are not only calculated for the time after the initialization timesteps but also for some timeframes during the initialization timeframes. This parameter defines how many of these timeframes are created in the initialization time. This can be useful to observe the convergence of the profiles towards the profile of the final timestep.
+➡️ `NUMBER_OF_STABILIZATION_TIMEFRAMES` : int\
+The system requires some time to reach a steady state, in which the thermal conductivity should be calculated. Thus, this parameter controls how many first timeframes are skipped before the measurement begins. For example, this can be at least half of the `NUMBER_OF_TIMEFRAMES` parameter.
 
-## Plotting/Output parameters
+## Output parameters
 
 ### Thermal maps
 
@@ -247,9 +249,9 @@ The heat flux maps, the thermal map and the pixel volumes plot are all based on 
 Concerning the heat flux maps, it is important to consider that the `Heat flux map.pdf` file displays the absolute magnitude of heat flux. So if a phonon travels through a place twice in opposite directions, the heat flux will be added. In the `Heat flux map x.pdf` and `Heat flux map y.pdf` the directional heat flux is calculated which means that if a phonon travels through a place twice in opposite directions, the heat flux will cancel out.
 
 ```python
-NUMBER_OF_PIXELS_X               = 25
-NUMBER_OF_PIXELS_Y               = 100
-IGNORE_FAULTY_PHONONS            = False
+NUMBER_OF_PIXELS_X = 25
+NUMBER_OF_PIXELS_Y = 100
+IGNORE_FAULTY_PHONONS = False
 ```
 
 ➡️ `NUMBER_OF_PIXELS_X` `NUMBER_OF_PIXELS_Y` : int&#x20;
@@ -258,8 +260,8 @@ These parameters define the pixel grid which is used for the map creation, so a 
 
 ```python
 pixel_size = 30e-9
-NUMBER_OF_PIXELS_X             = int(WIDTH / pixel_size)
-NUMBER_OF_PIXELS_Y             = int(LENGTH / pixel_size)
+NUMBER_OF_PIXELS_X = int(WIDTH / pixel_size)
+NUMBER_OF_PIXELS_Y = int(LENGTH / pixel_size)
 ```
 
 ➡️ `IGNORE_FAULTY_PHONONS` : bool\
@@ -285,8 +287,8 @@ This variable defines the background color in the `Phonon paths XY.pdf` and `Pho
 ### Line plots
 
 ```python
-NUMBER_OF_NODES                  = 400
-NUMBER_OF_LENGTH_SEGMENTS        = 10
+NUMBER_OF_NODES = 400
+NUMBER_OF_LENGTH_SEGMENTS = 10
 ```
 
 ➡️ `NUMBER_OF_NODES` : int\
@@ -304,8 +306,8 @@ Animations are currently not working. See [this issue](https://github.com/anufri
 Note that `NUMBER_OF_TIMESTEPS` should not be too large, otherwise the generation of animation may take a very long time because one frame for each time step will be created. A few hundred time steps is a reasonable value.
 
 ```python
-OUTPUT_PATH_ANIMATION            = False
-OUTPUT_ANIMATION_FPS             = 24
+OUTPUT_PATH_ANIMATION = False
+OUTPUT_ANIMATION_FPS = 24
 ```
 
 ➡️ `OUTPUT_PATH_ANIMATION` : bool\
