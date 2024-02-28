@@ -41,7 +41,7 @@ There are two heat flux profiles calculated in the simulation. The one called `H
 Alternatively, you can run FreePATHS in the mean free path sampling mode, which is designed to calculate the thermal conductivity by integrating phonon dispersion and sampling the phonon relaxation time (or phonon mean free paths) for each frequency. To run the program in this mode, reduce the number of phonons to about 30 and add the `-s` flag in the command:
 
 ```
-freepaths -s simple_nanowire.py
+freepaths -s your_input_file.py
 ```
 
 In this mode, the thermal conductivity at a given temperature (_T_) is calculated as:
@@ -52,7 +52,7 @@ $$
 
 where _k_ is the Boltzmann constant, ω(q) and _v_(q) are the frequency and group velocity on the branch _j_ of the phonon dispersion at the wavevector _q._ The phonon relaxation time _τ_ (or the phonon mean free path Λ = _v_(_q_)·τ) is measured by running phonons through the structure and recording the average of the distances between diffuse scattering events.
 
-For example, if we take the same input file as in the nanowire example, reduce the number of phonons to 30 and run it with `-s` flag:
+For example, if we take the same input file as in [the nanowire example](../basic-tutorials/nanowire.md), reduce the number of phonons to 30 and run it with `-s` flag:
 
 ```
 freepaths -s nanowire.py
