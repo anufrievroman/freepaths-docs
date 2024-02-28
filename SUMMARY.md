@@ -29,7 +29,4 @@
 
 * [Creating new hole shapes (the easy way)](advanced-tutorials/creating-new-holes-the-easy-way.md)
 * [Adding your own hole shapes (the advanced way)](advanced-tutorials/adding-your-own-hole-or-pillar-the-advanced-way.md)
-
-***
-
-* [References and credits](references-and-credits.md)
+* [References and credits](advanced-tutorials/references-and-credits.md)

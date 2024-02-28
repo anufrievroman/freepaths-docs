@@ -5,7 +5,7 @@ FreePATHS requires python 3. On Linux and MacOS, it is probably already installe
 Install the package from PyPi repository by entering this command into a terminal or a python console:
 
 ```
-pipx install --upgrade freepaths
+pipx install freepaths
 ```
 
 ### Development

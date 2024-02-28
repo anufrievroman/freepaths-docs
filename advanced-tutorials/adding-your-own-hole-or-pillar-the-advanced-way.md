@@ -6,9 +6,7 @@ There is an alternative method for adding new shapes by using the very flexible 
 
 ## Understanding the code structure
 
-All holes and pillars are defined in the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file. And each hole and pillar is defined as a class in this file. For the hole to work with FreePATHS, some requirements need to be fulfilled. (Pillars have an added requirement of needing to have both `x0` and `y0` as class attributes)
-
-I will walk you through the requirements step by step in the following sections. Feel free to look at the other holes to see how they work if you need some inspiration.
+All holes and pillars are defined in the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file, and each hole and pillar is defined as a class in this file. For the hole to work with FreePATHS, some requirements need to be fulfilled. (Pillars have an added requirement of needing to have both `x0` and `y0` as class attributes). I will walk you through the requirements step by step in the following sections. Refer to the other holes to see how they work if you need some inspiration.
 
 ## Creating a minimal example
 
@@ -16,8 +14,8 @@ The class must have some predefined functions to work, and I will go through the
 
 ```python
 class NewHole(Hole)
-	def __init__(self):
-		pass
+    def __init__(self):
+        pass
 ```
 
 The class inherits from the general Hole class (which does not do anything currently). As for any python class, use the `__init__` method to receive all parameters for the class and do any heavy precalculations you will need for the other methods here, as this is only executed once.
@@ -84,7 +82,7 @@ HOLES                          = [NewHole(x=0, y=LENGTH/2, size_x=300e-9, size_y
 
 Next, let's finalize the `get_patch` method so that the hole will show up in the structure plots. While this step is not necessarily required for the hole to behave correctly, I still highly recommend doing it now so that you can use it later to debug the scattering.
 
-As explained before, the `get_path` method needs to return a [matplotlib Patch object](https://matplotlib.org/stable/api/patches\_api.html) that describes the shape of the hole. Please check the [matplotlib documentation](https://matplotlib.org/stable/api/patches\_api.html), but you will probably end up using a [Polygon patch](https://matplotlib.org/stable/api/\_as\_gen/matplotlib.patches.Polygon.html#matplotlib.patches.Polygon).
+As explained before, the `get_path` method needs to return a [matplotlib Patch object](https://matplotlib.org/stable/api/patches\_api.html) that describes the shape of the hole. Check the [matplotlib documentation](https://matplotlib.org/stable/api/patches\_api.html), but you will probably end up using a [Polygon patch](https://matplotlib.org/stable/api/\_as\_gen/matplotlib.patches.Polygon.html#matplotlib.patches.Polygon).
 
 Now you can just run the simulation again and make sure your hole shows up correctly in `Structure XY.pdf` or `Phonon paths XY.pdf`. You can compare `Structure XY.pdf` and `Pixel volumes.pdf` to see if they look the same.
 
