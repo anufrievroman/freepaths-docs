@@ -1,21 +1,21 @@
 ---
-description: Simple nanowire at 300 K
+description: Silicon nanowire at 300 K
 ---
 
 # Nanowire
 
-This simulation runs by default if you run the program without any input files, as:
-
-`freepahts`
-
-The simulation models thermal transport in a Si nanowire at 300 K. The algorithm calculates the thermal profiles, heat flux, and the thermal conductivity at different time intervals. Here is an example of phonon paths in such structure showing somewhat diffusive behavior:
+The example `examples/nanowire.py` shows thermal transport simulation in a simple nanowire at room temperature. Here is an example of phonon paths in such a structure showing mostly diffusive behavior:
 
 <figure><img src="../.gitbook/assets/paths.jpg" alt="" width="563"><figcaption><p>Example of phonon paths in the structure.</p></figcaption></figure>
 
-From the profile plots, we can see how the temperature and heat flux profiles converges with time as the system is reaching the state (the different colored lines represent the system state at different times):
+The algorithm calculates the thermal profiles, heat flux, and the thermal conductivity at different time intervals. From the profile plots, we can see how the temperature and heat flux profiles converge after about 6th timeframe, as the system is reaching the state:
 
-<figure><img src="../.gitbook/assets/thermal profile.jpg" alt="" width="375"><figcaption><p>Temperature profiles at different time instervals converge to the linear profile.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (16).png" alt="" width="375"><figcaption><p>Temperature profiles at different time instervals converge to the linear profile.</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/heat flux (2).jpg" alt="" width="375"><figcaption><p>Heat flux profiles converge to the flat line.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (17).png" alt="" width="375"><figcaption><p>Heat flux profiles converge to the flat line.</p></figcaption></figure>
 
-This can be used to estimate the thermal conductivity of the structure. See the [thermal conductivity calculation](../advanced-tutorials/themal-conductivity-calculation.md) page for more information.
+This can be used to estimate the [thermal conductivity](../advanced-tutorials/themal-conductivity-calculation.md) of the structure. The  plot of thermal conductivity shows us the convergence and the averaging:
+
+<figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity convergance and averaging over the steady state period.</p></figcaption></figure>
+
+For a simple nanowire, the material and effective thermal conductivities are identical and equal to about 54 W/m·K, which is consistent with experimental observations.
