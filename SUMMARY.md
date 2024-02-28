@@ -23,6 +23,7 @@
 * [Phononic crystal](basic-tutorials/phononic-crystal.md)
 * [Parabolic lens](basic-tutorials/parabolic-lens.md)
 * [Thermal gradients](basic-tutorials/thermal-gradients.md)
+* [Scattering map](basic-tutorials/scattering-map.md)
 * [Animations](basic-tutorials/animations.md)
 
 ## Advanced Tutorials

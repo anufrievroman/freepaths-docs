@@ -18,7 +18,7 @@ In this approach, we use the main algorithm of FreePATHS to obtain heat flux (J)
 
 <figure><img src="../.gitbook/assets/image (14).png" alt="" width="563"><figcaption><p>Schematic of the simulation time.</p></figcaption></figure>
 
-We can see the convergence of the temperature and heat flux profiles as the time progresses and the simulation reached steady state:
+We can see the convergence of the temperature and heat flux profiles as the time progresses and the simulation reaches steady state:
 
 <div>
 
@@ -52,7 +52,13 @@ $$
 
 where _k_ is the Boltzmann constant, ω(q) and _v_(q) are the frequency and group velocity on the branch _j_ of the phonon dispersion at the wavevector _q._ The phonon relaxation time _τ_ (or the phonon mean free path Λ = _v_(_q_)·τ) is measured by running phonons through the structure and recording the average of the distances between diffuse scattering events.
 
+For example, if we take the same input file as in the nanowire example, reduce the number of phonons to 30 and run it with `-s` flag:
 
+```
+freepaths -s nanowire.py
+```
+
+We obtain the thermal conductivity of about 51 W/m·K, consistent with the Fourier law approach above.
 
 ## Effective vs Material thermal conductivity
 

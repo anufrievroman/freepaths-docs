@@ -25,7 +25,7 @@ Note that `angle_distribution="uniform"` because we need to emit phonons in all 
 
 <div>
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Phonon trajectories show collimation of phonons reflected from the parabolic boundary.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Phonon trajectories show collimation of phonons reflected from the parabolic boundary.</p></figcaption></figure>
 
  
 

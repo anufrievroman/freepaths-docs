@@ -23,13 +23,13 @@ Here, the `HOLES` list is filled with the `CircularHole` objects. This will crea
 
 If we increase the number of phonons to several thousand, we can see some interesting distributions, for example the distributions of phonon angle at the beginning (red) and end (blue) of the structure. Interestingly, the array of holes "aligned" phonon trajectories along the passages between the holes \[1, 2].
 
-<figure><img src="../.gitbook/assets/image.png" alt="" width="375"><figcaption><p>Angular distribution show that while initially angles of phonons are random (red), many phonons have about zero angle degrees at the top of the structure (blue).</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1).png" alt="" width="375"><figcaption><p>Angular distribution show that while initially angles of phonons are random (red), many phonons have about zero angle degrees at the top of the structure (blue).</p></figcaption></figure>
 
 One can also output, for example, phonon frequency spectrum or time phonons took to reach the cold side.
 
 <div>
 
-<figure><img src="../.gitbook/assets/image (1).png" alt="" width="375"><figcaption><p>Phonon frequency spectrum.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption><p>Phonon frequency spectrum.</p></figcaption></figure>
 
  
 
