@@ -16,7 +16,7 @@ $$
 
 In this approach, we use the main algorithm of FreePATHS to obtain heat flux (J) and temperature gradient (dT/dL) in the steady state regime. An e[xample of such simulation is described here](../basic-tutorials/nanowire.md). To use this approach, one must understand the [time parameters of the simulation](../getting-started/config-file-creation-guide.md#simulation-time-parameters). Specifically, that over several timeframes, the simulation is trying to achieve steady state thermal flow and then measured the profiles used for the thermal conductivity calculation.
 
-<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Schematic of the simulation time.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (14).png" alt="" width="563"><figcaption><p>Schematic of the simulation time.</p></figcaption></figure>
 
 We can see the convergence of the temperature and heat flux profiles as the time progresses and the simulation reached steady state:
 
@@ -51,3 +51,15 @@ $$
 $$
 
 where _k_ is the Boltzmann constant, ω(q) and _v_(q) are the frequency and group velocity on the branch _j_ of the phonon dispersion at the wavevector _q._ The phonon relaxation time _τ_ (or the phonon mean free path Λ = _v_(_q_)·τ) is measured by running phonons through the structure and recording the average of the distances between diffuse scattering events.
+
+
+
+## Effective vs Material thermal conductivity
+
+One must distinguish two different quantities, _material_ and _effective_ thermal conductivity. For simple structures without holes (like a [nanowire](../basic-tutorials/nanowire.md)) these quantities are the same. However, if the structure has non-uniform volume or pores or pillars, these quantities are not the same and the effective thermal conductivity is lower. For example, for a structure with some holes, FreePATHS will typical output a plot showing both quantities, as follows:
+
+<figure><img src="../.gitbook/assets/image (18).png" alt="" width="563"><figcaption><p>Example of  material and effective thermal conductivities of porous structure.</p></figcaption></figure>
+
+The **effective thermal conductivity** is essentially the conductivity of a "black box" structure with a given thickness, width, and length, regardless of how much material has been removed inside the box. This quantity is useful in engineering, but note that it can be physically misleading as one can achieve the effective conductivity even below the amorphous limit simply removing lots of material, for example by making dense holes.&#x20;
+
+The **material thermal conductivity** "takes into account" the volume reduction due to material removal and essentially represents the thermal conductivity of the material between the holes. This quantity typically reflects the reduction in thermal conductivity caused by phonon scattering on the holes.
