@@ -1,16 +1,5 @@
 ---
 description: How to make your own input files
-layout:
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: false
 ---
 
 # Input file creation
