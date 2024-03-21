@@ -18,9 +18,9 @@ Please be advised that the information on this page might not be quite up-to-dat
 
 After learning about the parameters, please look at the example files provided [here](https://github.com/anufrievroman/freepaths/tree/master/examples), some of which have further explanations on the wiki.
 
-## Basic parameters
+### Basic parameters
 
-### Most basic parameters
+#### Most basic parameters
 
 These parameters control the most fundamental elements of the simulation.
 
@@ -48,7 +48,7 @@ The phonon is simulated until it reaches a cold side or until the number of time
 ➡️ `T` : float\
 The temperature of the simulation in Kelvin. Since increasing the temperature increases the number of scattering events and phonons take longer to traverse the structure, simulations at high temperatures take significantly longer than at low temperatures.
 
-### Simulation domain
+#### Simulation domain
 
 The simulation domain consists of a box. These parameters control the size of the box. The unit is meters.
 
@@ -67,7 +67,7 @@ Defines the width of the simulation domain in meters. This corresponds to the x 
 ➡️ `LENGTH` : float\
 Defines the length of the simulation domain in meters. This corresponds to the y coordinate and the box will span from `0` to `LENGTH` on the y axis.
 
-### Simulation boundaries
+#### Simulation boundaries
 
 Each side of the simulation domain can either be a wall that phonons scatter on, a cold side that phonons disappear on, a hot side where phonons re-thermalize or empty so that phonons can fly through it. The floor and ceiling of the box are always physical walls. By default, the bottom is assumed to be hot, the top is assumed cold, and the left and right walls are just physical walls.
 
@@ -96,7 +96,7 @@ To set a wall to be solid, set the corresponding `INCLUDE_..._SIDEWALL = True` a
 
 <figure><img src="../.gitbook/assets/default_setup.png" alt="" width="249"><figcaption><p>Top view of a default simulation domain.</p></figcaption></figure>
 
-### Phonon sources
+#### Phonon sources
 
 The phonons are not emitted by the hot sides but by phonon sources. A source of phonons is an area where phonons are generated in a given direction. This area can be placed anywhere in the structure.
 
@@ -130,7 +130,7 @@ Note that the source angle distribution is also adjusted. The angle distribution
 
 <figure><img src="../.gitbook/assets/image (12).png" alt="" width="563"><figcaption><p>Available phonon angle distributions at the phonon source.</p></figcaption></figure>
 
-### Holes and pillars
+#### Holes and pillars
 
 While holes are not necessarily required for a simulation, which you can see in the empty default value, they are a key aspect of FreePATHS which is why they are in the necessary parameters section.
 
@@ -163,7 +163,7 @@ There are multiple ways to add arbitrary shapes into the simulation. The simples
 ➡️ `PILLARS` : list\
 Pillars are a more experimental feature, and the only pillar available at the time is `CircularPillar`. Pillars work the same way as holes but instead of preventing phonons from entering a certain area of the simulation domain they extend the simulation domain in _z_ direction locally.
 
-### Multiprocessing parameter
+#### Multiprocessing
 
 ```python
 NUMBER_OF_PROCESSES = 10
@@ -172,9 +172,9 @@ NUMBER_OF_PROCESSES = 10
 ➡️ `NUMBER_OF_PROCESSES` : int\
 Every phonon is simulated independently, one after the other. To speed up the calculation, the phonons should be distributed across multiple processes, which will each simulate phonons independently. This value should be set to a value close to the number of threads your processor has. Please take note that the progress percentage displayed in the terminal is the progress of a single process, and that some processes will take longer than others to finish.
 
-## Advanced simulation parameters
+### Advanced simulation parameters
 
-### Material parameters
+#### Material
 
 ```python
 MEDIA = "Si"
@@ -187,7 +187,7 @@ This parameter describes what material the simulation domain is made of. Phonons
 ➡️ `IS_TWO_DIMENSIONAL_MATERIAL` : bool\
 If this is set to `True` the z dimension will be ignored and the simulation will take place only in the x-y plane. This is usually used for Graphene sheet simulation.
 
-### Roughness parameters
+#### Roughness
 
 When phonons scatter on a surface, the surface roughness influences the probability of specular or diffuse scattering on the surface.
 
@@ -204,7 +204,7 @@ The roughness values are expressed in meters. Most of the variable names are pre
 
 If the roughness is set to a very low value, the scattering will be mostly specular, which can be used on the side walls, for example, as a symmetric/periodic boundary condition. It can also be used for testing purposes to check if the scattering behavior is programmed correctly.
 
-### Phonon behavior parameters
+#### Internal scattering
 
 ```python
 INCLUDE_INTERNAL_SCATTERING = True
@@ -221,7 +221,7 @@ Use the gray approximation to determine the internal scattering rate.
 ➡️ `GRAY_APPROXIMATION_MFP` : float\
 If `USE_GRAY_APPROXIMATION_MFP` is set to `True`, this needs to be set to the phonon mean free path to be used for the gray approximation.
 
-### Simulation time parameters
+#### Time
 
 Please do not confuse the "virtual" timesteps discussed in this section with the timesteps discussed in the Most basic parameters section. The `NUMBER_OF_TIMESTEPS` parameter defines the maximum time a phonon has to travel through the structure, while the parameters of this section are used to make sure the thermal simulation that is designed to reach the steady state.
 
@@ -244,9 +244,9 @@ The simulation time determined by `NUMBER_OF_VIRTUAL_TIMESTEPS` is divided into 
 ➡️ `NUMBER_OF_STABILIZATION_TIMEFRAMES` : int\
 The system requires some time to reach a steady state, in which the thermal conductivity should be calculated. Thus, this parameter controls how many first timeframes are skipped before the measurement begins. For example, this can be at least half of the `NUMBER_OF_TIMEFRAMES` parameter.
 
-## Output parameters
+### Output parameters
 
-### Thermal maps
+#### Thermal maps
 
 The heat flux maps, the thermal map and the pixel volumes plot are all based on the same pixel grid. The thermal conductivity calculation is heavily dependent on these plots.
 
@@ -271,7 +271,7 @@ NUMBER_OF_PIXELS_Y = int(LENGTH / pixel_size)
 ➡️ `IGNORE_FAULTY_PHONONS` : bool\
 Sometimes, phonons may escape the structure and get trapped outside the structure or travel outside the simulation domain. This can cause the maps to not look nice because the holes are not empty. If this parameter is set to `True` all phonons that are outside the structure are simply ignored in the map generation, which improves both the look and the calculations. I recommend keeping this on `False` so that you notice if phonons leave the structure, which can be an indicator of some errors or bugs. If phonons leave the structure, this can be turned on to still get clean data.
 
-### Structure plots
+#### Structure plots
 
 ```python
 OUTPUT_SCATTERING_MAP            = False
@@ -288,7 +288,7 @@ This parameter defines how many trajectories of phonons are saved into the `Phon
 ➡️ `OUTPUT_STRUCTURE_COLOR` : str\
 This variable defines the background color in the `Phonon paths XY.pdf` and `Phonon paths YZ.pdf` output plots. You can use a hexadecimal color or a color name like `'blue'` or any color that matplotlib library accepts.
 
-### Line plots
+#### Line plots
 
 ```python
 NUMBER_OF_NODES = 400
@@ -301,7 +301,7 @@ This value affects the number of bins for the histogram output plots, like for e
 ➡️ `NUMBER_OF_LENGTH_SEGMENTS` : int\
 A few plots display information in segments along the y-axis like `Scattering rates.pdf` and `Time spent in segments.pdf`. The number of segments for these plots can be adjusted with this parameter.
 
-### Animation
+#### Animation
 
 {% hint style="danger" %}
 Animations are currently not working. See [this issue](https://github.com/anufrievroman/freepaths/issues/7).
