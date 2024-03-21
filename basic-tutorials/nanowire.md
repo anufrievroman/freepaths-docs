@@ -16,7 +16,7 @@ After the simulation, we can see the output files in the Results folder. For exa
 
 Also, the algorithm calculates the thermal profiles, heat flux, and the thermal conductivity at different time intervals. From the profile plots, we can see how the temperature and heat flux profiles converge after about 6th timeframe, as the system is reaching the state:
 
-<figure><img src="../.gitbook/assets/image (16).png" alt="" width="375"><figcaption><p>Temperature profiles at different time instervals converge to the linear profile.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (16).png" alt="" width="375"><figcaption><p>Temperature profiles at different time intervals.</p></figcaption></figure>
 
 <figure><img src="../.gitbook/assets/image (17).png" alt="" width="375"><figcaption><p>Heat flux profiles converge to the flat line.</p></figcaption></figure>
 
