@@ -18,19 +18,15 @@ In this approach, we use the main algorithm of FreePATHS to obtain heat flux (J)
 
 <figure><img src="../.gitbook/assets/image (14).png" alt="" width="563"><figcaption><p>Schematic of the simulation time.</p></figcaption></figure>
 
-We can see the convergence of the temperature and heat flux profiles as the time progresses and the simulation reaches steady state:
+We can see the convergence of the temperature profile to the linear gradient as the time progresses and the simulation reaches steady state in the last few time frames:
 
-<div>
+<figure><img src="../.gitbook/assets/image (16).png" alt="" width="563"><figcaption><p>Temperature profiles at different time segments.</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption><p>Temperature profiles at different time instervals converge to the linear profile.</p></figcaption></figure>
+Likewise, heat flux profiles converge to the flat line in the last few time frames:
 
- 
+<figure><img src="../.gitbook/assets/image (17).png" alt="" width="563"><figcaption><p>Heat flux profiles converge to the flat line in the steady state.</p></figcaption></figure>
 
-<figure><img src="../.gitbook/assets/image (17).png" alt=""><figcaption><p>Heat flux profiles converge to the flat line.</p></figcaption></figure>
-
-</div>
-
-The temperature gradient is obtained by a linear regression and the heat flux value through the mean over the _y_ profile. As the simulation progresses, you can see the value for the thermal conductivity converge:
+Then, the temperature gradient is obtained by a linear regression on the temperature profile and the heat flux value through the mean over the heat flux profile. The thermal conductivity is then obtained from Fourier law. As the simulation progresses and reaches the steady state, the thermal conductivity converges to a stable value:
 
 <figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity converges as the system reaches steady state.</p></figcaption></figure>
 
