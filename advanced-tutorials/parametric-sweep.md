@@ -16,7 +16,7 @@ def update_config_file(config_file, temperature):
         lines = f.readlines()
     for i, line in enumerate(lines):
         if line.startswith("OUTPUT_FOLDER_NAME"):
-            lines[i] = f"OUTPUT_FOLDER_NAME = {temperature}\n"
+            lines[i] = f"OUTPUT_FOLDER_NAME = '{temperature}'\n"
         if line.startswith("T "):
             lines[i] = f"T = {temperature}\n"
 
