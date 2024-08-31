@@ -2,7 +2,7 @@
 description: Math behind the simulations
 ---
 
-# Equations
+# Other equations
 
 ### Motion equations
 
@@ -45,16 +45,16 @@ $$
 For triangle facing up
 
 $$
-\alpha = arccos(cos(\phi)·cos(\theta+sign(x-x_0)·(\pi/2-\beta)))
+\alpha = arccos(cos(\phi)·cos(\pi/2-|\theta|+\beta))
 $$
 
 For triangle facing down
 
 $$
-\alpha = arccos(cos(\phi)·cos(\theta-sign(x-x_0)·(\pi/2-\beta)))
+\alpha = arccos(cos(\phi)·cos(\pi/2-|\theta|-\beta))
 $$
 
-where β is the half-angle of the tip of the triangle, and _sign_(_x-x_0) shows from which side phonon strike the triangle.
+where β is the half-angle of the tip of the triangle.
 
 **Wall of the circular hole**
 
