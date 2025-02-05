@@ -208,6 +208,7 @@ BOTTOM_ROUGHNESS                 = 0.2e-9
 HOLE_ROUGHNESS                   = 2e-9
 PILLAR_ROUGHNESS                 = 2e-9
 PILLAR_TOP_ROUGHNESS             = 0.2e-9
+INTERFACE_ROUGHNESS              = 0.2e-9
 ```
 
 The roughness values are expressed in meters. Most of the variable names are pretty self-explanatory. To clarify, `TOP_ROUGHNESS` references the simulation domain boundary in the positive z direction and `BOTTOM_ROUGHNESS` in the negative z direction. `SIDE_WALL_ROUGHNESS` are all other simulation domain boundaries.
