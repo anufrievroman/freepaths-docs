@@ -6,7 +6,7 @@ description: How to make your own input files
 
 FreePATHS is used by providing a config file to the program that controls the simulation. This config file is in the form of a python script. In this python script, you can either define the parameters directly like this `NUMBER_OF_PHONONS = 100`, or you can also use python code to set the parameters like this, for example `TIMESTEP = 300e-9 / 10000`.
 
-Each parameter has a default value, which is defined in the [default\_config.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/default\_config.py) file. If you provide no config file, FreePATHS will simply run the default config. And each parameter that you do not set will use the default value. If you input a non-existent parameter, it will be ignored and no error will be raised, so double-check the parameters.
+Each parameter has a default value, which is defined in the [default\_config.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/default_config.py) file. If you provide no config file, FreePATHS will simply run the default config. And each parameter that you do not set will use the default value. If you input a non-existent parameter, it will be ignored and no error will be raised, so double-check the parameters.
 
 All the parameters are explained on this site, grouped logically. For some parameters, not only what they do but also some theoretical explanations and assumptions behind them are detailed.
 
@@ -140,11 +140,11 @@ PILLARS = []
 ```
 
 ➡️ `HOLES` : list\
-To build any structure in FreePATHS holes are used. A hole has a certain shape and cuts through the simulation domain in the z direction. A selection of holes and their parameters are shown in the image below. If you want to look at the holes and their parameters in more detail, take a look at the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file. I also recommend taking a look at the [all\_shapes.py](https://github.com/anufrievroman/freepaths/blob/master/examples/all\_shapes.py) example file.
+To build any structure in FreePATHS holes are used. A hole has a certain shape and cuts through the simulation domain in the z direction. A selection of holes and their parameters are shown in the image below. If you want to look at the holes and their parameters in more detail, take a look at the [holes.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/holes.py) file. I also recommend taking a look at the [all\_shapes.py](https://github.com/anufrievroman/freepaths/blob/master/examples/all_shapes.py) example file.
 
 <figure><img src="../.gitbook/assets/shapes.png" alt=""><figcaption><p>Possible shapes of holes and walls with their respective parameters.</p></figcaption></figure>
 
-Note that `ParabolaBottom` and `ParabolaTop` are special because you cannot place them anywhere in the simulation domain. They will always appear at the top or bottom side of the structure. See the [parabolic\_lens\_focusing.py](https://github.com/anufrievroman/freepaths/blob/master/examples/parabolic\_lens\_focusing.py) example.
+Note that `ParabolaBottom` and `ParabolaTop` are special because you cannot place them anywhere in the simulation domain. They will always appear at the top or bottom side of the structure. See the [parabolic\_lens\_focusing.py](https://github.com/anufrievroman/freepaths/blob/master/examples/parabolic_lens_focusing.py) example.
 
 To add holes to the simulation, simply put them into the list. It is often very useful to generate these holes using some simple python code. For example, the following code will create a 5x6 square lattice of circular holes:
 
@@ -162,6 +162,16 @@ There are multiple ways to add arbitrary shapes into the simulation. The simples
 
 ➡️ `PILLARS` : list\
 Pillars are a more experimental feature, and the only pillar available at the time is `CircularPillar`. Pillars work the same way as holes but instead of preventing phonons from entering a certain area of the simulation domain they extend the simulation domain in _z_ direction locally.
+
+➡️ `INTERFACES` : list\
+Interfaces represent vertical or horizontal planes on which phonon can either pass, or be scattered according to usual rules of scattering on walls. Two types of interfaces are available:
+
+```
+VerticalPlane(position_x=0, transmission=0.0)
+HorizontalPlane(position_z=0, transmission=0.0)
+```
+
+The `transmission`parameter takes values between zero and one and represents the probability of being transmitted through the interface, with zero being absence of transmission and one being total transmission.
 
 #### Multiprocessing
 
