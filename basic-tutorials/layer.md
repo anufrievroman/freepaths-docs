@@ -27,11 +27,11 @@ while x <= end_x:
 
 Here, the `INTERFACE` list is filled with the `VerticalPlane` objects. This will create a structure that looks like so:
 
-<figure><img src="../.gitbook/assets/image (5).png" alt="" width="207"><figcaption><p>Phonon trajectories.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/layers.png" alt="" width="207"><figcaption><p>Phonon trajectories.</p></figcaption></figure>
 
-If we increase the number of phonons to several thousand, we can see some interesting distributions, for example the distributions of phonon angle at the beginning (red) and end (blue) of the structure. Interestingly, the array of holes "aligned" phonon trajectories along the passages between the holes \[1, 2].
+If we increase the number of phonons to several thousand, we can see some interesting curves. For examples, the transmission factor in function of the incident angles. 
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption><p>Angular distribution show of phonons on hot and cold sides.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/T_vs_angle.png" alt="" width="563"><figcaption><p>Angular distribution show of phonons on hot and cold sides.</p></figcaption></figure>
 
 One can also output, for example, phonon frequency spectrum or time phonons took to reach the cold side.
 
@@ -40,13 +40,14 @@ One can also output, for example, phonon frequency spectrum or time phonons took
 The file `information.txt` also contains various statistical insides, for example, the scattering likelihood:
 
 ```
-99% of phonons reached the cold side
+95% of particles reached the cold side
 
-11.09% - scattering on side walls (14.98% - diffuse, 85.02% - specular)
-48.50% - scattering on top and bottom walls (0.94% - diffuse, 99.06% - specular)
-3.68% - rethermalization at the hot side
-0.00% - internal scattering processes
-45.52% - scattering on hole walls (19.61% - diffuse, 80.39% - specular)
+8.62% - scattering on side walls (99.88% - diffuse, 0.12% - specular)
+1.60% - scattering on top and bottom walls (90.00% - diffuse, 10.00% - specular)
+0.78% - rethermalization at the hot side
+71.27% - internal scattering processes
+18.33% - scattering on interfaces (24.08% - diffuse, 75.92% - specular)
+67.81% - transmission through interfaces (24.72% - diffuse, 75.28% - specular)
 ```
 
 ### References
