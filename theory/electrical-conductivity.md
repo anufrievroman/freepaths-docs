@@ -31,3 +31,9 @@ Also, we want our prediction to match the bulk electron conductivity before we p
 <figure><img src="../.gitbook/assets/image (2).png" alt="" width="277"><figcaption></figcaption></figure>
 
 To be continued...
+
+
+
+### References
+
+1. Priyadarshia and Neophytou, [J. Appl. Phys. 133, 054301 (2023)](https://doi.org/10.1063/5.0134466)
