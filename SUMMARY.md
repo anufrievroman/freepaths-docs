@@ -13,6 +13,7 @@
 
 * [Algorithm](theory/algorithm.md)
 * [Thermal conductivity](theory/themal-conductivity-calculation.md)
+* [Electrical conductivity](theory/electrical-conductivity.md)
 * [Other equations](theory/equations.md)
 
 ## Basic tutorials

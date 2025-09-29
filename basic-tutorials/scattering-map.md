@@ -16,7 +16,7 @@ BOTTOM_ROUGHNESS               = 0.2e-9
 
 Note that it's to run for a limited number of phonons because otherwise the scattering will become huge and difficult to open. Below it the example of obtained scattering map.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>Illustrations of phonon trajectories and coordinated of scattering events.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption><p>Illustrations of phonon trajectories and coordinated of scattering events.</p></figcaption></figure>
 
 We can observe side walls mostly experience diffuse scattering, while top and bottom walls show mainly specular scattering because of the roughness we set above.
 
