@@ -1,8 +1,8 @@
 ---
-description: Layer in single-crystal at 300K
+Description: Layer in single-crystal at 300K
 ---
 
-# Phononic crystal
+# Layers in single cristal
 
 This example shows how to add layers in a specific material to your structure and can be reproduced with `examples/layers.py` input file. The structure contains the square array of layer defined in the input file as:
 
@@ -29,15 +29,14 @@ Here, the `INTERFACE` list is filled with the `VerticalPlane` objects. This will
 
 <figure><img src="../.gitbook/assets/layers.png" alt="" width="207"><figcaption><p>Phonon trajectories.</p></figcaption></figure>
 
-If we increase the number of phonons to several thousand, we can see some interesting curves. For examples, the transmission factor in function of the incident angles. 
+If we increase the number of phonons to several thousand, we can see some interesting curves. For examples, the transmission factor in function of the incident angles. Each curve corresponds to one frequency, and each color corresponds to one mode.
 
-<figure><img src="../.gitbook/assets/T_vs_angle.png" alt="" width="563"><figcaption><p>Angular distribution show of phonons on hot and cold sides.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/T_vs_angle.png" alt="" width="563"><figcaption><p>Transmission factor.</p></figcaption></figure>
 
-One can also output, for example, phonon frequency spectrum or time phonons took to reach the cold side.
+To better observe the influence of frequency on transmission, this curve shows the phonon incident angle as a function of its frequency, with the transmission factor represented as a color map.
+<div><figure><img src="../.gitbook/assets/colormap.png" alt="" width="375"><figcaption><p>Incident angle vs frequency.</p></figcaption></figure>
 
-<div><figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt="" width="375"><figcaption><p>Phonon frequency spectrum.</p></figcaption></figure> <figure><img src="../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption><p>Time that phonons took to reach the cold side.</p></figcaption></figure></div>
-
-The file `information.txt` also contains various statistical insides, for example, the scattering likelihood:
+The file `information.txt` also contains various statistical insides, for example, the average transmission:
 
 ```
 95% of particles reached the cold side
@@ -53,5 +52,4 @@ The file `information.txt` also contains various statistical insides, for exampl
 ### References
 
 1. Singh et al. [Applied Physics Letters, (2023)](https://aip.scitation.org/doi/10.1063/5.0137221)
-2. Anufriev et al. [Materials Today Physics 15, 100272 (2021)](https://www.sciencedirect.com/science/article/pii/S2542529320300961)
 
