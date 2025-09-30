@@ -91,10 +91,12 @@ $$
 Following the spectral mixed-mismatch idea, the total transmissivity of one interface is the convex combination of the specular and diffuse parts weighted by the *incident-side* specularity:
 
 $$
-\alpha_{i\to j}(\theta_i,\omega,p) =
-P_i(\omega,p)\,\alpha^{\mathrm{Spec}}_{i\to j}(\theta_i,\omega,p)
-+ (1-P_i(\omega,p))\,\alpha^{\mathrm{Diff}}_{i\to j}(\omega,p)
+\begin{aligned}
+\alpha_{i\to j}(\theta_i,\omega,p)
+&= P_i(\omega,p)\,\alpha^{\mathrm{Spec}}_{i\to j}(\theta_i,\omega,p) + (1-P_i(\omega,p))\,\alpha^{\mathrm{Diff}}_{i\to j}(\omega,p)
+\end{aligned}
 $$
+
 
 (The reverse direction $j \to i$ uses $P_j$ and the corresponding angles and specularity.)
 
