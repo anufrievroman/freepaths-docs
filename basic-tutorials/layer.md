@@ -27,7 +27,7 @@ while x <= end_x:
 
 Here, the `INTERFACE` list is filled with the `VerticalPlane` objects. This will create a structure that looks like so:
 
-<figure><img src="../.gitbook/assets/layers.png" alt="" width="207"><figcaption><p>Phonon trajectories.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/Layer.png" alt="" width="207"><figcaption><p>Phonon trajectories.</p></figcaption></figure>
 
 If we increase the number of phonons to several thousand, we can see some interesting curves. For examples, the transmission factor in function of the incident angles. Each curve corresponds to one frequency, and each color corresponds to one mode.
 
