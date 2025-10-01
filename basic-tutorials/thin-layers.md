@@ -19,7 +19,7 @@ while x <= end_x:
     x += period
 ```
 
-Here, the `INTERFACE` list is filled with the `VerticalPlane` objects. This will create a structure that looks like so:\
+Here, the `INTERFACE` list is filled with the `VerticalPlane` objects. This will create a structure that looks like the figure below, where the thin layers are indicated by the black lines:\
 
 
 <figure><img src="../.gitbook/assets/image.png" alt="" width="333"><figcaption></figcaption></figure>

@@ -15,6 +15,7 @@
 * [Thermal conductivity](theory/themal-conductivity-calculation.md)
 * [Electrical conductivity](theory/electrical-conductivity.md)
 * [Other equations](theory/equations.md)
+* [Transmission equations](theory/transmission-equations.md)
 
 ## Basic tutorials
 
