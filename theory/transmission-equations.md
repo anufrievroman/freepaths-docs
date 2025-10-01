@@ -33,7 +33,7 @@ $$
 \lambda_m(\omega,p) = \frac{2\pi}{k_m(\omega,p)}
 $$
 
-The interface specularity depends on the roughness η and follows Ziman’s exponential law. It is different from the angle-dependent specularity equation used in FreePATHS. For the SMMM model, this equation is angle-independent. (Eq. 32 in \[1]).
+The interface specularity $$P_m$$ depends on the roughness $$\eta$$ and follows Ziman’s exponential law. It is different from the angle-dependent specularity equation used in FreePATHS. For the SMMM model, this equation is angle-independent. (Eq. 32 in \[1]).
 
 $$
 P_m(\omega,p) = \exp\!\left(-\frac{16\pi^2 \eta^2}{\lambda_m(\omega,p)^2}\right)
@@ -56,9 +56,11 @@ no real transmitted angle exists: the code sets $$\alpha^{\mathrm{Spec}}_{i\to j
 
 and returns a specular reflection. In that case, only the diffuse channel can still transmit phonons across the layer.
 
-In scattering primitives with “2T” signature, two tests are made:\
-(i) entry Si→Ge\
-(ii) exit Ge→Si\
+In scattering primitives with “2T” signature, two tests are made:
+
+1. Entry Si → Ge
+2. Exit Ge → Si
+
 Both must lie in $$[-1, 1]$$, otherwise the code sends a specular reflection.
 
 **Specular (AMM-like) transmission.**
