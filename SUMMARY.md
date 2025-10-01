@@ -24,6 +24,7 @@
 * [Thermal gradients](basic-tutorials/thermal-gradients.md)
 * [Scattering map](basic-tutorials/scattering-map.md)
 * [Animations](basic-tutorials/animations.md)
+* [Thin layers](basic-tutorials/thin-layers.md)
 
 ## Advanced Tutorials
 

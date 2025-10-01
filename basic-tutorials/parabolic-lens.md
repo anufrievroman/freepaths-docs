@@ -23,7 +23,7 @@ HOLES = [ParabolaBottom(tip=0, focus=300e-9)]
 
 Note that `angle_distribution="uniform"` because we need to emit phonons in all directions evenly. This model produces the following structure, which collimates phonons after reflection from the parabolic boundary:
 
-<div><figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>Phonon trajectories show collimation of phonons reflected from the parabolic boundary.</p></figcaption></figure> <figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Angular distribution show that many phonons have an angle of zero degrees at the top of the structure (blue), while initial distribution was uniform (red).</p></figcaption></figure></div>
+<div><figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Phonon trajectories show collimation of phonons reflected from the parabolic boundary.</p></figcaption></figure> <figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Angular distribution show that many phonons have an angle of zero degrees at the top of the structure (blue), while initial distribution was uniform (red).</p></figcaption></figure></div>
 
 The parabolic lens can also be inverted and placed at the top as follows
 
