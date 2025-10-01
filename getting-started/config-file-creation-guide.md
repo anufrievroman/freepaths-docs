@@ -26,7 +26,7 @@ These parameters control the most fundamental elements of the simulation.
 
 ```python
 OUTPUT_FOLDER_NAME             = 'Si nanowire at 300 K'
-NUMBER_OF_PHONONS              = 5000
+NUMBER_OF_PARTICLES            = 5000
 TIMESTEP                       = 2e-12
 NUMBER_OF_TIMESTEPS            = 200000
 T                              = 300
@@ -36,8 +36,8 @@ T                              = 300
 The outputs of the simulation will be saved in the Results folder. In this folder, another folder with this name will be created, which will contain the output files. So, in this case, the result files will be in `Results/Si nanowire at 300 K`. Keep in mind that the the Results folder will be created in the folder you executed the FreePATHS command. Also, pay attention that if the simulation is run again, the results will be overwritten without a warning.\
 A useful trick is to use f-strings to automatically name the output folders. For example, if the same simulation is to be run at multiple temperatures, using `OUTPUT_FOLDER_NAME = f'Simulation at {T}K'` will automatically put the simulation temperature in the output folder name. Just make sure to define the parameters (`T` in this case) before.
 
-➡️ `NUMBER_OF_PHONONS` : int\
-This will define how many phonons are simulated. Since the Monte Carlo simulation approach is inherently statistical, more phonons should result in more stable results with less standard variation between the results of different simulations at the cost of more calculation time.
+➡️ `NUMBER_OF_PARTICLES` : int\
+This will define how many articles are simulated. Since the Monte Carlo simulation approach is inherently statistical, more phonons should result in more stable results with less standard variation between the results of different simulations at the cost of more calculation time.
 
 ➡️ `TIMESTEP` : float\
 The phonons are not simulated in a continuous fashion but only every timestep. If the timestep is small, the phonon behavior will be more realistic, but the simulation time will increase. And vice versa for a large timestep. Because the phonons are only simulated every timestep the time between two scattering events of a particular phonon cannot be smaller than the timestep so take this into account, especially when simulating at high temperatures where scattering events are more frequent. If you experience wrong or unexpected phonon behavior, reducing the timestep can also help with this.
@@ -96,20 +96,20 @@ To set a wall to be solid, set the corresponding `INCLUDE_..._SIDEWALL = True` a
 
 <figure><img src="../.gitbook/assets/default_setup.png" alt="" width="249"><figcaption><p>Top view of a default simulation domain.</p></figcaption></figure>
 
-#### Phonon sources
+#### Particle sources
 
 The phonons are not emitted by the hot sides but by phonon sources. A source of phonons is an area where phonons are generated in a given direction. This area can be placed anywhere in the structure.
 
 ```python
-PHONON_SOURCES = [Source(x=0, y=0, z=0, size_x=0, size_y=0, size_z=0, 
+PARTICLE_SOURCES = [Source(x=0, y=0, z=0, size_x=0, size_y=0, size_z=0, 
 			angle_distribution="random", angle=0)]
 ```
 
 ➡️ `PHONON_SOURCES` : list\
-The list needs to conation one or multiple Sources. Often this will be one source on the hot side. Here is an example (note that all values of a Source that are not set will be zero):
+The list needs to contain one or multiple `Source` objects. Often this will be one source on the hot side. Here is an example (note that all values of a Source that are not set will be zero):
 
 ```python
-PHONON_SOURCES = [
+PARTICLE_SOURCES = [
                 Source(x=-300e-9, size_x=100e-9),
                 Source(x=0, size_x=100e-9),
                 Source(x=300e-9, size_x=100e-9)
@@ -119,14 +119,14 @@ PHONON_SOURCES = [
 It is convenient to use `WIDTH`, `LENGTH` and `THICKNESS` like in this example:
 
 ```python
-PHONON_SOURCES = [Source(
+PARTICLE_SOURCES = [Source(
 			    x=0, y=LENGTH/2, z=0, 
 			    size_x=0, size_y=LENGTH, size_z=THICKNESS, 
 			    angle_distribution="random", angle=np.pi/2
                 )]
 ```
 
-Note that the source angle distribution is also adjusted. The angle distribution can be chosen among one of those shown in the image below. In the case of multiple sources, the phonons will be emitted from them with equal probability.
+Note that the source angle distribution is also adjusted. The angle distribution can be chosen from among one of those shown in the image below. In the case of multiple sources, the phonons will be emitted from them with equal probability.
 
 <figure><img src="../.gitbook/assets/image (12).png" alt="" width="563"><figcaption><p>Available phonon angle distributions at the phonon source.</p></figcaption></figure>
 
@@ -164,23 +164,26 @@ There are multiple ways to add arbitrary shapes into the simulation. The simples
 Pillars are a more experimental feature, and the only pillar available at the time is `CircularPillar`. Pillars work the same way as holes but instead of preventing phonons from entering a certain area of the simulation domain they extend the simulation domain in _z_ direction locally.
 
 ➡️ `INTERFACES` : list\
-Interfaces represent vertical or horizontal planes on which phonon can either pass, or be scattered according to usual rules of scattering on walls. Two types of interfaces are available:
+Interfaces represent vertical planes on which phonon can either pass, or be scattered according to usual rules of scattering on walls. The interface can be set up as follows:
 
 ```
-VerticalPlane(position_x=0, transmission=0.0)
-HorizontalPlane(position_z=0, transmission=0.0)
+VerticalPlane(position_x=0, inner_material='Ge', outer_material=MEDIA, depth = THICKNESS)
 ```
 
-The `transmission`parameter takes values between zero and one and represents the probability of being transmitted through the interface, with zero being absence of transmission and one being total transmission.
+The transmission will be calculated using the [equations from this section](../basic-tutorials/thin-layers.md).
 
-#### Multiprocessing
+#### Multiprocessing and resourses
 
 ```python
 NUMBER_OF_PROCESSES = 10
+LOW_MEMORY_USAGE = False
 ```
 
 ➡️ `NUMBER_OF_PROCESSES` : int\
 Every phonon is simulated independently, one after the other. To speed up the calculation, the phonons should be distributed across multiple processes, which will each simulate phonons independently. This value should be set to a value close to the number of threads your processor has. Please take note that the progress percentage displayed in the terminal is the progress of a single process, and that some processes will take longer than others to finish.
+
+➡️ `LOW_MEMORY_USAGE` : bool\
+When set to true, it will use less memory, which may help with heavy calculations, but will not save the mean free path data.
 
 ### Advanced simulation parameters
 
@@ -234,11 +237,11 @@ If `USE_GRAY_APPROXIMATION_MFP` is set to `True`, this needs to be set to the ph
 
 #### Time
 
-Please do not confuse the "virtual" timesteps discussed in this section with the timesteps discussed in the Most basic parameters section. The `NUMBER_OF_TIMESTEPS` parameter defines the maximum time a phonon has to travel through the structure, while the parameters of this section are used to make sure the thermal simulation that is designed to reach the steady state.
+Do not confuse the "virtual" timesteps discussed in this section with the timesteps discussed in the Most basic parameters section. The basic `NUMBER_OF_TIMESTEPS` parameter defines the maximum time a phonon has to travel through the structure, while the parameters of this section are used to make sure the thermal simulation can reach the steady state.
 
 <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Scheme of times used in the simulation.</p></figcaption></figure>
 
-Considering the `Thermal map.pdf` and the resulting `Temperature profile.pdf` please consider that the physics of the entire simulation behaves with the temperature of the parameter `T` even if `Temperature profile.pdf` shows a significantly higher temperature. This is because the temperature in `Temperature profile.pdf` results from the amount of heat that enters the structure, which is dependent on `NUMBER_OF_PHONONS`. Thus, the temperatures in `Temperature profile.pdf` should not be taken at face value. For the thermal conductivity calculation, the gradient of this profile is used.
+Considering the `Thermal map.pdf` and the resulting `Temperature profile.pdf` please consider that the physics of the entire simulation behaves with the temperature of the parameter `T` even if `Temperature profile.pdf` shows a significantly higher temperature. This is because the temperature in `Temperature profile.pdf` results from the amount of heat that enters the structure, which is dependent on `NUMBER_OF_PHONONS`. Thus, the temperatures in⁣ `Temperature profile.pdf` should not be taken at face value. For the thermal conductivity calculation, the gradient of this profile is used, [as explained here](../theory/themal-conductivity-calculation.md).
 
 ```python
 NUMBER_OF_VIRTUAL_TIMESTEPS = 3 * NUMBER_OF_TIMESTEPS
@@ -247,13 +250,35 @@ NUMBER_OF_STABILIZATION_TIMEFRAMES = 4
 ```
 
 ➡️ `NUMBER_OF_VIRTUAL_TIMESTEPS` : int\
-The phonons do not all enter the structure at the same time, but a virtual start time is assigned to each phonon randomly and the range of these start times is controlled with this parameter. This means that because no phonons are generated before the simulation starts that the first moments of the simulation are not useful because all phonons are at the beginning of the structure and none are towards the end of the structure. This also means that phonons that enter the structure towards the end of the simulation time and exit the structure after the simulation time are not considered for some calculations during their entire flight time. This is not a huge issue, but be aware that the shorter the simulation time is with respect to the time the phonons need to traverse the structure, the more information that is generated is not considered. So this parameter should at least be a couple of times larger than the time it takes phonons to traverse the structure. The time it takes phonons to traverse the structure can be determined with `Distribution of travel times.pdf` (Determining the 95% or 99% quantile by eye should be sufficient).
+The phonons do not all enter the structure at the same time, but a virtual start time is assigned to each phonon randomly, and the range of these start times is controlled with this parameter. This means that because no phonons are generated before the simulation starts, the first moments of the simulation are not useful because all phonons are at the beginning of the structure and none are towards the end of the structure. This also means that phonons that enter the structure towards the end of the simulation time and exit the structure after the simulation time are not considered for some calculations during their entire flight time. This is not a huge issue, but be aware that the shorter the simulation time is with respect to the time the phonons need to traverse the structure, the more information that is generated is not considered. So this parameter should at least be a couple of times larger than the time it takes phonons to traverse the structure. The time it takes phonons to traverse the structure can be determined with `Distribution of travel times.pdf` (determining the 95% or 99% quantile by eye should be sufficient).
 
 ➡️ `NUMBER_OF_TIMEFRAMES` : int\
 The simulation time determined by `NUMBER_OF_VIRTUAL_TIMESTEPS` is divided into several timeframes to observe the evolution of the system with time. The number of the timeframes should be around 8 for reasonable output.
 
 ➡️ `NUMBER_OF_STABILIZATION_TIMEFRAMES` : int\
 The system requires some time to reach a steady state, in which the thermal conductivity should be calculated. Thus, this parameter controls how many first timeframes are skipped before the measurement begins. For example, this can be at least half of the `NUMBER_OF_TIMEFRAMES` parameter.
+
+### Electron parameters
+
+```python
+from scipy.constants import k, electron_volt
+
+IS_CARRIER_ELECTRON              = True
+ENERGY_UPPER_BOUND               = 3*k*T / electron_volt
+ENERGY_LOWER_BOUND               = 0
+ENERGY_STEP                      = 5e-3
+ELECTRON_MFP                     = 15e-9 # [m]
+MEAN_MAPPING_CONSTANT            = 5e-6 # [m²]
+```
+
+➡️ `IS_CARRIER_ELECTRON` : bool\
+Choose whether the charge carriers are electrons or holes
+
+➡️ `ELECTRON_MFP` : float\
+Set the mean free path of the electrons. Typically it is a few nanometers.
+
+➡️ `MEAN_MAPPING_CONSTANT` : float\
+It is the constant that maps simulated to expected electrical conductivity in bulk. See [this page for more details](../theory/electrical-conductivity.md).
 
 ### Output parameters
 
@@ -266,7 +291,7 @@ Concerning the heat flux maps, it is important to consider that the `Heat flux m
 ```python
 NUMBER_OF_PIXELS_X = 25
 NUMBER_OF_PIXELS_Y = 100
-IGNORE_FAULTY_PHONONS = False
+IGNORE_FAULTY_PARTICLES = False
 ```
 
 ➡️ `NUMBER_OF_PIXELS_X` `NUMBER_OF_PIXELS_Y` : int&#x20;
@@ -279,8 +304,8 @@ NUMBER_OF_PIXELS_X = int(WIDTH / pixel_size)
 NUMBER_OF_PIXELS_Y = int(LENGTH / pixel_size)
 ```
 
-➡️ `IGNORE_FAULTY_PHONONS` : bool\
-Sometimes, phonons may escape the structure and get trapped outside the structure or travel outside the simulation domain. This can cause the maps to not look nice because the holes are not empty. If this parameter is set to `True` all phonons that are outside the structure are simply ignored in the map generation, which improves both the look and the calculations. I recommend keeping this on `False` so that you notice if phonons leave the structure, which can be an indicator of some errors or bugs. If phonons leave the structure, this can be turned on to still get clean data.
+➡️ `IGNORE_FAULTY_PARTICLES` : bool\
+Sometimes, particles may escape the structure and get trapped outside the structure or travel outside the simulation domain. This can cause the maps to not look nice because the holes are not empty. If this parameter is set to `True` particles that are outside the structure are simply ignored in the map generation, which improves both the look and the calculations. Try keeping this on `False` so that you notice if particles leave the structure, which can be an indicator of some errors or bugs. If just a few particles leave the structure, this can be turned on to still get clean data.
 
 #### Structure plots
 
@@ -294,10 +319,10 @@ OUTPUT_STRUCTURE_COLOR           = "#F0F0F0"
 If this is set to `True` an additional output file `Scattering map.pdf` will be generated in which the position and type of all scattering events is shown. This can be very useful for debugging and testing.
 
 ➡️ `OUTPUT_TRAJECTORIES_OF_FIRST` : int\
-This parameter defines how many trajectories of phonons are saved into the `Phonon paths.csv` output file and how many phonon trajectories are plotted in the `Phonon paths XY.pdf` and `Phonon paths YZ.pdf` output files.
+This parameter defines how many trajectories of phonons are saved into the `Particle paths.csv` output file and how many phonon trajectories are plotted in the `Particle paths XY.pdf` and `Particle paths YZ.pdf` output files.
 
 ➡️ `OUTPUT_STRUCTURE_COLOR` : str\
-This variable defines the background color in the `Phonon paths XY.pdf` and `Phonon paths YZ.pdf` output plots. You can use a hexadecimal color or a color name like `'blue'` or any color that matplotlib library accepts.
+This variable defines the background color in the `Particle paths XY.pdf` and `Particle paths YZ.pdf` output plots. You can use a hexadecimal color or a color name like `'blue'` or any color that the matplotlib library accepts.
 
 #### Line plots
 
@@ -329,4 +354,4 @@ OUTPUT_ANIMATION_FPS = 24
 Set this to `True` to generate an animation.
 
 ➡️ `OUTPUT_ANIMATION_FPS` : int\
-Each timestep corresponds to one frame. This parameter determines the playback speed of the frames in the generated video. Please note that all phonons will start flying at the beginning of the video.
+Each timestep corresponds to one frame. This parameter determines the playback speed of the frames in the generated video. Please note that all particles will start flying at the beginning of the video.

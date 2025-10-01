@@ -1,6 +1,6 @@
 # References and credits
 
-The code is being developed by [Roman Anufriev](https://anufrievroman.com), Philipp Gassmann, and other contributors in [Nomura lab](https://www.nlab.iis.u-tokyo.ac.jp/index-e.html) at the University of Tokyo since 2018. If you would like to use this code for your research, consider citing the papers below, if it is appropriate. If you need certain feature to be implemented for your research, we can consider a collaboration.
+The code has been developed by [Roman Anufriev](https://anufrievroman.com), Philipp Gassmann, Simon Defradas, Victor Remy and other contributors in the [Nomura lab](https://www.nlab.iis.u-tokyo.ac.jp/index-e.html) at the University of Tokyo since 2018. If you would like to use this code for your research, consider citing the papers below, if it is appropriate. If you need a certain feature to be implemented for your research, we can consider a collaboration.
 
 ### References
 
@@ -15,6 +15,7 @@ The code is being developed by [Roman Anufriev](https://anufrievroman.com), Phil
 
 Development of this code was funded by the following grants:
 
+* CNRS Cellule Energie grant 2024 (SEGMENT)
 * PRESTO JST (No. JPMJPR19I1)
 * CREST JST (No. JPMJCR19Q3)
 * Kakenhi (15H05869, 15K13270, and 18K14078)

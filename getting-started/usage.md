@@ -4,16 +4,17 @@ description: How to run FreePATHS simulations
 
 # Usage
 
-FreePATHS is a command line application, so it runs inside Linux, MacOS, or Windows terminal. It takes an input file or config file from the user, which contains all the settings, and outputs the results in a new folder. For an extensive guide on creating config files, please see [config-file-creation-guide.md](config-file-creation-guide.md).
+FreePATHS is a command-line application, so it runs inside Linux, macOS, or Windows terminal. It takes an input file or config file from the user, which contains all the settings, and outputs the results in a new folder. For an extensive guide on creating config files, please see [config-file-creation-guide.md](config-file-creation-guide.md).
 
-There are two modes of using the program.
+There are three modes of using the program.
 
-* The **main mode** traces many phonons through a structure and collects statistics about their paths. This mode calculates the thermal flux and Temperature profile of the sample and uses this to calculate effective thermal conductivity.
+* The **main mode** traces many phonons through a structure and collects statistics about their paths. This mode calculates the thermal flux and temperature profile of the sample and uses this to calculate effective thermal conductivity.
 * The **MFP sampling mode** measures phonon mean free paths using a few phonons and calculates the thermal conductivity by integrating phonon dispersion.
+* The **electron simulation** mode simulates electrons instead of the phonons.
 
 ### Demo
 
-First, if you simply run `freepaths` without specifying an input file, the program will run a [demo simulation](../basic-tutorials/nanowire.md) and output some demo results.
+First, if you simply run `freepaths` without specifying an input file, the program will run a [demo simulation](../basic-tutorials/nanowire.md) and output some demo results, so that you can take it look what kind of results you can get.
 
 ### Main mode
 
@@ -38,13 +39,22 @@ After the simulation, see the results in a newly created `Results` folder.
 Alternatively, you can run FreePATHS in the mean free path sampling mode, which is designed to calculate the thermal conductivity by integrating phonon dispersion, as [explained here](../theory/themal-conductivity-calculation.md#mean-free-path-approach). To run the program in this mode, reduce the number of phonons to about 30 and add the `-s` flag in the command:
 
 ```
-freepaths -s simple_nanowire.py
+freepaths -s your_input_file.py
 ```
 
 The thermal conductivity will be output in the terminal. However, other statistical quantities and plots will still be calculated and output in the `Results` folder.
 
+### Electron transport mode
+
+FreePATHS can also simulate electron transport and obtain electrical conductivity, [as explained here](../theory/electrical-conductivity.md). To use this mode, add `-e` flag before your input file and don't forget to [set electron properties](config-file-creation-guide.md#electron-parameters).&#x20;
+
+```
+freepaths -e your_input_file.py
+```
+
 ### Troubleshooting
 
 * If simulations are too slow, try using [multiprocessing](config-file-creation-guide.md#multiprocessing-parameter).
-* Rarely, phonons may enter a hole in the structure or break out of structure boundaries. To reduce the impact of this bug, reduce the `TIMESTEP` parameter. However, this usually happens once per thousands of collisions and has negligible impact on the final statistics.
+* If you experience crashes due to excessive memory usage, try `LOW_MEMORY_USAGE = True` parameter in the input file.
+* Rarely, phonons may enter a hole in the structure or break out of structure boundaries. To reduce the impact of this bug, reduce the `TIMESTEP` parameter. However, this usually happens once per thousands of collisions and has a negligible impact on the final statistics.
 * If you have an error similar to `Cannot mix incompatible Qt library (5.15.7) with this library (5.15.8)` it likely means that you have a program like `qt5-styleplugins` that didn't upgrade to the latest Qt library with the rest of the system.
