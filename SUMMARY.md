@@ -21,6 +21,7 @@
 
 * [Nanowire](basic-tutorials/nanowire.md)
 * [Phononic crystal](basic-tutorials/phononic-crystal.md)
+* [Electrons in holey membranes](basic-tutorials/electrons-in-holey-membranes.md)
 * [Parabolic lens](basic-tutorials/parabolic-lens.md)
 * [Thermal gradients](basic-tutorials/thermal-gradients.md)
 * [Scattering map](basic-tutorials/scattering-map.md)
