@@ -4,13 +4,13 @@ description: Example of electrical conductivity simulations for a membrane with 
 
 # Electrons in holey membranes
 
-In this example, we use `electrons_in_holey_membrane.py` file to compute the electrical conductivity of a holey membrane, similar to those measured in \[1]. The input file sets electron mean free paths at a constant value of 15 nm.
+In this example, we use `examples/electrons_in_holey_membrane.py` file to compute the electrical conductivity and Seebeck coefficient of a holey membrane, similar to those measured in Ref. \[1]. The input file sets electron mean free paths at a constant value of 15 nm.
 
 ```
 ELECTRON_MFP = 15e-9
 ```
 
-Moreover, since the electrical conductivity depends on the energy of electrons, we need to set the Fermi level of the crystal. For example, in _n_-doped silicon with $$3 \times 10^{18} cm^{-3}$$ dopant concentration, we can estimate the Fermi level at about -50 meV from the conduction band. This value can be set in the input file to get the electrical conductivity in the plots.
+Moreover, since the electrical conductivity depends on the energy of electrons, we need to set the Fermi level of the crystal. For example, in _n_-doped silicon with $$3 \times 10^{18} cm^{-3}$$ dopant concentration, we can estimate the Fermi level at about -50 meV from the conduction band. This value can be set in the input file to get values directly in the plots.
 
 ```python
 from scipy.constants import electron_volt
@@ -35,7 +35,7 @@ From the transport distribution function, the electrical conductivity $$\sigma$$
 
 <div><figure><img src="../.gitbook/assets/image (30).png" alt="" width="534"><figcaption></figcaption></figure> <figure><img src="../.gitbook/assets/image (31).png" alt="" width="563"><figcaption></figcaption></figure></div>
 
-Thus, the values obtained for our specific Fermi level is about $$\sigma$$ = 85 kS/m and S = 0.3 mV/K which are roughly in the range reported in the experiments \[1]. The uncertainty comes from the fact that the Fermi level in the experimental samples is usually not known and only roughly estimated from the doping level, which in turn is also approximated. Thus, these simulations work best to compare different structures on the same wafer with the same doping rather than to obtain absolute values of electrical conductivity.
+Thus, the values obtained for our specific Fermi level are about $$\sigma$$ = 85 kS/m and S = 0.3 mV/K, roughly in the range reported in the experiments \[1]. The uncertainty comes from the fact that the Fermi level in the experimental samples is usually not known and only roughly estimated from the doping level, which in turn is also approximated. Thus, these simulations work best to compare different structures on the same wafer with the same doping rather than to obtain absolute values.
 
 #### References
 
