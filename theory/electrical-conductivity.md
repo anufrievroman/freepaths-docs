@@ -12,9 +12,17 @@ We use the relaxation time approximation to compute the collision term:
 
 <figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
-And we can compute the average time of flight $$\tau _s$$ _i.e_. the time it takes for an electron to travel from one side of the structure to another. Once $$\tau _s$$ is known, we can compute the physical quantities:
+And we can compute the average time of flight $$\langle ToF \rangle$$ _i.e_. the average time it takes for an electron to travel from one side of the structure to another. Once this time is known, we can compute the flux per simulated electron as $$F(E) = \langle ToF \rangle^{-1}$$, from which, we can compute the transport distribution function:
 
-<figure><img src="../.gitbook/assets/image (4).png" alt="" width="563"><figcaption></figcaption></figure>
+<p align="center"> <span class="math">\Xi (E) = C \times F(E) \times g(E)</span></p>
+
+where $$g(E)$$ is the density of states, and $$C$$ is the mapping constant. Then, the electrical conductivity is given by the:
+
+<p align="center"><span class="math">\sigma = q^2 \int \Xi(E) \left(-\frac{\partial f}{\partial E} \right) dE</span></p>
+
+and Seeback coefficient it given by:
+
+<p align="center"><span class="math">S = \frac {qk_b}{\sigma} \int \Xi(E) \left(-\frac{\partial f}{\partial E} \right) \left(\frac{E - E_f}{k_bT} \right) dE</span></p>
 
 Also, we want our prediction to match the bulk electron conductivity before we proceed to the calculations on nanostructures, so we need to compute the mapping constant as:
 
