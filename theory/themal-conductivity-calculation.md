@@ -11,10 +11,10 @@ FreePATHS can calculate the thermal conductivity of the structure using two diff
 Traditionally, the thermal conductivity is a coefficient in the Fourier law:
 
 $$
-J = \kappa \nabla T,
+J = - \kappa \nabla T,
 $$
 
-In this approach, we use the main algorithm of FreePATHS to obtain heat flux (J) and temperature gradient (dT/dL) in the steady state regime. An e[xample of such simulation is described here](../basic-tutorials/nanowire.md). To use this approach, one must understand the [time parameters of the simulation](../getting-started/config-file-creation-guide.md#simulation-time-parameters). Specifically, that over several timeframes, the simulation is trying to achieve steady state thermal flow and then measured the profiles used for the thermal conductivity calculation.
+In this approach, we use the main algorithm of FreePATHS to obtain heat flux (J) and temperature gradient (dT/dL) in the steady state regime. An [example of such simulation is described here](../basic-tutorials/nanowire.md). To use this approach, one must understand the [time parameters of the simulation](../getting-started/config-file-creation-guide.md#simulation-time-parameters). Specifically, that over several timeframes, the simulation is trying to achieve steady state thermal flow and then measured the profiles used for the thermal conductivity calculation.
 
 <figure><img src="../.gitbook/assets/image (14).png" alt="" width="563"><figcaption><p>Schematic of the simulation time.</p></figcaption></figure>
 
