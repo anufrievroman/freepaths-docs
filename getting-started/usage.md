@@ -14,7 +14,7 @@ There are three modes of using the program.
 
 ### Demo
 
-First, if you simply run `freepaths` without specifying an input file, the program will run a [demo simulation](../basic-tutorials/nanowire.md) and output some demo results, so that you can take it look what kind of results you can get.
+First, if you simply run `freepaths` without specifying an input file, the program will run a [demo simulation](../basic-tutorials/nanowire.md) and output some demo results, so that you can take a look at what kind of results you can get.
 
 ### Main mode
 

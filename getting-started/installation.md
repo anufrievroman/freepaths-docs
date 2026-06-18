@@ -1,6 +1,6 @@
 # Installation
 
-FreePATHS requires python 3. On Linux and MacOS, it is probably already installed. On Windows, you may choose to install [Anaconda](https://www.anaconda.com) package, which will install everything for you.
+FreePATHS requires Python 3. On Linux and MacOS, it is probably already installed. On Windows, you may choose to install [Anaconda](https://www.anaconda.com) package, which will install everything for you.
 
 Install the package from PyPi repository by entering this command into a terminal or a python console:
 
@@ -16,19 +16,19 @@ If you'd like to work on the code, and run it without installing into your pytho
 git clone https://github.com/anufrievroman/freepaths
 ```
 
-Change your terminal directory to the directory of the repository (it' where the README file is):
+Change your terminal directory to the directory of the repository (it's where the README file is):
 
 ```
 cd freepaths
 ```
 
-Run _FreePATH_ as:
+Run _FreePATHS_ as:
 
 ```
 python -m freepaths
 ```
 
-This will run the code located inside the `freepaths` folder (which is inside the downloaded `freepaths` folder). In this case, the folder `freepahts` is considered a python module.\
+This will run the code located inside the `freepaths` folder (which is inside the downloaded `freepaths` folder). In this case, the folder `freepaths` is considered a Python module.\
 \
 In case of troubles, make sure to uninstall all other copies of `freepaths` from your system, for example those installed with `pipx`:
 

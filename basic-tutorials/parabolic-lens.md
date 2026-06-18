@@ -35,7 +35,7 @@ PHONON_SOURCES = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0, size_z=THICKNES
 HOLES = [ParabolaTop(tip=1000e-9, focus=100e-9)]
 ```
 
-Here, the source is place in the bottom, while parabola at the top.
+Here, the source is placed at the bottom, while the parabola is at the top.
 
 ### Reference
 

@@ -1,8 +1,8 @@
 ---
-Description: Layer in single-crystal at 300K
+description: Layer in single-crystal at 300K
 ---
 
-# Layers in single cristal
+# Layers in single crystal
 
 This example shows how to add layers in a specific material to your structure and can be reproduced with `examples/layers.py` input file. The structure contains the square array of layer defined in the input file as:
 
@@ -29,14 +29,14 @@ Here, the `INTERFACE` list is filled with the `VerticalPlane` objects. This will
 
 <figure><img src="../.gitbook/assets/Layer.png" alt="" width="207"><figcaption><p>Phonon trajectories.</p></figcaption></figure>
 
-If we increase the number of phonons to several thousand, we can see some interesting curves. For examples, the transmission factor in function of the incident angles. Each curve corresponds to one frequency, and each color corresponds to one mode.
+If we increase the number of phonons to several thousand, we can see some interesting curves. For examples, the transmission factor as a function of the incident angles. Each curve corresponds to one frequency, and each color corresponds to one mode.
 
 <figure><img src="../.gitbook/assets/T_vs_angle.png" alt="" width="563"><figcaption><p>Transmission factor.</p></figcaption></figure>
 
 To better observe the influence of frequency on transmission, this curve shows the phonon incident angle as a function of its frequency, with the transmission factor represented as a color map.
 <div><figure><img src="../.gitbook/assets/colormap.png" alt="" width="375"><figcaption><p>Incident angle vs frequency.</p></figcaption></figure>
 
-The file `information.txt` also contains various statistical insides, for example, the average transmission:
+The file `information.txt` also contains various statistical insights, for example, the average transmission:
 
 ```
 95% of particles reached the cold side

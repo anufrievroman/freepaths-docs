@@ -21,7 +21,7 @@ $$
 = T_{1}(\theta_i,\omega,p)\,\times\,T_{2}(\theta_t,\omega,p)
 $$
 
-where θ<sub>i</sub> is the incident angle in Si, θ<sub>t</sub> is the transmitted angle inside Ge determined by Snell’s law (4), ω is the angular frequency, and _p_ the branch/polarization. The SMMM model used in the simulation and is summarized here. A detailed description is provided in \[1].
+where θ<sub>i</sub> is the incident angle in Si, θ<sub>t</sub> is the transmitted angle inside Ge determined by Snell’s law (4), ω is the angular frequency, and _p_ the branch/polarization. The SMMM model is used in the simulation and is summarized here. A detailed description is provided in \[1].
 
 ***
 

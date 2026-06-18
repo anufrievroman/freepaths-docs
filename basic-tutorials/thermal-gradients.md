@@ -31,7 +31,7 @@ Note that only left and right side walls exist in the system and the distributio
 
 <figure><img src="../.gitbook/assets/image (12).png" alt="" width="563"><figcaption><p>Available phonon angle distributions at the phonon source.</p></figcaption></figure>
 
-Thus, to create the horizontal thermal gradient, side walls should be rearranged, distribution changed and cold/hot side positions changed accordingly. For example, as follows (these lines are commented in the `anisotroopy_study.py` file):
+Thus, to create the horizontal thermal gradient, side walls should be rearranged, distribution changed and cold/hot side positions changed accordingly. For example, as follows (these lines are commented in the `anisotropy_study.py` file):
 
 ```
 # Walls:
@@ -59,5 +59,5 @@ Note that we changed the angle parameter in the Source object. Below are the sch
 Likewise, the gradient can be set in any other direction as long as the hot and cold sides are different. More than one wall can serve as a cold or a hot side. Essentially, hot side means that phonons will be diffusely scattered from that wall (thermalized). Conversely, cold side means that phonons will be absorbed by that wall and simulation will be over for these phonons.
 
 {% hint style="info" %}
-Note that while it is possible to send the phonons through the structure in any direction, the thermal conductivity calculation will along the y direction
+Note that while it is possible to send the phonons through the structure in any direction, the thermal conductivity calculation will be along the y direction
 {% endhint %}

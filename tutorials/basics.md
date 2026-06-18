@@ -119,7 +119,7 @@ See the [examples](https://github.com/anufrievroman/freepaths/tree/master/exampl
 
 ### Multiprocessing
 
-You increase the speed of your simulations by using multiprocessing. Simply add desired number of processes to your input file. For example:
+You can increase the speed of your simulations by using multiprocessing. Simply add desired number of processes to your input file. For example:
 
 ```
 NUMBER_OF_PROCESSES = 8

@@ -40,11 +40,11 @@ $$
 P_m(\omega,p) = \exp\!\left(-\frac{16\pi^2 \eta^2}{\lambda_m(\omega,p)^2}\right)
 $$
 
-with $\eta$ is the roughness.  
+where $\eta$ is the roughness.  
 
 **Snell's law.**
 
-In the SMMM method, for specular scattering, the transmitted phonons are deverted satisfying Snell's law (Equation 18 in the paper [RanCao2024]):
+In the SMMM method, for specular scattering, the transmitted phonons are diverted, satisfying Snell's law (Equation 18 in the paper [RanCao2024]):
 
 $$
 \frac{v_{g,i}(\omega,p)}{\sin\theta_i} =

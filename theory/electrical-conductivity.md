@@ -20,7 +20,7 @@ where $$g(E)$$ is the density of states, and $$C$$ is the mapping constant. Then
 
 <p align="center"><span class="math">\sigma = q^2 \int \Xi(E) \left(-\frac{\partial f}{\partial E} \right) dE</span></p>
 
-and Seeback coefficient it given by:
+and Seebeck coefficient is given by:
 
 <p align="center"><span class="math">S = \frac {qk_b}{\sigma} \int \Xi(E) \left(-\frac{\partial f}{\partial E} \right) \left(\frac{E - E_f}{k_bT} \right) dE</span></p>
 

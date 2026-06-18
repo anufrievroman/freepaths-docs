@@ -8,7 +8,7 @@ In simple words, you can use the `PointLineHole` to draw any line you want, whic
 
 ## How does the PointLineHole work
 
-The `PointLineHole` creates many circular holes that are at closely spaced points along a line. If the circular holes are spaces closely enough, this will give the impression of a continuous line with a certain thickness. If there are not enough circles or points, the shape will become irregular, and the scattering will be inconsistent, as illustrated by the below image. So, make sure that the holes are spaced closely enough. But if you generate too many points, the execution time of the simulation might increase because the phonon position has to be checked against more points.
+The `PointLineHole` creates many circular holes that are at closely spaced points along a line. If the circular holes are spaced closely enough, this will give the impression of a continuous line with a certain thickness. If there are not enough circles or points, the shape will become irregular, and the scattering will be inconsistent, as illustrated by the below image. So, make sure that the holes are spaced closely enough. But if you generate too many points, the execution time of the simulation might increase because the phonon position has to be checked against more points.
 
 <figure><img src="../.gitbook/assets/lowresolution.png" alt="" width="375"><figcaption><p>Example of low number of circles.</p></figcaption></figure>
 

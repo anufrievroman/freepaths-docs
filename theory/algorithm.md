@@ -10,7 +10,7 @@ The algorithm runs the simulations step-by-step and phonon-by-phonon. For each p
 
 ### Initialization
 
-At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a frequency (wavelength) and the direction according to the source type. The frequency is assigned according to the Plank distribution of phonon frequencies at this temperature (_T_). See the picture on the [main page](../) for the example of the Plank distribution function. From the assigned frequency, the algorithm determines the phonon group velocity (_v_) from the phonon dispersion in the given material. If more than one polarization branch is available at this frequency, it is chosen randomly.
+At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a frequency (wavelength) and the direction according to the source type. The frequency is assigned according to the Planck distribution of phonon frequencies at this temperature (_T_). See the picture on the [main page](../) for the example of the Plank distribution function. From the assigned frequency, the algorithm determines the phonon group velocity (_v_) from the phonon dispersion in the given material. If more than one polarization branch is available at this frequency, it is chosen randomly.
 
 The phonon starts moving step-by-step in the assigned direction according to the following equations:
 
@@ -28,11 +28,11 @@ $$
 p = exp(-16 \pi ^2 \sigma^2 cos^2(\alpha) / \lambda ^2)
 $$
 
-where _p_ is the specularity probability (number between zero and one), σ is the surface roughness, α is the angle to the surface, and λ is the wavelength of the phonon. Then the algorithm draws a random number between zero and one. If the number is greater than p than the scattering is diffuse, otherwise specular. If the scattering is specular, the phonon is reflected elastically, from the surface. If the scattering is diffuse, the phonon is reflected in a random direction, but using the [Lambert cosine distribution](https://en.wikipedia.org/wiki/Lambert's\_cosine\_law) of probability. After the scattering, the phonon continues the movement and keeps moving and being scattered until it either reaches the cold side, or returns to the hot side, or the time of the simulation for each phonon is over.
+where _p_ is the specularity probability (number between zero and one), σ is the surface roughness, α is the angle to the surface, and λ is the wavelength of the phonon. Then the algorithm draws a random number between zero and one. If the number is greater than p, then the scattering is diffuse, otherwise specular. If the scattering is specular, the phonon is reflected elastically, from the surface. If the scattering is diffuse, the phonon is reflected in a random direction, but using the [Lambert cosine distribution](https://en.wikipedia.org/wiki/Lambert's\_cosine\_law) of probability. After the scattering, the phonon continues the movement and keeps moving and being scattered until it either reaches the cold side, or returns to the hot side, or the time of the simulation for each phonon is over.
 
 ### Internal scattering
 
-Besides the surface scattering, phonon can also experience [internal scattering](https://en.wikipedia.org/wiki/Phonon\_scattering). The internal scattering means all scattering processes like impurity scattering, phonon-phonon scattering (including Normal and Umklapp scatterings). In the simulation, this kind of scattering programmed to occur when a certain time (relaxation time) passed since the last scattering of any kind. In other words, if phonon runs for too long without any scatterings, it's getting more and more likely to be scattered due to the phonon-phonon process. The relaxation time is calculated depending on the phonon frequency, temperature, and polarization.
+Besides the surface scattering, phonon can also experience [internal scattering](https://en.wikipedia.org/wiki/Phonon\_scattering). The internal scattering means all scattering processes like impurity scattering, phonon-phonon scattering (including Normal and Umklapp scatterings). In the simulation, this kind of scattering is programmed to occur when a certain time (relaxation time) has passed since the last scattering of any kind. In other words, if phonon runs for too long without any scatterings, it's getting more and more likely to be scattered due to the phonon-phonon process. The relaxation time is calculated depending on the phonon frequency, temperature, and polarization.
 
 ### Distributions and statistics
 

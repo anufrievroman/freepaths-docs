@@ -14,7 +14,7 @@ After the simulation, we can see the output files in the Results folder. For exa
 
 <figure><img src="../.gitbook/assets/paths.jpg" alt=""><figcaption><p>Example of phonon paths in the structure.</p></figcaption></figure>
 
-Also, the algorithm calculates the thermal profiles, heat flux, and the thermal conductivity at different time intervals. From the profile plots, we can see how the temperature profiles converge after about 6th timeframe, as the system is reaching the state:
+Also, the algorithm calculates the thermal profiles, heat flux, and the thermal conductivity at different time intervals. From the profile plots, we can see how the temperature profiles converge after about the 6th timeframe, as the system is reaching the steady state:
 
 <figure><img src="../.gitbook/assets/image (16).png" alt="" width="563"><figcaption><p>Temperature profiles at different time intervals.</p></figcaption></figure>
 
@@ -24,7 +24,7 @@ Likewise, the heat flux converges to the flat line in the last few time frames:
 
 This can be used to estimate the [thermal conductivity](../theory/themal-conductivity-calculation.md) of the structure via the Fourier law. The  plot of thermal conductivity shows the convergence and the averaging in the steady state interval:
 
-<figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity convergance and averaging over the steady state period.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity convergence and averaging over the steady state period.</p></figcaption></figure>
 
 For a simple nanowire, the [material and effective](../theory/themal-conductivity-calculation.md#effective-vs-material-thermal-conductivity) thermal conductivities are identical and equal to about 54 W/m·K, which is consistent with experimental observations.
 

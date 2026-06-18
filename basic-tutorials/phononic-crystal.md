@@ -29,7 +29,7 @@ One can also output, for example, phonon frequency spectrum or time phonons took
 
 <div><figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt="" width="375"><figcaption><p>Phonon frequency spectrum.</p></figcaption></figure> <figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt="" width="375"><figcaption><p>Time that phonons took to reach the cold side.</p></figcaption></figure></div>
 
-The file `information.txt` also contains various statistical insides, for example, the scattering likelihood:
+The file `information.txt` also contains various statistical insights, for example, the scattering likelihood:
 
 ```
 99% of phonons reached the cold side

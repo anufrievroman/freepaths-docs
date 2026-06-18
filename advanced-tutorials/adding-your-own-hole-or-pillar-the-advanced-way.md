@@ -10,7 +10,7 @@ All holes and pillars are defined in the [holes.py](https://github.com/anufrievr
 
 ## Creating a minimal example
 
-The class must have some predefined functions to work, and I will go through them one by one. Let's start by creating the class and it's `__init__` method:
+The class must have some predefined functions to work, and I will go through them one by one. Let's start by creating the class and its `__init__` method:
 
 ```python
 class NewHole(Hole)

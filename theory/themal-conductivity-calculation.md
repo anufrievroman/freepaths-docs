@@ -58,7 +58,7 @@ We obtain the thermal conductivity of about 51 W/m·K, consistent with the Fouri
 
 ## Effective vs Material thermal conductivity
 
-One must distinguish two different quantities, _material_ and _effective_ thermal conductivity. For simple structures without holes (like a [nanowire](../basic-tutorials/nanowire.md)) these quantities are the same. However, if the structure has non-uniform volume or pores or pillars, these quantities are not the same and the effective thermal conductivity is lower. For example, for a structure with some holes, FreePATHS will typical output a plot showing both quantities, as follows:
+One must distinguish two different quantities, _material_ and _effective_ thermal conductivity. For simple structures without holes (like a [nanowire](../basic-tutorials/nanowire.md)) these quantities are the same. However, if the structure has non-uniform volume or pores or pillars, these quantities are not the same and the effective thermal conductivity is lower. For example, for a structure with some holes, FreePATHS will typically output a plot showing both quantities, as follows:
 
 <figure><img src="../.gitbook/assets/image (18).png" alt="" width="563"><figcaption><p>Example of  material and effective thermal conductivities of porous structure.</p></figcaption></figure>
 

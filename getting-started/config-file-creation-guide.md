@@ -10,9 +10,9 @@ Each parameter has a default value, which is defined in the [default\_config.py]
 
 All the parameters are explained on this site, grouped logically. For some parameters, not only what they do but also some theoretical explanations and assumptions behind them are detailed.
 
-In the first section the most important parameters are explained, the second section details some more in-depth aspects of the simulation are presented and in the last section the parameters mainly used for adjusting the simulation outputs are shown.
+The first section explains the most important parameters, the second section presents more in-depth aspects of the simulation, and the last section shows the parameters mainly used for adjusting the simulation outputs.
 
-While the default values for the parameters, which are the ones shown on this page, are set to realistic values so that if a parameter is not given, the default value should work fine. I still recommend you to read this entire page so that you are informed about all the features FreePATHS has and do not overlook anything when setting up your simulation.
+Although the default values shown on this page are set to realistic values and should work fine if not provided, I still recommend reading this entire page to learn about all of FreePATHS's features and to avoid overlooking anything when setting up your simulation.
 
 Please be advised that the information on this page might not be quite up-to-date.
 
@@ -37,7 +37,7 @@ The outputs of the simulation will be saved in the Results folder. In this folde
 A useful trick is to use f-strings to automatically name the output folders. For example, if the same simulation is to be run at multiple temperatures, using `OUTPUT_FOLDER_NAME = f'Simulation at {T}K'` will automatically put the simulation temperature in the output folder name. Just make sure to define the parameters (`T` in this case) before.
 
 ➡️ `NUMBER_OF_PARTICLES` : int\
-This will define how many articles are simulated. Since the Monte Carlo simulation approach is inherently statistical, more phonons should result in more stable results with less standard variation between the results of different simulations at the cost of more calculation time.
+This will define how many particles are simulated. Since the Monte Carlo simulation approach is inherently statistical, more phonons should result in more stable results with less standard variation between the results of different simulations at the cost of more calculation time.
 
 ➡️ `TIMESTEP` : float\
 The phonons are not simulated in a continuous fashion but only every timestep. If the timestep is small, the phonon behavior will be more realistic, but the simulation time will increase. And vice versa for a large timestep. Because the phonons are only simulated every timestep the time between two scattering events of a particular phonon cannot be smaller than the timestep so take this into account, especially when simulating at high temperatures where scattering events are more frequent. If you experience wrong or unexpected phonon behavior, reducing the timestep can also help with this.
@@ -172,7 +172,7 @@ VerticalPlane(position_x=0, inner_material='Ge', outer_material=MEDIA, depth = T
 
 The transmission will be calculated using the [equations from this section](../basic-tutorials/thin-layers.md).
 
-#### Multiprocessing and resourses
+#### Multiprocessing and resources
 
 ```python
 NUMBER_OF_PROCESSES = 10
