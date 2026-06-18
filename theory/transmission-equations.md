@@ -21,7 +21,7 @@ $$
 = T_{1}(\theta_i,\omega,p)\,\times\,T_{2}(\theta_t,\omega,p)
 $$
 
-where $\theta_i$ is the incident angle in Si, $\theta_t$ is the transmitted angle inside Ge determined by Snell’s law (4), $\omega$ is the angular frequency, and $p$ the branch/polarization. The SMMM model is used in the simulation and is summarized here. A detailed description is provided in \[1].
+where $$\theta_i$$ is the incident angle in Si, $$\theta_t$$ is the transmitted angle inside Ge determined by Snell’s law (4), $$\omega$$ is the angular frequency, and $$p$$ the branch/polarization. The SMMM model is used in the simulation and is summarized here. A detailed description is provided in \[1].
 
 ***
 
@@ -46,7 +46,7 @@ $$
 \frac{v_{g,j}(\omega,p)}{\sin\theta_j}
 $$
 
-with $\theta_i$ the incident angle between the projection to the x-y plane and y-axis and $\theta_j$ the exit angle, $v_i$ and $v_j$ are the group velocities of the incident and transmitted material, respectively. In case of:
+with $$\theta_i$$ the incident angle between the projection to the x-y plane and y-axis and $$\theta_j$$ the exit angle, $$v_i$$ and $$v_j$$ are the group velocities of the incident and transmitted material, respectively. In case of:
 
 $$
 \bigl|\tfrac{v_{g,j}}{v_{g,i}}\sin\theta_i\bigr|>1
@@ -77,7 +77,7 @@ $$
 {(Z_i |\cos\theta_i| + Z_j |\cos\theta_j|)^2}
 $$
 
-where $\theta_j$ is obtained from Snell’s law.
+where $$\theta_j$$ is obtained from Snell’s law.
 
 **Diffuse (DMM-like) transmission.**
 
@@ -128,7 +128,7 @@ $$
 \alpha^{\mathrm{tot}}_{2T}(\theta,\omega,p) = T_1 \times T_2
 $$
 
-In practice, we compute wave vectors from the tabulated dispersions, then wavelengths, then $P_i$, $P_j$; we obtain $\theta_t$ from Snell’s law, and finally evaluate the equations above.
+In practice, we compute wave vectors from the tabulated dispersions, then wavelengths, then $$P_i$$, $$P_j$$; we obtain $$\theta_t$$ from Snell’s law, and finally evaluate the equations above.
 
 ***
 
