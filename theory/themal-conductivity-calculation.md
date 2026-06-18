@@ -56,6 +56,8 @@ freepaths -s nanowire.py
 
 We obtain the thermal conductivity of about 51 W/m·K, consistent with the Fourier law approach above.
 
+Note that the result can vary slightly between runs due to Monte Carlo randomness; running a few times and averaging improves precision. Also note that this mode does not produce reliable results when pillars are present in the structure.
+
 ## Effective vs Material thermal conductivity
 
 One must distinguish two different quantities, _material_ and _effective_ thermal conductivity. For simple structures without holes (like a [nanowire](../basic-tutorials/nanowire.md)) these quantities are the same. However, if the structure has non-uniform volume or pores or pillars, these quantities are not the same and the effective thermal conductivity is lower. For example, for a structure with some holes, FreePATHS will typically output a plot showing both quantities, as follows:

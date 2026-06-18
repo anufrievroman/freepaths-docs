@@ -31,6 +31,5 @@
 ## Advanced Tutorials
 
 * [Parametric sweep](advanced-tutorials/parametric-sweep.md)
-* [MFP sampling mode](advanced-tutorials/MFP%20sampling%20mode.md)
 * [Creating new hole shapes (the easy way)](advanced-tutorials/creating-new-holes-the-easy-way.md)
 * [Adding your own hole shapes (the advanced way)](advanced-tutorials/adding-your-own-hole-or-pillar-the-advanced-way.md)
