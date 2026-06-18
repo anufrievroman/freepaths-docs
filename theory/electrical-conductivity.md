@@ -24,11 +24,25 @@ and Seebeck coefficient is given by:
 
 <p align="center"><span class="math">S = \frac {qk_b}{\sigma} \int \Xi(E) \left(-\frac{\partial f}{\partial E} \right) \left(\frac{E - E_f}{k_bT} \right) dE</span></p>
 
-Also, we want our prediction to match the bulk electron conductivity before we proceed to the calculations on nanostructures, so we need to compute the mapping constant as:
+### Mapping constant C
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt="" width="277"><figcaption></figcaption></figure>
+C is a calibration constant that bridges the MC simulation output to physically meaningful units. The MC simulation produces raw time-of-flight values, which do not carry the correct dimensions or scale to be used directly as a TDF. C corrects for this.
 
-See additional details in the Ref. \[1].
+C is defined as the ratio of the analytical BTE conductivity for the pristine bulk material to the raw MC-derived conductivity for the same pristine material:
+
+$$C = \frac{\sigma_\mathrm{BTE}}{\sigma_\mathrm{MC,\,raw}}$$
+
+where the analytical (bulk) conductivity in the numerator is computed from:
+
+$$\Xi_\mathrm{bulk}(E) = \Lambda \cdot v(E) \cdot g(E)$$
+
+with Λ the bulk electron mean free path, $$v(E) = \sqrt{2E/m^*}$$ the group velocity, and $$g(E)$$ the 3D density of states. This is the exact BTE result for a pristine crystal with acoustic phonon scattering only. The denominator is the conductivity obtained from the MC simulation of the same pristine structure.
+
+Once C is determined this way, it is kept fixed and reused for any nanostructured geometry. The nanostructuring effect then appears entirely through the change in the simulated travel times, not through C.
+
+**Important:** C must be calibrated on a pristine simulation (no holes or scatterers). See the [MEAN\_MAPPING\_CONSTANT parameter](../getting-started/config-file-creation-guide.md#electron-parameters) for the required two-step workflow.
+
+See additional details in Ref. \[1].
 
 ### References
 

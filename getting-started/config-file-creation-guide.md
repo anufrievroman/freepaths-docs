@@ -277,8 +277,14 @@ Choose whether the charge carriers are electrons or holes
 ➡️ `ELECTRON_MFP` : float\
 Set the mean free path of the electrons. Typically it is a few nanometers.
 
-➡️ `MEAN_MAPPING_CONSTANT` : float\
-It is the constant that maps simulated to expected electrical conductivity in bulk. See [this page for more details](../theory/electrical-conductivity.md).
+➡️ `MEAN_MAPPING_CONSTANT` : float or None\
+This is the calibration constant C that maps the raw MC travel-time results to physically correct units. It must be obtained from a **two-step workflow**:
+
+**Step 1 — calibration run:** Set `MEAN_MAPPING_CONSTANT = None` and run the simulation on a **pristine structure with no holes or other scatterers**. FreePATHS will automatically compute C and save it to `Data/Mapping constant.csv`. Note the value at your material's Fermi level.
+
+**Step 2 — production runs:** Set `MEAN_MAPPING_CONSTANT` to the value obtained in step 1 (e.g. `MEAN_MAPPING_CONSTANT = 5e-6`) and run the simulation on your nanostructured geometry. FreePATHS will use this fixed C for all subsequent calculations.
+
+If you skip step 1 and leave `MEAN_MAPPING_CONSTANT = None` while running on a nanostructured sample (with holes, pores, etc.), FreePATHS will recompute C from the nanostructured travel times, which conflates the geometry effect with the calibration and gives incorrect results. The value `5e-6` shown in the example is only a placeholder — you must determine it for your specific material and temperature. See [this page for more details on C](../theory/electrical-conductivity.md).
 
 ### Output parameters
 
