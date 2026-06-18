@@ -18,7 +18,7 @@ $$
 = T_{1}(\theta_i,\omega,p)\,\times\,T_{2}(\theta_t,\omega,p)
 $$
 
-where $\theta_i$ is the incident angle in Si, $\theta_t$ is the transmitted angle inside Ge determined by Snell’s law (4), $\omega$ is the angular frequency, and $p$ the branch/polarization. The SMMM model is utilized for the simulation and is summarized in this document; a detailed description is provided in [RanCao2024].
+where $$\theta_i$$ is the incident angle in Si, $$\theta_t$$ is the transmitted angle inside Ge determined by Snell’s law (4), $$\omega$$ is the angular frequency, and $$p$$ the branch/polarization. The SMMM model is utilized for the simulation and is summarized in this document; a detailed description is provided in [RanCao2024].
 
 ---
 
@@ -26,7 +26,7 @@ where $\theta_i$ is the incident angle in Si, $\theta_t$ is the transmitted angl
 
 **Dispersion → wavenumber and wavelength.**
 
-For each material $m \in \{i,j\}$ and branch $p$, the code interpolates the dispersion tables to obtain $k_m(\omega,p)$ and thus the wavelength. Here, classes Si and Ge are called. Note that the Ge class has been calculated approximately and will need to be verified in the future, but the Si class already exists and nothing has changed.
+For each material $$m \in \{i,j\}$$ and branch $$p$$, the code interpolates the dispersion tables to obtain $$k_m(\omega,p)$$ and thus the wavelength. Here, classes Si and Ge are called. Note that the Ge class has been calculated approximately and will need to be verified in the future, but the Si class already exists and nothing has changed.
 
 $$
 \lambda_m(\omega,p) = \frac{2\pi}{k_m(\omega,p)}
@@ -40,7 +40,7 @@ $$
 P_m(\omega,p) = \exp\!\left(-\frac{16\pi^2 \eta^2}{\lambda_m(\omega,p)^2}\right)
 $$
 
-where $\eta$ is the roughness.  
+where $$\eta$$ is the roughness.  
 
 **Snell's law.**
 
@@ -51,19 +51,19 @@ $$
 \frac{v_{g,j}(\omega,p)}{\sin\theta_j}
 $$
 
-with $\theta_i$ the incident angle between the projection to the x-y plane and y-axis and $\theta_j$ the exit angle. $v_{g,i}$ and $v_{g,j}$ are the group velocities of the incident and transmitted material, respectively.  
+with $$\theta_i$$ the incident angle between the projection to the x-y plane and y-axis and $$\theta_j$$ the exit angle. $$v_{g,i}$$ and $$v_{g,j}$$ are the group velocities of the incident and transmitted material, respectively.  
 
-To satisfy Snell’s relation, the computed $\sin\theta_j$ must lie in $[-1,1]$.  
-If $\bigl|\tfrac{v_{g,j}}{v_{g,i}}\sin\theta_i\bigr|>1$ (equivalently $|\sin\theta_j|>1$), no real transmitted angle exists: the code sets $\alpha^{\mathrm{Spec}}_{i\to j}=0$ and returns a specular reflection. In that case, only the diffuse channel can still transmit phonons across the layer.  
+To satisfy Snell’s relation, the computed $$\sin\theta_j$$ must lie in $$[-1,1]$$.  
+If $$\bigl|\tfrac{v_{g,j}}{v_{g,i}}\sin\theta_i\bigr|>1$$ (equivalently $$|\sin\theta_j|>1$$), no real transmitted angle exists: the code sets $$\alpha^{\mathrm{Spec}}_{i\to j}=0$$ and returns a specular reflection. In that case, only the diffuse channel can still transmit phonons across the layer.  
 
 In scattering primitives with “2T” signature, two tests are made:  
 (i) entry Si→Ge  
 (ii) exit Ge→Si  
-Both must lie in $[-1,1]$, otherwise the code sends a specular reflection.
+Both must lie in $$[-1,1]$$, otherwise the code sends a specular reflection.
 
 **Specular (AMM-like) transmission.**
 
-For the specular specularity we use the classical AMM form with acoustic impedances $Z_m=\rho_m v_{g,m}$ (simplification of Equation 25 in [RanCao2024]):
+For the specular specularity we use the classical AMM form with acoustic impedances $$Z_m=\rho_m v_{g,m}$$ (simplification of Equation 25 in [RanCao2024]):
 
 $$
 \alpha^{\mathrm{Spec}}_{i\to j}(\theta_i,\omega,p) =
@@ -71,8 +71,8 @@ $$
 {(Z_i |\cos\theta_i| + Z_j |\cos\theta_j|)^2}
 $$
 
-where $\theta_j$ is obtained from Snell’s law.  
-(The absolute values ensure nonnegative $\cos$ factors in code.)
+where $$\theta_j$$ is obtained from Snell’s law.  
+(The absolute values ensure nonnegative $$\cos$$ factors in code.)
 
 **Diffuse (DMM-like) transmission.**
 
@@ -98,7 +98,7 @@ $$
 $$
 
 
-(The reverse direction $j \to i$ uses $P_j$ and the corresponding angles and specularity.)
+(The reverse direction $$j \to i$$ uses $$P_j$$ and the corresponding angles and specularity.)
 
 ---
 
@@ -124,16 +124,16 @@ $$
 \alpha^{\mathrm{tot}}_{2T}(\theta,\omega,p) = T_1 \times T_2
 $$
 
-In practice, we compute $k_i,k_j$ from the tabulated dispersions, then $\lambda_i,\lambda_j$, then $P_i,P_j$; we obtain $\theta_t$ from Snell’s law, and finally evaluate the equations above.
+In practice, we compute $$k_i,k_j$$ from the tabulated dispersions, then $$\lambda_i,\lambda_j$$, then $$P_i,P_j$$; we obtain $$\theta_t$$ from Snell’s law, and finally evaluate the equations above.
 
 ---
 
 ### Modeling notes (as coded)
 
 - **Elastic, branch-conserving scattering:** no inelasticity or polarization conversion; transmissions are branch-wise (LA/TA) and elastic.  
-- **Total internal reflection (TIR):** if $(v_{g,i}/v_{g,j})\sin\theta_i > 1$, then $\alpha^{\mathrm{Spec}}_{i\to j}=0$ and only the diffuse formula contributes.  
+- **Total internal reflection (TIR):** if $$(v_{g,i}/v_{g,j})\sin\theta_i > 1$$, then $$\alpha^{\mathrm{Spec}}_{i\to j}=0$$ and only the diffuse formula contributes.  
 - **Independent sequential events:** the two interfaces (entry/exit) are treated as independent; coherent interference and internal multiple reflections are neglected for simplicity; this matches the intended use for thin, rough, incoherent mini-layers.  
-- **Angle handling:** $|\cos\theta|$ is used in the AMM formula to avoid sign issues for grazing angles in numerical implementation.  
+- **Angle handling:** $$|\cos\theta|$$ is used in the AMM formula to avoid sign issues for grazing angles in numerical implementation.  
 
 ---
 
