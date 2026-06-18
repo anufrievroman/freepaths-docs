@@ -105,7 +105,7 @@ PARTICLE_SOURCES = [Source(x=0, y=0, z=0, size_x=0, size_y=0, size_z=0,
 			angle_distribution="random", angle=0)]
 ```
 
-➡️ `PHONON_SOURCES` : list\
+➡️ `PARTICLE_SOURCES` : list\
 The list needs to contain one or multiple `Source` objects. Often this will be one source on the hot side. Here is an example (note that all values of a Source that are not set will be zero):
 
 ```python
@@ -269,13 +269,17 @@ ENERGY_LOWER_BOUND               = 0
 ENERGY_STEP                      = 5e-3
 ELECTRON_MFP                     = 15e-9 # [m]
 MEAN_MAPPING_CONSTANT            = 5e-6 # [m²]
+MEDIA_FERMI_LEVEL                = None # [J]
 ```
 
 ➡️ `IS_CARRIER_ELECTRON` : bool\
-Choose whether the charge carriers are electrons or holes
+Choose whether the charge carriers are electrons or holes.
 
 ➡️ `ELECTRON_MFP` : float\
 Set the mean free path of the electrons. Typically it is a few nanometers.
+
+➡️ `MEDIA_FERMI_LEVEL` : float or None\
+The Fermi level of the material in joules, measured from the conduction band minimum (i.e. negative values mean the Fermi level is below the band edge). If set to `None`, the material's default Fermi level is used. Setting this explicitly is important for doped semiconductors, where the Fermi level depends on the carrier concentration. For example, for n-doped silicon at 3×10¹⁸ cm⁻³, a value of `-50e-3 * electron_volt` places the Fermi level 50 meV below the conduction band. This value is used to mark the operating point on the output plots of conductivity, Seebeck coefficient, and power factor.
 
 ➡️ `MEAN_MAPPING_CONSTANT` : float or None\
 This is the calibration constant C that maps the raw MC travel-time results to physically correct units. It must be obtained from a **two-step workflow**:

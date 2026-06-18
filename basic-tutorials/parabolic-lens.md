@@ -15,7 +15,7 @@ We place the parabolic boundary at the bottom and move the hot spot that emits t
 COLD_SIDE_POSITION_TOP = True
 
 # Phonon source:
-PHONON_SOURCES = [Source(y=300e-9, size_x=100e-9,  size_y=100e-9, size_z=THICKNESS, angle_distribution="uniform")]
+PARTICLE_SOURCES = [Source(y=300e-9, size_x=100e-9,  size_y=100e-9, size_z=THICKNESS, angle_distribution="uniform")]
 
 # Parabolic mirror:
 HOLES = [ParabolaBottom(tip=0, focus=300e-9)]
@@ -29,7 +29,7 @@ The parabolic lens can also be inverted and placed at the top as follows
 
 ```
 # Phonon source:
-PHONON_SOURCES = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="directional")]
+PARTICLE_SOURCES = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="directional")]
 
 # Parabolic boundary:
 HOLES = [ParabolaTop(tip=1000e-9, focus=100e-9)]
