@@ -24,8 +24,8 @@ HOLES = [FunctionLineHole(x=0, y=200e-9, function_range=(-2*np.pi, np.pi), funct
 
 Let's go through the arguments one by one:
 
-* With the `x` and `y` arguments can be used to position the hole in the structure. It is an offset between the origin of the simulation's coordinate system and the function's coordinate system. So if both are set to 0 the function will simply be drawn in the structure's coordinate system.
-* The `function_range` argument defines from what x value to what x value the function is plotted. For `sin(x)/x` `-2pi` and `2pi` are good spots. You can see this example above. For demonstration purposes here, I will use a range of `-2pi` and `pi`. Notice how with an asymmetric range the origin of the function and therefore the reference point for its position is not at it's center.
+* The `x` and `y` arguments can be used to position the hole in the structure. It is an offset between the origin of the simulation's coordinate system and the function's coordinate system. So if both are set to 0 the function will simply be drawn in the structure's coordinate system.
+* The `function_range` argument defines from what x value to what x value the function is plotted. For `sin(x)/x` `-2pi` and `2pi` are good spots. You can see this example above. For demonstration purposes here, I will use a range of `-2pi` and `pi`. Notice how with an asymmetric range the origin of the function and therefore the reference point for its position is not at its center.
 * The simplest way of defining the `function` is using a lambda function. Lambda functions are easy to use: Just write `lambda x:` and put the expression to be evaluated behind this. It is also possible to simply define a regular function, which we will come back to.
 * You can use `size_x` and `size_y` to define the size of the resulting structure. This will take into account the thickness of the hole so that the total hole size corresponds to what was put in. We will also come back to this.
 * The `resolution` is the distance in x between two adjacent points or circles. Pay attention that this is only the distance in x direction, so if the function is steep, the actual distance between the points will be significantly larger than this.
@@ -85,7 +85,7 @@ This hole is best used with a python function to generate the list of points. Ev
 
 ### Example 1 - Straight lines
 
-This example, demonstrates how you can draw straight lines using this hole:
+This example demonstrates how you can draw straight lines using this hole:
 
 ```python
 import numpy as np
@@ -194,7 +194,7 @@ HOLES = [make_arc_hole(200e-9, 20, 90, 5e-9, -100e-9, 50e-9, 30e-9, 0)]
 
 ### Example 3 - Combining structures
 
-Here is how multiple generation functions can be combined to create even more complete shapes:
+Here is how multiple generation functions can be combined to create even more complex shapes:
 
 ```python
 def make_line_arc_structure(lines, arcs, resolution, x, y, thickness, rotation):

@@ -10,15 +10,19 @@ The algorithm runs the simulations step-by-step and phonon-by-phonon. For each p
 
 ### Initialization
 
-At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a frequency (wavelength) and the direction according to the source type. The frequency is assigned according to the Planck distribution of phonon frequencies at this temperature (_T_). See the picture on the [main page](../) for the example of the Plank distribution function. From the assigned frequency, the algorithm determines the phonon group velocity (_v_) from the phonon dispersion in the given material. If more than one polarization branch is available at this frequency, it is chosen randomly.
+At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a frequency (wavelength) and the direction according to the source type. The frequency is assigned according to the Planck distribution of phonon frequencies at this temperature (_T_). See the picture on the [main page](../) for the example of the Planck distribution function. From the assigned frequency, the algorithm determines the phonon group velocity (_v_) from the phonon dispersion in the given material. If more than one polarization branch is available at this frequency, it is chosen randomly.
 
 The phonon starts moving step-by-step in the assigned direction according to the following equations:
 
 $$
-\Delta x = sin(\theta)·abs(cos(\phi))·v·dt \\ \Delta y = cos(\theta)·abs(cos(\phi))·v·dt \\ \Delta z = sin(\phi)·v·dt
+\begin{aligned}
+\Delta x &= \sin(\theta)\cdot|\cos(\phi)|\cdot v\cdot dt \\
+\Delta y &= \cos(\theta)\cdot|\cos(\phi)|\cdot v\cdot dt \\
+\Delta z &= \sin(\phi)\cdot v\cdot dt
+\end{aligned}
 $$
 
-where θ is the angle between the projection to _x-y_ plane and _y_-axis, and ψ is the angle to the horizontal plane, _v_ is the speed, and _dt_ is the time step.
+where θ is the angle between the projection to _x-y_ plane and _y_-axis, and φ is the angle to the horizontal plane, _v_ is the speed, and _dt_ is the time step.
 
 ### Scattering on boundaries
 

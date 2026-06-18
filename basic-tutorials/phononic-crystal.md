@@ -1,5 +1,5 @@
 ---
-description: Square array of hole in a thin plate at 4 K
+description: Square array of holes in a thin plate at 4 K
 ---
 
 # Phononic crystal
@@ -23,7 +23,7 @@ Here, the `HOLES` list is filled with the `CircularHole` objects. This will crea
 
 If we increase the number of phonons to several thousand, we can see some interesting distributions, for example the distributions of phonon angle at the beginning (red) and end (blue) of the structure. Interestingly, the array of holes "aligned" phonon trajectories along the passages between the holes \[1, 2].
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption><p>Angular distribution show of phonons on hot and cold sides.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt="" width="563"><figcaption><p>Angular distributions of phonons on hot and cold sides.</p></figcaption></figure>
 
 One can also output, for example, phonon frequency spectrum or time phonons took to reach the cold side.
 

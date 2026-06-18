@@ -40,4 +40,4 @@ Thus, the values obtained for our specific Fermi level are about $$\sigma$$ = 85
 #### References
 
 1. Lim et al.,[ _ACS Nano_ 10, 1, 124–132 (2016)](https://pubs.acs.org/doi/10.1021/acsnano.5b05385)
-2. Priyadarshia and Neophytou, [J. Appl. Phys. 133, 054301 (2023)](https://doi.org/10.1063/5.0134466)
+2. Priyadarshi and Neophytou, [J. Appl. Phys. 133, 054301 (2023)](https://doi.org/10.1063/5.0134466)

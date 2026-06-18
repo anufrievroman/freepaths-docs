@@ -36,7 +36,7 @@ After the simulation, see the results in a newly created `Results` folder.
 
 ### Mean free path sampling mode
 
-Alternatively, you can run FreePATHS in the mean free path sampling mode, which is designed to calculate the thermal conductivity by integrating phonon dispersion, as [explained here](../theory/themal-conductivity-calculation.md#mean-free-path-approach). To run the program in this mode, reduce the number of phonons to about 30 and add the `-s` flag in the command:
+Alternatively, you can run FreePATHS in the mean free path sampling mode, which is designed to calculate the thermal conductivity by integrating phonon dispersion, as [explained here](../theory/themal-conductivity-calculation.md#mean-free-path-approach). To run the program in this mode, reduce `NUMBER_OF_PARTICLES` to about 30 and add the `-s` flag in the command:
 
 ```
 freepaths -s your_input_file.py
