@@ -129,7 +129,7 @@ BOTTOM_ROUGHNESS                 = 1e-12
 HOLES                          = [NewHole(x=0, y=LENGTH/2, size_x=300e-9, size_y=400e-9)]
 
 # Sources
-PARTICLE_SOURCES                 = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="random_up")]
+PARTICLE_SOURCES                 = [Source(x=0, y=0, z=0, size_x=WIDTH,  size_y=0, size_z=THICKNESS, angle_distribution="random")]
 ```
 
 ## Afterword

@@ -15,7 +15,7 @@ INTERFACE_ROUGHNESS = 1.5e-9  # roughness of the interfaces
 
 x = start_x
 while x <= end_x:
-    INTERFACES.append(VerticalPlane(position_x=x, roughness=INTERFACE_ROUGHNESS, inner_material='Ge', outer_material=MEDIA, depth = THICKNESS)) # add the material of the layers here
+    INTERFACES.append(VerticalPlane(position_x=x, inner_material='Ge', outer_material=MEDIA, depth=THICKNESS)) # add the material of the layers here
     x += period
 ```
 

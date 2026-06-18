@@ -4,7 +4,7 @@ In `examples/scattering_map.py` we learn how to output the map of scattering pro
 
 ```
 OUTPUT_FOLDER_NAME             = 'Scattering map in fishbone nanowire'
-NUMBER_OF_PHONONS              = 300
+NUMBER_OF_PARTICLES            = 300
 T                              = 50.0
 OUTPUT_SCATTERING_MAP          = True
 

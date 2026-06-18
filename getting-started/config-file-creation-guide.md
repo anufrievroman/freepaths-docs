@@ -27,8 +27,8 @@ These parameters control the most fundamental elements of the simulation.
 ```python
 OUTPUT_FOLDER_NAME             = 'Si nanowire at 300 K'
 NUMBER_OF_PARTICLES            = 5000
-TIMESTEP                       = 2e-12
-NUMBER_OF_TIMESTEPS            = 200000
+TIMESTEP                       = 1e-12
+NUMBER_OF_TIMESTEPS            = 300000
 T                              = 300
 ```
 
@@ -195,7 +195,7 @@ IS_TWO_DIMENSIONAL_MATERIAL = False
 ```
 
 ➡️ `MEDIA` : str\
-This parameter describes what material the simulation domain is made of. Phonons speed and internal scattering behavior are examples of what is affected by this. Current choices are: `Si`, `SiC`, and `Graphite`
+This parameter describes what material the simulation domain is made of. Phonons speed and internal scattering behavior are examples of what is affected by this. Current choices are: `Si`, `Ge`, `SiC`, and `Graphite`
 
 ➡️ `IS_TWO_DIMENSIONAL_MATERIAL` : bool\
 If this is set to `True` the z dimension will be ignored and the simulation will take place only in the x-y plane. This is usually used for Graphene sheet simulation.
