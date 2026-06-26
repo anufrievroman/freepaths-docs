@@ -12,9 +12,15 @@ There are three modes of using the program.
 * The **MFP sampling mode** measures phonon mean free paths using a few phonons and calculates the thermal conductivity by integrating phonon dispersion.
 * The **electron simulation** mode simulates electrons instead of the phonons.
 
-### Demo
+### Getting started
 
-First, if you simply run `freepaths` without specifying an input file, the program will run a [demo simulation](../basic-tutorials/nanowire.md) and output some demo results, so that you can take a look at what kind of results you can get.
+If you run `freepaths` without any arguments, the program will print a short usage summary and exit. To run a demo simulation with default parameters, use the `--demo` flag:
+
+```
+freepaths --demo
+```
+
+Example input files can be found in the [examples folder on GitHub](https://github.com/anufrievroman/freepaths/tree/master/examples).
 
 ### Main mode
 
