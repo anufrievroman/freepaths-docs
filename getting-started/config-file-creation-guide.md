@@ -26,9 +26,9 @@ These parameters control the most fundamental elements of the simulation.
 
 ```python
 OUTPUT_FOLDER_NAME             = 'Si nanowire at 300 K'
-NUMBER_OF_PARTICLES            = 5000
-TIMESTEP                       = 1e-12
-NUMBER_OF_TIMESTEPS            = 300000
+NUMBER_OF_PARTICLES            = 10000
+TIMESTEP                       = 2e-12
+NUMBER_OF_TIMESTEPS            = 200000
 T                              = 300
 ```
 
@@ -54,7 +54,7 @@ The simulation domain consists of a box. These parameters control the size of th
 
 ```python
 THICKNESS                        = 150e-9
-WIDTH                            = 500e-9
+WIDTH                            = 200e-9
 LENGTH                           = 2000e-9
 ```
 
@@ -261,15 +261,15 @@ The system requires some time to reach a steady state, in which the thermal cond
 ### Electron parameters
 
 ```python
-from scipy.constants import k, electron_volt
-
 IS_CARRIER_ELECTRON              = True
-ENERGY_UPPER_BOUND               = 3*k*T / electron_volt
+ENERGY_UPPER_BOUND               = 350e-3  # [eV]
 ENERGY_LOWER_BOUND               = 0
 ENERGY_STEP                      = 5e-3
-ELECTRON_MFP                     = 15e-9 # [m]
-MEAN_MAPPING_CONSTANT            = 5e-6 # [m²]
-MEDIA_FERMI_LEVEL                = None # [J]
+ELECTRON_MFP                     = 10e-9   # [m]
+MEAN_MAPPING_CONSTANT            = 5e-6    # [m²]
+MEDIA_FERMI_LEVEL                = None    # [J]
+FERMI_LEVEL_LOWER_BOUND          = -0.2    # [eV]
+FERMI_LEVEL_UPPER_BOUND          =  0.2    # [eV]
 ```
 
 ➡️ `IS_CARRIER_ELECTRON` : bool\
@@ -290,6 +290,9 @@ This is the calibration constant C that maps the raw MC travel-time results to p
 
 If you skip step 1 and leave `MEAN_MAPPING_CONSTANT = None` while running on a nanostructured sample (with holes, pores, etc.), FreePATHS will recompute C from the nanostructured travel times, which conflates the geometry effect with the calibration and gives incorrect results. The value `5e-6` shown in the example is only a placeholder — you must determine it for your specific material and temperature. See [this page for more details on C](../theory/electrical-conductivity.md).
 
+➡️ `FERMI_LEVEL_LOWER_BOUND` / `FERMI_LEVEL_UPPER_BOUND` : float\
+These define the range of Fermi levels (in eV, measured from the conduction band minimum) over which the post-processing integrals for σ, S, and PF are evaluated. The default range of −0.2 to +0.2 eV covers the intrinsic and lightly-doped regimes at 300 K. Extend the lower bound (e.g. to −0.4 eV) if you need to cover near-intrinsic or p-type conditions, or raise the upper bound for heavily n-doped samples. Note that this is a post-processing sweep only — it does not affect which electrons are simulated.
+
 ### Output parameters
 
 #### Thermal maps
@@ -299,8 +302,8 @@ The heat flux maps, the thermal map and the pixel volumes plot are all based on 
 Concerning the heat flux maps, it is important to consider that the `Heat flux map.pdf` file displays the absolute magnitude of heat flux. So if a phonon travels through a place twice in opposite directions, the heat flux will be added. In the `Heat flux map x.pdf` and `Heat flux map y.pdf` the directional heat flux is calculated which means that if a phonon travels through a place twice in opposite directions, the heat flux will cancel out.
 
 ```python
-NUMBER_OF_PIXELS_X = 25
-NUMBER_OF_PIXELS_Y = 100
+NUMBER_OF_PIXELS_X = 7
+NUMBER_OF_PIXELS_Y = 67
 IGNORE_FAULTY_PARTICLES = False
 ```
 
@@ -321,7 +324,7 @@ Sometimes, particles may escape the structure and get trapped outside the struct
 
 ```python
 OUTPUT_SCATTERING_MAP            = False
-OUTPUT_TRAJECTORIES_OF_FIRST     = 50
+OUTPUT_TRAJECTORIES_OF_FIRST     = 20
 OUTPUT_STRUCTURE_COLOR           = "#F0F0F0"
 ```
 

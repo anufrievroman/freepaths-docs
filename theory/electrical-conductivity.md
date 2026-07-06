@@ -49,7 +49,7 @@ $$
 **Seebeck coefficient:**
 
 $$
-S = \frac{qk_B}{\sigma} \int \Xi(E) \left(-\frac{\partial f}{\partial E}\right) \left(\frac{E - E_f}{k_BT}\right) dE
+S = -\frac{qk_B}{\sigma} \int \Xi(E) \left(-\frac{\partial f}{\partial E}\right) \left(\frac{E - E_f}{k_BT}\right) dE
 $$
 
 **Power factor:**
