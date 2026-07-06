@@ -42,6 +42,10 @@ This will define how many particles are simulated. Since the Monte Carlo simulat
 ➡️ `TIMESTEP` : float\
 The phonons are not simulated in a continuous fashion but only every timestep. If the timestep is small, the phonon behavior will be more realistic, but the simulation time will increase. And vice versa for a large timestep. Because the phonons are only simulated every timestep the time between two scattering events of a particular phonon cannot be smaller than the timestep so take this into account, especially when simulating at high temperatures where scattering events are more frequent. If you experience wrong or unexpected phonon behavior, reducing the timestep can also help with this.
 
+{% hint style="warning" %}
+For **electron simulations**, the default phonon timestep of `2e-12` s is far too large. Electrons travel much faster than phonons, so their mean free path is covered in a single timestep, making scattering statistics meaningless. Use `TIMESTEP = 1e-14` s (or smaller) for electron transport simulations.
+{% endhint %}
+
 ➡️ `NUMBER_OF_TIMESTEPS` : int\
 The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. Thus, this parameter should usually be high enough so that most phonons reach the cold side. Otherwise, you will see a warning at the end of the simulation.
 

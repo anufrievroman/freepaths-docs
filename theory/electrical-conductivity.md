@@ -66,6 +66,10 @@ $$
 
 These are computed as a function of $$E_f$$ and saved as PDF plots and CSV files (`Electron conductivity.pdf`, `Seebeck coefficient.pdf`, `Power factor.pdf`, `Electron thermal conductivity.pdf`). The value at the material's Fermi level is also marked on each plot.
 
+{% hint style="warning" %}
+**Phonon drag is not included.** The Seebeck coefficient computed here accounts only for the diffusion contribution. Phonon drag — the additional Seebeck enhancement arising from momentum transfer from the phonon system to electrons — is neglected. This effect can be significant at low temperatures or in high-purity materials, so the computed $$S$$ values may be underestimated in those regimes.
+{% endhint %}
+
 ### Mapping constant C
 
 C is a calibration constant that bridges the MC simulation output to physically meaningful units. The MC simulation produces raw time-of-flight values, which do not carry the correct dimensions or scale to be used directly as a TDF. C corrects for this.
