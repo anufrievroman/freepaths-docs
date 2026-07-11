@@ -53,7 +53,7 @@ You now have a working hole that you can use in FreePATHS without it throwing an
 
 The first step is to finish the `__init__` method to get and store things like the hole position or size and to do any preliminary calculations. I recommend avoiding using `x` and `y` as attribute names and to use `x0` and `y0` instead, since `x` and `y` and `z` are used in the other methods.
 
-After that, let's add the `is_inside` method. Remember that this method should evaluate if the given point is inside the hole and return a boolean. After you finished the `is_inside` method, you can test it by running any simulation and checking the `Pixel volumes.pdf` output file. It should show the shape of your hole in black. Make sure to increase `NUMBER_OF_PIXELS_X` and `NUMBER_OF_PIXELS_Y` to get a higher resolution image. Also, make sure to check if all parameters of the hole class (like the position and size) have the desired effect.
+After that, let's add the `is_inside` method. Remember that this method should evaluate if the given point is inside the hole and return a boolean. After you finished the `is_inside` method, you can test it by running any simulation and checking `Structure XY.pdf`, which overlays the pixel grid on the structure — your hole should appear as a black region on the grid. Make sure to increase `NUMBER_OF_PIXELS_X` and `NUMBER_OF_PIXELS_Y` to get a higher resolution image. Also, make sure to check if all parameters of the hole class (like the position and size) have the desired effect.
 
 Example config file you can use for testing:
 
@@ -84,7 +84,7 @@ Next, let's finalize the `get_patch` method so that the hole will show up in the
 
 As explained before, the `get_path` method needs to return a [matplotlib Patch object](https://matplotlib.org/stable/api/patches\_api.html) that describes the shape of the hole. Check the [matplotlib documentation](https://matplotlib.org/stable/api/patches\_api.html), but you will probably end up using a [Polygon patch](https://matplotlib.org/stable/api/\_as\_gen/matplotlib.patches.Polygon.html#matplotlib.patches.Polygon).
 
-Now you can just run the simulation again and make sure your hole shows up correctly in `Structure XY.pdf` or `Phonon paths XY.pdf`. You can compare `Structure XY.pdf` and `Pixel volumes.pdf` to see if they look the same.
+Now you can just run the simulation again and make sure your hole shows up correctly in `Structure XY.pdf` or `Phonon paths XY.pdf`. The pixel grid overlay on `Structure XY.pdf` lets you verify that the drawn patch aligns with the `is_inside` region.
 
 ## Making the hole functional
 

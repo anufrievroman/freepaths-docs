@@ -70,6 +70,21 @@ These are computed as a function of $$E_f$$ and saved as PDF plots and CSV files
 **Phonon drag is not included.** The Seebeck coefficient computed here accounts only for the diffusion contribution. Phonon drag — the additional Seebeck enhancement arising from momentum transfer from the phonon system to electrons — is neglected. This effect can be significant at low temperatures or in high-purity materials, so the computed $$S$$ values may be underestimated in those regimes.
 {% endhint %}
 
+### Figure of merit ZT
+
+The thermoelectric figure of merit is:
+
+$$
+ZT = \frac{S^2 \sigma}{\kappa_{el} + \kappa_{ph}} T
+$$
+
+FreePATHS computes ZT vs Fermi level and saves it to `Data/ZT.csv` and `ZT.pdf`, but only when the phonon thermal conductivity $$\kappa_{ph}$$ is available in the same output folder. This means **phonon simulations must be run first**, in the same `OUTPUT_FOLDER_NAME`, before running the electron simulation:
+
+1. Run a phonon simulation (main tracing or MFP sampling mode) for your structure. This writes `Data/Average thermal conductivity.csv` or `Data/Thermal conductivity from MFP.csv` to the output folder.
+2. Run the electron simulation (`-e` flag) with the same `OUTPUT_FOLDER_NAME`. FreePATHS will find the phonon κ file and compute ZT automatically.
+
+If no phonon κ file is found, FreePATHS will print a warning and skip the ZT output.
+
 ### Mapping constant C
 
 C is a calibration constant that bridges the MC simulation output to physically meaningful units. The MC simulation produces raw time-of-flight values, which do not carry the correct dimensions or scale to be used directly as a TDF. C corrects for this.

@@ -352,7 +352,7 @@ NUMBER_OF_LENGTH_SEGMENTS = 10
 This value affects the number of bins for the histogram output plots, like for example `Distribution of angles.pdf`.
 
 ➡️ `NUMBER_OF_LENGTH_SEGMENTS` : int\
-A few plots display information in segments along the y-axis like `Scattering rates.pdf` and `Time spent in segments.pdf`. The number of segments for these plots can be adjusted with this parameter.
+A few plots display information in segments along the y-axis like `Scattering rate profile.pdf` and `Time spent in segments.pdf`. The number of segments for these plots can be adjusted with this parameter.
 
 #### Animation
 
