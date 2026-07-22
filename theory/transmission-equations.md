@@ -11,8 +11,8 @@ description: Formalism used to model transmission through thin layers or another
 For example, we want to model phonon transport through a SiGe layer embedded in Si crystal.\
 A phonon crossing this inclusion experiences two sequential interface events:
 
-1. entrance: Si → Ge
-2. exit: Ge → Si
+1. entrance: Si → SiGe
+2. exit: SiGe → Si
 
 Thus, the total transmission probability is the product of the two steps:
 
@@ -21,7 +21,7 @@ $$
 = T_{1}(\theta_i,\omega,p)\,\times\,T_{2}(\theta_t,\omega,p)
 $$
 
-where $$\theta_i$$ is the incident angle in Si, $$\theta_t$$ is the transmitted angle inside Ge determined by Snell’s law (4), $$\omega$$ is the angular frequency, and $$p$$ the branch/polarization. The SMMM model is used in the simulation and is summarized here. A detailed description is provided in \[1].
+where $$\theta_i$$ is the incident angle in Si, $$\theta_t$$ is the transmitted angle inside SiGe determined by Snell’s law (4), $$\omega$$ is the angular frequency, and $$p$$ the branch/polarization. The SMMM model is used in the simulation and is summarized here. A detailed description is provided in \[1].
 
 ***
 
@@ -58,8 +58,8 @@ and returns a specular reflection. In that case, only the diffuse channel can st
 
 In scattering primitives with “2T” signature, two tests are made:
 
-1. Entry Si → Ge
-2. Exit Ge → Si
+1. Entry Si → SiGe
+2. Exit SiGe → Si
 
 Both must lie in $$[-1, 1]$$, otherwise the code sends a specular reflection.
 
@@ -106,9 +106,9 @@ $$
 
 ***
 
-#### Two interfaces in series (Si→Ge then Ge→Si)
+#### Two interfaces in series (Si→SiGe then SiGe→Si)
 
-For the Ge mini-layer, we evaluate:
+For the SiGe mini-layer, we evaluate:
 
 $$
 T_{1}(\theta_i,\omega,p) =
@@ -144,11 +144,11 @@ In practice, we compute wave vectors from the tabulated dispersions, then wavele
 #### Justification for the 2T construction
 
 Representing the SiGe layer as a finite _mini-rectangle_ naturally yields two heterogeneous boundaries.\
-The 2T product allows the inclusion to act as a virtual slab, forcing an entry (Si→Ge) and an exit (Ge→Si) event, each mixed by roughness-dependent specularity via the SMMM equations.
+The 2T product allows the inclusion to act as a virtual slab, forcing an entry (Si→SiGe) and an exit (SiGe→Si) event, each mixed by roughness-dependent specularity via the SMMM equations.
 
 A simple per-frequency, per-branch model that captures roughness at both interfaces while respecting detailed balance between AMM and DMM.
 
-By contrast, if the geometry involves only a single Si/Ge boundary (for example, a rectangle of SiGe inside the Si sample), the proper choice is the 1T case: drop the 2T formula and use the single-interface SMMM instead.
+By contrast, if the geometry involves only a single Si/SiGe boundary (for example, a rectangle of SiGe inside the Si sample), the proper choice is the 1T case: drop the 2T formula and use the single-interface SMMM instead.
 
 ***
 

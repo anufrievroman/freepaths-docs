@@ -1,6 +1,6 @@
 # Installation
 
-FreePATHS requires Python 3. On Linux and MacOS, it is probably already installed. On Windows, you may choose to install [Anaconda](https://www.anaconda.com) package, which will install everything for you.
+FreePATHS requires Python 3.11 or later. On Linux and MacOS, a recent Python 3 is probably already installed. On Windows, you may choose to install [Anaconda](https://www.anaconda.com) package, which will install everything for you.
 
 Install the package from PyPi repository by entering this command into a terminal or a python console:
 

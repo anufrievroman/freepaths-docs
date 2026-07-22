@@ -10,7 +10,7 @@ The algorithm runs the simulations step-by-step and phonon-by-phonon. For each p
 
 ### Initialization
 
-At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a frequency (wavelength) and the direction according to the source type. The frequency is assigned according to the Planck distribution of phonon frequencies at this temperature (_T_). See the picture on the [main page](../) for the example of the Planck distribution function. From the assigned frequency, the algorithm determines the phonon group velocity (_v_) from the phonon dispersion in the given material. If more than one polarization branch is available at this frequency, it is chosen randomly.
+At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a branch and frequency from the real phonon dispersion of the material. The sampling weights the density of states by the mode heat capacity and group velocity — this is the correct emission spectrum for a flux source (a hot wall emits each mode at a rate proportional to how fast that mode carries energy away). From the assigned frequency, the group velocity is read directly from the tabulated dispersion. The legacy Debye-Planck sampling (uniform branch selection, branch-blind Planck distribution) is still available via `SAMPLE_FROM_DISPERSION = False` but is not recommended.
 
 The phonon starts moving step-by-step in the assigned direction according to the following equations:
 
@@ -36,7 +36,14 @@ where _p_ is the specularity probability (number between zero and one), σ is th
 
 ### Internal scattering
 
-Besides the surface scattering, phonon can also experience [internal scattering](https://en.wikipedia.org/wiki/Phonon\_scattering). The internal scattering means all scattering processes like impurity scattering, phonon-phonon scattering (including Normal and Umklapp scatterings). In the simulation, this kind of scattering is programmed to occur when a certain time (relaxation time) has passed since the last scattering of any kind. In other words, if phonon runs for too long without any scatterings, it's getting more and more likely to be scattered due to the phonon-phonon process. The relaxation time is calculated depending on the phonon frequency, temperature, and polarization.
+Besides the surface scattering, phonons experience internal scattering from phonon-phonon interactions (Umklapp and 4-phonon processes) and from point defects or mass-disorder impurities. The time between internal scattering events is drawn from an exponential distribution with rate equal to the sum of all individual scattering rates (Matthiessen's rule), and the relaxation time depends on frequency, temperature, and polarization.
+
+At each internal scattering event, the event is attributed to one of two physical channels based on the ratio of their rates:
+
+- **Inelastic channel** (Umklapp, 4-phonon): anharmonic processes that exchange energy with the phonon bath. The phonon's branch and frequency are redrawn from the dispersion-weighted distribution, proportional to the mode heat capacity divided by the inelastic relaxation time. This rethermalization step is essential for correct thermal transport: without it, energy deposited into slow zone-edge modes cannot return to faster modes and thermal conductivity is strongly underestimated.
+- **Elastic channel** (impurity/mass-disorder, Rayleigh ∝ ω⁴): redirects the phonon without changing its frequency or branch. No rethermalization occurs.
+
+The total scattering rate and the thermal conductivity are unaffected by this split; only the attribution of rethermalization events changes.
 
 ### Distributions and statistics
 

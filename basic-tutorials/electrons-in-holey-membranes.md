@@ -17,6 +17,8 @@ from scipy.constants import electron_volt
 MEDIA_FERMI_LEVEL = -50e-3 * electron_volt
 ```
 
+The example file also sets `MEAN_MAPPING_CONSTANT = 1.4e-5`, the pre-calibrated calibration constant C that converts the raw Monte Carlo flux into physical units for this material and Fermi level. If you adapt this example to your own structure or material, you will need to recalibrate this value yourself — see the [MEAN\_MAPPING\_CONSTANT parameter](../getting-started/config-file-creation-guide.md#electron-parameters) for the required two-step workflow.
+
 To run the simulation for electrons, use the `-e` flag as follows:&#x20;
 
 ```

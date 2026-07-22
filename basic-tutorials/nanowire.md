@@ -26,7 +26,7 @@ This can be used to estimate the [thermal conductivity](../theory/themal-conduct
 
 <figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity convergence and averaging over the steady state period.</p></figcaption></figure>
 
-For a simple nanowire, the [material and effective](../theory/themal-conductivity-calculation.md#effective-vs-material-thermal-conductivity) thermal conductivities are identical and equal to about 54 W/m·K, which is consistent with experimental observations.
+For a simple nanowire, the [material and effective](../theory/themal-conductivity-calculation.md#effective-vs-material-thermal-conductivity) thermal conductivities are identical and equal to about 29 W/m·K, which is consistent with experimental observations. Note that this short (200 nm) domain shows strong ballistic suppression compared to bulk silicon; conductivity rises toward the bulk value for longer wires.
 
 Now, we can try another approach to the [thermal conductivity calculation](../theory/themal-conductivity-calculation.md#mean-free-path-approach). We take the same input file but reduce the number of phonons to 30 and run it with `-s` flag:
 
@@ -34,7 +34,7 @@ Now, we can try another approach to the [thermal conductivity calculation](../th
 freepaths -s nanowire.py
 ```
 
-The program calculates [the integral over the phonon branches](../theory/themal-conductivity-calculation.md#mean-free-path-approach), and we obtain a similar value of the thermal conductivity of about 51 W/m·K.
+The program calculates [the integral over the phonon branches](../theory/themal-conductivity-calculation.md#mean-free-path-approach), and we obtain a comparable value of the thermal conductivity of about 38 W/m·K. The two methods need not match exactly here: MFP sampling captures the cross-section-limited scattering strength but not the additional ballistic suppression that the Fourier approach picks up at this short domain length.
 
 ## Tips for thermal conductivity calculations
 

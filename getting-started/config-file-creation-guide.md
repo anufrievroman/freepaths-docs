@@ -4,7 +4,7 @@ description: How to make your own input files
 
 # Input file creation
 
-FreePATHS is used by providing a config file to the program that controls the simulation. This config file is in the form of a python script. In this python script, you can either define the parameters directly like this `NUMBER_OF_PHONONS = 100`, or you can also use python code to set the parameters like this, for example `TIMESTEP = 300e-9 / 10000`.
+FreePATHS is used by providing a config file to the program that controls the simulation. This config file is in the form of a python script. In this python script, you can either define the parameters directly like this `NUMBER_OF_PARTICLES = 100`, or you can also use python code to set the parameters like this, for example `TIMESTEP = 300e-9 / 10000`.
 
 Each parameter has a default value, which is defined in the [default\_config.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/default_config.py) file. If you provide no config file, FreePATHS will simply run the default config. And each parameter that you do not set will use the default value. If you input a non-existent parameter, it will be ignored and no error will be raised, so double-check the parameters.
 
@@ -47,7 +47,11 @@ For **electron simulations**, the default phonon timestep of `2e-12` s is far to
 {% endhint %}
 
 ➡️ `NUMBER_OF_TIMESTEPS` : int\
-The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. Thus, this parameter should usually be high enough so that most phonons reach the cold side. Otherwise, you will see a warning at the end of the simulation.
+The phonon is simulated until it reaches a cold side or until the number of timesteps is reached. This is to prevent infinite calculation times if a phonon gets stuck somewhere. Thus, this parameter should usually be high enough so that most phonons reach the cold side. Otherwise, you will see a warning at the end of the simulation. This is especially important for the thermal conductivity calculation: phonons that are removed because they ran out of timesteps are missing from the later timeframes, which biases the temperature and heat flux profiles towards fast phonons.
+
+{% hint style="info" %}
+**MFP sampling mode only:** the parameter `MAX_NUMBER_OF_SCATTERING_EVENTS = 1000` (default) limits each phonon's flight to at most this many free-path segments. Slow, frequently-scattering zone-edge phonons converge their mean free path estimate long before reaching a domain boundary, so ending their flight early dramatically reduces wall-clock time without affecting accuracy. `NUMBER_OF_TIMESTEPS` remains as a fallback ceiling for rare near-ballistic phonons.
+{% endhint %}
 
 ➡️ `T` : float\
 The temperature of the simulation in Kelvin. Since increasing the temperature increases the number of scattering events and phonons take longer to traverse the structure, simulations at high temperatures take significantly longer than at low temperatures.
@@ -171,10 +175,13 @@ Pillars are a more experimental feature, and the only pillar available at the ti
 Interfaces represent vertical planes on which phonon can either pass, or be scattered according to usual rules of scattering on walls. The interface can be set up as follows:
 
 ```
-VerticalPlane(position_x=0, inner_material='Ge', outer_material=MEDIA, depth = THICKNESS)
+VerticalPlane(position_x=0, inner_material='SiGe', outer_material=MEDIA, depth = THICKNESS)
 ```
 
 The transmission will be calculated using the [equations from this section](../basic-tutorials/thin-layers.md).
+
+➡️ `BULKS` : list\
+Bulks represent rectangular inclusions of another material embedded in the simulation domain (for example a SiGe block inside a Si matrix). Phonon transmission and reflection at the inclusion boundary are calculated with the same spectral hybrid transmission model as interfaces, [explained here](../theory/transmission-equations.md). See the [RectangularBulk class in scatterers.py](https://github.com/anufrievroman/freepaths/blob/master/freepaths/scatterers.py) for the available parameters.
 
 #### Multiprocessing and resources
 
@@ -199,7 +206,7 @@ IS_TWO_DIMENSIONAL_MATERIAL = False
 ```
 
 ➡️ `MEDIA` : str\
-This parameter describes what material the simulation domain is made of. Phonons speed and internal scattering behavior are examples of what is affected by this. Current choices are: `Si`, `Ge`, `SiC`, and `Graphite`
+This parameter describes what material the simulation domain is made of. Phonons speed and internal scattering behavior are examples of what is affected by this. Current choices are: `Si`, `SiGe`, `SiC`, and `Graphite`. `Diamond` and `AlN` have tabulated dispersions but no relaxation-time model yet, so they cannot be used for full simulations.
 
 ➡️ `IS_TWO_DIMENSIONAL_MATERIAL` : bool\
 If this is set to `True` the z dimension will be ignored and the simulation will take place only in the x-y plane. This is usually used for Graphene sheet simulation.
@@ -225,9 +232,12 @@ If the roughness is set to a very low value, the scattering will be mostly specu
 #### Internal scattering
 
 ```python
-INCLUDE_INTERNAL_SCATTERING = True
-USE_GRAY_APPROXIMATION_MFP = False
-GRAY_APPROXIMATION_MFP = None
+INCLUDE_INTERNAL_SCATTERING        = True
+USE_GRAY_APPROXIMATION_MFP         = False
+GRAY_APPROXIMATION_MFP             = None
+SAMPLE_FROM_DISPERSION             = True
+RETHERMALIZE_INELASTIC_SCATTERING  = True
+USE_DISPERSION_HEAT_CAPACITY       = True
 ```
 
 ➡️ `INCLUDE_INTERNAL_SCATTERING` : bool\
@@ -239,22 +249,50 @@ Use the gray approximation to determine the internal scattering rate.
 ➡️ `GRAY_APPROXIMATION_MFP` : float\
 If `USE_GRAY_APPROXIMATION_MFP` is set to `True`, this needs to be set to the phonon mean free path to be used for the gray approximation.
 
+➡️ `SAMPLE_FROM_DISPERSION` : bool\
+If `True` (default), phonon frequencies are drawn from the real phonon dispersion of the material, using the density of states weighted by the mode heat capacity and group velocity. This is the physically correct emission spectrum for a hot reservoir (a flux source emits proportionally to how fast each mode carries energy away). If `False`, the legacy Debye approximation is used instead, which treats all branches as identical and overestimates the contribution of low-frequency modes.
+
+➡️ `RETHERMALIZE_INELASTIC_SCATTERING` : bool\
+If `True` (default), each inelastic internal scattering event (Umklapp, 4-phonon) redraws the phonon's branch and frequency from the dispersion-weighted distribution. This models the anharmonic coupling that continuously redistributes phonon energy among modes. Elastic scattering events (impurity/mass-disorder) do not rethermalize — they only redirect the phonon, conserving its frequency and branch. Disabling this flag leaves each phonon in its initial mode for the entire simulation, which causes slow zone-edge modes to trap energy near the hot side and strongly underestimates thermal conductivity.
+
+➡️ `USE_DISPERSION_HEAT_CAPACITY` : bool\
+If `True` (default), the deposited phonon energy is converted to temperature using the heat capacity computed directly from the same dispersion branches that are sampled in the simulation (acoustic branches only). This makes the temperature profile and the resulting thermal conductivity self-consistent with the RTA integral. If `False`, the full experimental heat capacity (including optical branches) is used, which is physically more accurate for real materials but makes the simulated thermal conductivity incomparable to the model's own RTA prediction.
+
+#### Grain boundary scattering
+
+For polycrystalline materials, FreePATHS can add an extra scattering channel representing grain boundaries, on top of the usual internal scattering.
+
+```python
+GRAIN_SIZE                       = None
+GRAIN_SIZE_STD                   = 0.0
+GRAIN_ROUGHNESS                  = 1e-9
+```
+
+➡️ `GRAIN_SIZE` : float or None\
+The mean grain diameter, in meters. Leave as `None` (default) to disable grain boundary scattering entirely.
+
+➡️ `GRAIN_SIZE_STD` : float\
+The standard deviation of the grain size, in meters. Each phonon is assigned a grain size drawn from a lognormal distribution with this mean and standard deviation. Set to `0` for monodisperse grains (all the same size).
+
+➡️ `GRAIN_ROUGHNESS` : float\
+The RMS disorder width of the grain boundary, in meters, used in a Soffer-type specularity factor: at low frequencies (long wavelengths) the boundary appears smooth and phonons pass through, while at high frequencies it acts as a diffuse scatterer. Typical values are 100 nm–10 µm for `GRAIN_SIZE` and 0.5–2 nm for `GRAIN_ROUGHNESS`.
+
 #### Time
 
 Do not confuse the "virtual" timesteps discussed in this section with the timesteps discussed in the Most basic parameters section. The basic `NUMBER_OF_TIMESTEPS` parameter defines the maximum time a phonon has to travel through the structure, while the parameters of this section are used to make sure the thermal simulation can reach the steady state.
 
 <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Scheme of times used in the simulation.</p></figcaption></figure>
 
-Considering the `Thermal map.pdf` and the resulting `Temperature profile.pdf` please consider that the physics of the entire simulation behaves with the temperature of the parameter `T` even if `Temperature profile.pdf` shows a significantly higher temperature. This is because the temperature in `Temperature profile.pdf` results from the amount of heat that enters the structure, which is dependent on `NUMBER_OF_PHONONS`. Thus, the temperatures in⁣ `Temperature profile.pdf` should not be taken at face value. For the thermal conductivity calculation, the gradient of this profile is used, [as explained here](../theory/themal-conductivity-calculation.md).
+Considering the `Thermal map.pdf` and the resulting `Temperature profile.pdf` please consider that the physics of the entire simulation behaves with the temperature of the parameter `T` even if `Temperature profile.pdf` shows a significantly higher temperature. This is because the temperature in `Temperature profile.pdf` results from the amount of heat that enters the structure, which is dependent on `NUMBER_OF_PARTICLES`. Thus, the temperatures in⁣ `Temperature profile.pdf` should not be taken at face value. For the thermal conductivity calculation, the gradient of this profile is used, [as explained here](../theory/themal-conductivity-calculation.md).
 
 ```python
 NUMBER_OF_VIRTUAL_TIMESTEPS = 3 * NUMBER_OF_TIMESTEPS
-NUMBER_OF_TIMEFRAMES = 7
-NUMBER_OF_STABILIZATION_TIMEFRAMES = 4
+NUMBER_OF_TIMEFRAMES = 8
+NUMBER_OF_STABILIZATION_TIMEFRAMES = 5
 ```
 
 ➡️ `NUMBER_OF_VIRTUAL_TIMESTEPS` : int\
-The phonons do not all enter the structure at the same time, but a virtual start time is assigned to each phonon randomly, and the range of these start times is controlled with this parameter. This means that because no phonons are generated before the simulation starts, the first moments of the simulation are not useful because all phonons are at the beginning of the structure and none are towards the end of the structure. This also means that phonons that enter the structure towards the end of the simulation time and exit the structure after the simulation time are not considered for some calculations during their entire flight time. This is not a huge issue, but be aware that the shorter the simulation time is with respect to the time the phonons need to traverse the structure, the more information that is generated is not considered. So this parameter should at least be a couple of times larger than the time it takes phonons to traverse the structure. The time it takes phonons to traverse the structure can be determined with `Distribution of travel times.pdf` (determining the 95% or 99% quantile by eye should be sufficient).
+The phonons do not all enter the structure at the same time, but a virtual start time is assigned to each phonon randomly, and the range of these start times is controlled with this parameter. In other words, this parameter defines the total virtual time span of the thermal simulation: phonon emission is spread uniformly over it, and it is this time span that is divided into the timeframes described below. Because no phonons are generated before the simulation starts, the first moments of the simulation are not useful, as all phonons are at the beginning of the structure and none are towards the end — this initial period is discarded via `NUMBER_OF_STABILIZATION_TIMEFRAMES`. So this parameter should be at least a couple of times larger than the time it takes phonons to traverse the structure, so that the steady state can establish before the measurement timeframes begin. The time it takes phonons to traverse the structure can be determined with `Distribution of travel times.pdf` (determining the 95% or 99% quantile by eye should be sufficient). Note also that each phonon is only simulated for at most `NUMBER_OF_TIMESTEPS` of its own flight time, so if the virtual time span is much longer than that, make sure that almost all phonons reach the cold side within their flight time — otherwise the later timeframes will be missing the slow phonons and the profiles will be biased.
 
 ➡️ `NUMBER_OF_TIMEFRAMES` : int\
 The simulation time determined by `NUMBER_OF_VIRTUAL_TIMESTEPS` is divided into several timeframes to observe the evolution of the system with time. The number of the timeframes should be around 8 for reasonable output.
@@ -273,7 +311,7 @@ ELECTRON_MFP                     = 10e-9   # [m]
 MEAN_MAPPING_CONSTANT            = 5e-6    # [m²]
 MEDIA_FERMI_LEVEL                = None    # [J]
 FERMI_LEVEL_LOWER_BOUND          = -0.2    # [eV]
-FERMI_LEVEL_UPPER_BOUND          =  0.2    # [eV]
+FERMI_LEVEL_UPPER_BOUND          =  0.1    # [eV]
 ```
 
 ➡️ `IS_CARRIER_ELECTRON` : bool\
@@ -295,7 +333,7 @@ This is the calibration constant C that maps the raw MC travel-time results to p
 If you skip step 1 and leave `MEAN_MAPPING_CONSTANT = None` while running on a nanostructured sample (with holes, pores, etc.), FreePATHS will recompute C from the nanostructured travel times, which conflates the geometry effect with the calibration and gives incorrect results. The value `5e-6` shown in the example is only a placeholder — you must determine it for your specific material and temperature. See [this page for more details on C](../theory/electrical-conductivity.md).
 
 ➡️ `FERMI_LEVEL_LOWER_BOUND` / `FERMI_LEVEL_UPPER_BOUND` : float\
-These define the range of Fermi levels (in eV, measured from the conduction band minimum) over which the post-processing integrals for σ, S, and PF are evaluated. The default range of −0.2 to +0.2 eV covers the intrinsic and lightly-doped regimes at 300 K. Extend the lower bound (e.g. to −0.4 eV) if you need to cover near-intrinsic or p-type conditions, or raise the upper bound for heavily n-doped samples. Note that this is a post-processing sweep only — it does not affect which electrons are simulated.
+These define the range of Fermi levels (in eV, measured from the conduction band minimum) over which the post-processing integrals for σ, S, and PF are evaluated. The default range of −0.2 to +0.1 eV covers the intrinsic and lightly-doped regimes at 300 K. Extend the lower bound (e.g. to −0.4 eV) if you need to cover near-intrinsic or p-type conditions, or raise the upper bound for heavily n-doped samples. Note that this is a post-processing sweep only — it does not affect which electrons are simulated.
 
 ### Output parameters
 
@@ -309,6 +347,7 @@ Concerning the heat flux maps, it is important to consider that the `Heat flux m
 NUMBER_OF_PIXELS_X = 7
 NUMBER_OF_PIXELS_Y = 67
 IGNORE_FAULTY_PARTICLES = False
+GRADIENT_FIT_RANGE = (0.1, 0.9)
 ```
 
 ➡️ `NUMBER_OF_PIXELS_X` `NUMBER_OF_PIXELS_Y` : int&#x20;
@@ -323,6 +362,9 @@ NUMBER_OF_PIXELS_Y = int(LENGTH / pixel_size)
 
 ➡️ `IGNORE_FAULTY_PARTICLES` : bool\
 Sometimes, particles may escape the structure and get trapped outside the structure or travel outside the simulation domain. This can cause the maps to not look nice because the holes are not empty. If this parameter is set to `True` particles that are outside the structure are simply ignored in the map generation, which improves both the look and the calculations. Try keeping this on `False` so that you notice if particles leave the structure, which can be an indicator of some errors or bugs. If just a few particles leave the structure, this can be turned on to still get clean data.
+
+➡️ `GRADIENT_FIT_RANGE` : tuple\
+This parameter defines the portion of the structure length, as a pair of fractions between 0 and 1, over which the temperature gradient is fitted and the heat flux is averaged in the thermal conductivity calculation. Within a few phonon mean free paths of the hot and cold contacts the transport is quasi-ballistic, so the temperature profile deviates from linear near the contacts (temperature jumps, similar to those next to thermostats in molecular dynamics simulations). Restricting the fit to the interior of the structure excludes these contact regions, which yields a more accurate thermal conductivity, especially when the structure length is not much larger than the phonon mean free paths. By default, `(0.1, 0.9)`, the outer 10% of the length at each contact is excluded; set it to `(0.0, 1.0)` to use the whole length, or to something like `(0.2, 0.8)` when the contact regions are more pronounced. The linear fit shown in `Temperature profile.pdf` uses the same range.
 
 #### Structure plots
 

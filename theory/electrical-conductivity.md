@@ -98,10 +98,10 @@ $$
 where the analytical (bulk) conductivity in the numerator is computed from:
 
 $$
-\Xi_\mathrm{bulk}(E) = \Lambda \cdot v(E) \cdot g(E)
+\Xi_\mathrm{bulk}(E) = \frac{\Lambda}{3} \cdot v(E) \cdot g(E)
 $$
 
-with $$\Lambda$$ the bulk electron mean free path, $$v(E) = \sqrt{2E/m^*}$$ the group velocity, and $$g(E)$$ the 3D density of states. This is the exact BTE result for a pristine crystal with acoustic phonon scattering only. The denominator is the conductivity obtained from the MC simulation of the same pristine structure.
+with $$\Lambda$$ the bulk electron mean free path, $$v(E) = \sqrt{2E/m^*}$$ the group velocity, and $$g(E)$$ the 3D density of states. The factor of 1/3 is the 3D angular average $$\langle v_x^2/v^2 \rangle$$. This is the exact BTE result for a pristine crystal with acoustic phonon scattering only. The denominator is the conductivity obtained from the MC simulation of the same pristine structure.
 
 Once C is determined this way, it is kept fixed and reused for any nanostructured geometry. The nanostructuring effect then appears entirely through the change in the simulated travel times, not through C.
 

@@ -26,7 +26,7 @@ Likewise, heat flux profiles converge to the flat line in the last few time fram
 
 <figure><img src="../.gitbook/assets/image (17).png" alt="" width="563"><figcaption><p>Heat flux profiles converge to the flat line in the steady state.</p></figcaption></figure>
 
-Then, the temperature gradient is obtained by a linear regression on the temperature profile and the heat flux value through the mean over the heat flux profile. The thermal conductivity is then obtained from Fourier law. As the simulation progresses and reaches the steady state, the thermal conductivity converges to a stable value:
+Then, the temperature gradient is obtained by a linear regression on the temperature profile and the heat flux value through the mean over the heat flux profile. By default, the whole length of the structure is used, but the `GRADIENT_FIT_RANGE` parameter can restrict both the fit and the average to the interior of the structure (for example, the central 20–80% of the length) to exclude the regions near the contacts, where the transport is quasi-ballistic and the temperature profile deviates from linear. The thermal conductivity is then obtained from Fourier law. As the simulation progresses and reaches the steady state, the thermal conductivity converges to a stable value:
 
 <figure><img src="../.gitbook/assets/image (15).png" alt="" width="563"><figcaption><p>Thermal conductivity converges as the system reaches steady state.</p></figcaption></figure>
 
@@ -54,9 +54,13 @@ For example, if we take the same input file as in [the nanowire example](../basi
 freepaths -s nanowire.py
 ```
 
-We obtain the thermal conductivity of about 51 W/m·K, consistent with the Fourier law approach above.
+We obtain the thermal conductivity of about 38 W/m·K, comparable to the Fourier law approach above (the two methods need not match exactly, since MFP sampling captures cross-section-limited scattering but not the length-dependent ballistic suppression that the Fourier approach picks up in short domains).
 
 Note that the result can vary slightly between runs due to Monte Carlo randomness; running a few times and averaging improves precision. Also note that this mode does not produce reliable results when pillars are present in the structure.
+
+{% hint style="info" %}
+By default, `MAX_NUMBER_OF_SCATTERING_EVENTS = 1000` ends a phonon's flight early once it has accumulated this many free-path segments, instead of always running to `NUMBER_OF_TIMESTEPS`. Slow, frequently-scattering zone-edge modes converge their mean free path estimate long before reaching a domain boundary, so this dramatically speeds up MFP sampling runs without affecting accuracy. Set it to `None` to disable and always run to the timestep budget or a domain boundary.
+{% endhint %}
 
 ## Effective vs Material thermal conductivity
 

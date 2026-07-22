@@ -60,7 +60,7 @@ Example config file you can use for testing:
 ```python
 # General parameters
 OUTPUT_FOLDER_NAME               = "New hole test"
-NUMBER_OF_PHONONS                = 10
+NUMBER_OF_PARTICLES                = 10
 NUMBER_OF_TIMESTEPS              = 100
 NUMBER_OF_PROCESSES              = 1
 
@@ -101,8 +101,8 @@ Here is the example config you can use to test the scattering behavior:
 ```python
 # General parameters
 OUTPUT_FOLDER_NAME               = "New hole scattering test"
-NUMBER_OF_PHONONS                = 500
-OUTPUT_TRAJECTORIES_OF_FIRST     = NUMBER_OF_PHONONS
+NUMBER_OF_PARTICLES                = 500
+OUTPUT_TRAJECTORIES_OF_FIRST     = NUMBER_OF_PARTICLES
 TIMESTEP                         = 2e-12
 NUMBER_OF_TIMESTEPS              = 200000
 NUMBER_OF_PROCESSES              = 10
