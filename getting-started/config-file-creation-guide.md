@@ -308,6 +308,9 @@ ENERGY_UPPER_BOUND               = 350e-3  # [eV]
 ENERGY_LOWER_BOUND               = 0
 ENERGY_STEP                      = 5e-3
 ELECTRON_MFP                     = 10e-9   # [m]
+DOPING_CONCENTRATION             = 0.0     # [m^-3]
+SURFACE_POTENTIAL                = 0.0     # [eV]
+DEPLETION_DOPING                 = 0.0     # [m^-3]
 MEAN_MAPPING_CONSTANT            = 5e-6    # [m²]
 MEDIA_FERMI_LEVEL                = None    # [J]
 FERMI_LEVEL_LOWER_BOUND          = -0.2    # [eV]
@@ -318,7 +321,16 @@ FERMI_LEVEL_UPPER_BOUND          =  0.1    # [eV]
 Choose whether the charge carriers are electrons or holes.
 
 ➡️ `ELECTRON_MFP` : float\
-Set the mean free path of the electrons. Typically it is a few nanometers.
+Set the mean free path of the carriers. Typically it is a few nanometers. This is the crystal (acoustic-phonon-limited) mean free path, taken energy-independent. When `DOPING_CONCENTRATION > 0` it is combined with the ionized-impurity mean free path (see below) through Matthiessen's rule.
+
+➡️ `DOPING_CONCENTRATION` : float\
+Ionized-dopant concentration N_I (in m⁻³, i.e. cm⁻³ × 10⁶). When greater than zero, the carrier mean free path becomes energy- and doping-dependent through the Brooks–Herring ionized-impurity model, combined with `ELECTRON_MFP` via Matthiessen's rule: `1/Λ(E) = 1/ELECTRON_MFP + 1/Λ_ii(E)`. Ionized impurities scatter low-energy carriers most strongly (τ_ii ∝ E^{3/2}), which shortens the mean free path with doping and raises the Seebeck coefficient. This requires the material to define a static dielectric constant (currently silicon). The default `0.0` recovers the constant `ELECTRON_MFP`.
+
+➡️ `SURFACE_POTENTIAL` : float\
+Surface band bending φ_s (in eV) used to model **surface depletion of carriers**. When greater than zero, a dead layer of width `W = sqrt(2·ε_s·φ_s / (e·N))` (the abrupt-junction depletion approximation) is excluded around every free surface — side walls, top/bottom, and hole edges — for carriers only (phonons are unaffected). This represents Fermi-level pinning by surface states or the native oxide, which depletes mobile carriers near surfaces and reduces the conductivity of nanostructures. φ_s is the total band bending set by the pinning position (typically a few tenths of an eV). It needs a doping (`DEPLETION_DOPING` or `DOPING_CONCENTRATION`) and a material dielectric constant. The default `0.0` disables depletion. Note that a neck between two holes is depleted from **both** sides, so the conducting slit is `neck − 2W`; if `2W` exceeds the neck it pinches off entirely (σ → 0).
+
+➡️ `DEPLETION_DOPING` : float\
+Doping N (in m⁻³) used **only** for the surface-depletion width formula above. When `0.0`/`None` it falls back to `DOPING_CONCENTRATION`. Set this explicitly (and leave `DOPING_CONCENTRATION = 0`) to add a surface dead layer driven by the real doping **without** engaging Brooks–Herring ionized-impurity scattering — i.e. to isolate the depletion effect on top of a constant-`ELECTRON_MFP` transport calibration (so that a fixed `MEAN_MAPPING_CONSTANT` obtained without depletion stays valid).
 
 ➡️ `MEDIA_FERMI_LEVEL` : float or None\
 The Fermi level of the material in joules, measured from the conduction band minimum (i.e. negative values mean the Fermi level is below the band edge). If set to `None`, the material's default Fermi level is used. Setting this explicitly is important for doped semiconductors, where the Fermi level depends on the carrier concentration. For example, for n-doped silicon at 3×10¹⁸ cm⁻³, a value of `-50e-3 * electron_volt` places the Fermi level 50 meV below the conduction band. This value is used to mark the operating point on the output plots of conductivity, Seebeck coefficient, and power factor.
