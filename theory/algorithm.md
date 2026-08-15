@@ -10,7 +10,7 @@ The algorithm runs the simulations step-by-step and phonon-by-phonon. For each p
 
 ### Initialization
 
-At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a branch and frequency from the real phonon dispersion of the material. The sampling weights the density of states by the mode heat capacity and group velocity — this is the correct emission spectrum for a flux source (a hot wall emits each mode at a rate proportional to how fast that mode carries energy away). From the assigned frequency, the group velocity is read directly from the tabulated dispersion. The legacy Debye-Planck sampling (uniform branch selection, branch-blind Planck distribution) is still available via `SAMPLE_FROM_DISPERSION = False` but is not recommended.
+At the beginning of time, each phonon is generated at the hot side. Each phonon is assigned a branch and frequency from the real phonon dispersion of the material. The sampling weights the density of states by the mode heat capacity and group velocity — this is the correct emission spectrum for a flux source (a hot wall emits each mode at a rate proportional to how fast that mode carries energy away). From the assigned frequency, the group velocity is read directly from the tabulated dispersion.
 
 The phonon starts moving step-by-step in the assigned direction according to the following equations:
 

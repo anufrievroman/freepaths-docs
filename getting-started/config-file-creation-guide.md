@@ -233,27 +233,13 @@ If the roughness is set to a very low value, the scattering will be mostly specu
 
 ```python
 INCLUDE_INTERNAL_SCATTERING        = True
-USE_GRAY_APPROXIMATION_MFP         = False
-GRAY_APPROXIMATION_MFP             = None
-SAMPLE_FROM_DISPERSION             = True
-RETHERMALIZE_INELASTIC_SCATTERING  = True
 USE_DISPERSION_HEAT_CAPACITY       = True
 ```
 
 ➡️ `INCLUDE_INTERNAL_SCATTERING` : bool\
 If this is set to `False` phonons will not experience internal scattering. This means that they will only be scattered on Holes and simulation boundaries. This is mainly used for debugging and testing purposes.
 
-➡️ `USE_GRAY_APPROXIMATION_MFP` : bool\
-Use the gray approximation to determine the internal scattering rate.
-
-➡️ `GRAY_APPROXIMATION_MFP` : float\
-If `USE_GRAY_APPROXIMATION_MFP` is set to `True`, this needs to be set to the phonon mean free path to be used for the gray approximation.
-
-➡️ `SAMPLE_FROM_DISPERSION` : bool\
-If `True` (default), phonon frequencies are drawn from the real phonon dispersion of the material, using the density of states weighted by the mode heat capacity and group velocity. This is the physically correct emission spectrum for a hot reservoir (a flux source emits proportionally to how fast each mode carries energy away). If `False`, the legacy Debye approximation is used instead, which treats all branches as identical and overestimates the contribution of low-frequency modes.
-
-➡️ `RETHERMALIZE_INELASTIC_SCATTERING` : bool\
-If `True` (default), each inelastic internal scattering event (Umklapp, 4-phonon) redraws the phonon's branch and frequency from the dispersion-weighted distribution. This models the anharmonic coupling that continuously redistributes phonon energy among modes. Elastic scattering events (impurity/mass-disorder) do not rethermalize — they only redirect the phonon, conserving its frequency and branch. Disabling this flag leaves each phonon in its initial mode for the entire simulation, which causes slow zone-edge modes to trap energy near the hot side and strongly underestimates thermal conductivity.
+Phonon frequencies and branches are always sampled from the real phonon dispersion of the material, using the density of states weighted by the mode heat capacity and group velocity — the physically correct emission spectrum for a hot reservoir (a flux source emits proportionally to how fast each mode carries energy away). At each inelastic internal scattering event (Umklapp, 4-phonon) the phonon's branch and frequency are redrawn from the same dispersion-weighted distribution, modelling the anharmonic coupling that redistributes phonon energy among modes. Elastic events (impurity/mass-disorder) do not rethermalize — they only redirect the phonon, conserving its frequency and branch.
 
 ➡️ `USE_DISPERSION_HEAT_CAPACITY` : bool\
 If `True` (default), the deposited phonon energy is converted to temperature using the heat capacity computed directly from the same dispersion branches that are sampled in the simulation (acoustic branches only). This makes the temperature profile and the resulting thermal conductivity self-consistent with the RTA integral. If `False`, the full experimental heat capacity (including optical branches) is used, which is physically more accurate for real materials but makes the simulated thermal conductivity incomparable to the model's own RTA prediction.
