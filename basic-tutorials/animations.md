@@ -21,7 +21,3 @@ Note that `NUMBER_OF_TIMESTEPS` should not be too large, otherwise the generatio
 Example of animated phonon paths.
 {% endfile %}
 
-{% hint style="info" %}
-Note that the library used to create animations (imageio) often introduces breaking changes, so the animation functionality may not work as expected.
-{% endhint %}
-
