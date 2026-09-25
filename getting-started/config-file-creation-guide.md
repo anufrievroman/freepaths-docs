@@ -203,13 +203,17 @@ When set to true, it will use less memory, which may help with heavy calculation
 ```python
 MEDIA = "Si"
 IS_TWO_DIMENSIONAL_MATERIAL = False
+ISOTOPE_C13_CONCENTRATION = 0.0
 ```
 
 ➡️ `MEDIA` : str\
-This parameter describes what material the simulation domain is made of. Phonons speed and internal scattering behavior are examples of what is affected by this. Current choices are: `Si`, `SiGe`, `SiC`, and `Graphite`. `Diamond` and `AlN` have tabulated dispersions but no relaxation-time model yet, so they cannot be used for full simulations.
+This parameter describes what material the simulation domain is made of. Phonons speed and internal scattering behavior are examples of what is affected by this. Current choices are: `Si`, `SiGe`, `SiC`, `Graphite`, and `Diamond`. `AlN` has a tabulated dispersion but no relaxation-time model yet, so it cannot be used for full simulations.
 
 ➡️ `IS_TWO_DIMENSIONAL_MATERIAL` : bool\
 If this is set to `True` the z dimension will be ignored and the simulation will take place only in the x-y plane. This is usually used for Graphene sheet simulation.
+
+➡️ `ISOTOPE_C13_CONCENTRATION` : float\
+The fractional abundance of the heavy carbon isotope, between 0 and 1, used only by the carbon materials `Graphite` and `Diamond`; other materials ignore it. It adds a Tamura point-defect (mass-disorder) scattering channel, an elastic rate growing roughly as the fourth power of frequency, on top of the usual internal scattering. The default `0.0` models an isotopically pure crystal; use `0.0107` for natural carbon. Because the channel is elastic it redirects phonons without rethermalizing them, and because it is strongly frequency-dependent it suppresses high-frequency phonons far more than low-frequency ones.
 
 #### Roughness
 
@@ -262,6 +266,39 @@ The standard deviation of the grain size, in meters. Each phonon is assigned a g
 
 ➡️ `GRAIN_ROUGHNESS` : float\
 The RMS disorder width of the grain boundary, in meters, used in a Soffer-type specularity factor: at low frequencies (long wavelengths) the boundary appears smooth and phonons pass through, while at high frequencies it acts as a diffuse scatterer. Typical values are 100 nm–10 µm for `GRAIN_SIZE` and 0.5–2 nm for `GRAIN_ROUGHNESS`.
+
+#### Phonon hydrodynamics
+
+Normally FreePATHS treats every internal scattering event as resistive, which is the standard relaxation-time approximation. Setting these parameters additionally models momentum-conserving Normal (N) scattering, which enables phonon Poiseuille flow: N collisions redistribute momentum among phonons without destroying it, resistive scattering is comparatively rare, and the diffuse walls become the only momentum sink. This is off by default, so every other mode behaves exactly as before.
+
+Normal scattering is only defined for materials that provide a Normal rate, currently `Graphite` and `Diamond`. For all other materials the rate is zero and these parameters have no effect.
+
+```python
+PHONON_HYDRODYNAMIC                     = False
+NUMBER_OF_HYDRODYNAMIC_PRERUNS          = 5
+HYDRODYNAMIC_PRERUNS_WEIGHT             = 0.8
+NUMBER_OF_HYDRODYNAMIC_PRERUN_PARTICLES = None
+HYDRODYNAMIC_NORMAL_RESISTIVE           = False
+```
+
+➡️ `PHONON_HYDRODYNAMIC` : bool\
+The master switch. What it does depends on the simulation mode. In phonon tracing (the default mode) the Normal rate is added to the scattering clock and the simulation builds a self-consistent drift field: at each Normal event the phonon redraws its branch and frequency and then picks a new direction from the displaced Bose-Einstein distribution, biased toward the local drift velocity. In MFP sampling mode (`-s`) the Normal rate is likewise added to the clock, and a Callaway two-term thermal conductivity is computed and written to `Thermal conductivity Callaway.csv` as `kappa1`, `kappa2` and their sum; both this and the usual single-mode (SMRT) value are printed at the end of the run.
+
+➡️ `NUMBER_OF_HYDRODYNAMIC_PRERUNS` : int\
+How many drift-field-building passes to perform before the reported run. Used in phonon tracing only. The total number of passes is this number plus one: the drift field is held frozen within each pass and updated between passes, and the final reported run reads the converged field without updating it further.
+
+➡️ `HYDRODYNAMIC_PRERUNS_WEIGHT` : float\
+The under-relaxation gain, between 0 and 1, applied when the drift field is updated between preruns. The new field is blended into the old one as an exponential moving average, so a smaller value damps the update and converges more slowly but more stably, while a value of 1 replaces the field outright at every pass.
+
+➡️ `NUMBER_OF_HYDRODYNAMIC_PRERUN_PARTICLES` : int or None\
+How many particles to use in the prerun passes. Leave as `None` (default) to use `NUMBER_OF_PARTICLES`. The preruns only have to converge the drift field rather than produce publication statistics, so they can usually be run with considerably fewer particles than the final pass, which saves most of the cost of the extra passes.
+
+➡️ `HYDRODYNAMIC_NORMAL_RESISTIVE` : bool\
+A diagnostic control. When set to `True`, Normal events still fire at the same rate but redraw the direction isotropically instead of biasing it toward the drift, which makes them momentum-destroying. Comparing a run with this enabled against one with it disabled isolates the effect of momentum conservation alone, at identical scattering rates: a genuinely hydrodynamic feature will change between the two, whereas anything reproducible by ordinary diffuse scattering will not.
+
+{% hint style="warning" %}
+The drift field is built iteratively and does not always converge. It is reliable while the sample width is small compared to the Normal-scattering mean free path, and it starts to diverge as the two become comparable, which is unfortunately the onset of the hydrodynamic regime itself. Always check that the reported thermal conductivity is stable against `NUMBER_OF_HYDRODYNAMIC_PRERUNS`: if it keeps growing as preruns are added, or turns negative, the drift solver has not converged and the absolute value is not meaningful. Increasing the under-relaxation does not rescue it. Normalized and relative trends, and the spatial heat flux profiles, remain usable in that situation; for an absolute thermal conductivity, use MFP sampling mode (`-s`) and the Callaway value instead.
+{% endhint %}
 
 #### Time
 
@@ -346,6 +383,7 @@ NUMBER_OF_PIXELS_X = 7
 NUMBER_OF_PIXELS_Y = 67
 IGNORE_FAULTY_PARTICLES = False
 GRADIENT_FIT_RANGE = (0.1, 0.9)
+TEMPERATURE_PROFILE_X_RANGE = (0.0, 1.0)
 ```
 
 ➡️ `NUMBER_OF_PIXELS_X` `NUMBER_OF_PIXELS_Y` : int&#x20;
@@ -363,6 +401,9 @@ Sometimes, particles may escape the structure and get trapped outside the struct
 
 ➡️ `GRADIENT_FIT_RANGE` : tuple\
 This parameter defines the portion of the structure length, as a pair of fractions between 0 and 1, over which the temperature gradient is fitted and the heat flux is averaged in the thermal conductivity calculation. Within a few phonon mean free paths of the hot and cold contacts the transport is quasi-ballistic, so the temperature profile deviates from linear near the contacts (temperature jumps, similar to those next to thermostats in molecular dynamics simulations). Restricting the fit to the interior of the structure excludes these contact regions, which yields a more accurate thermal conductivity, especially when the structure length is not much larger than the phonon mean free paths. By default, `(0.1, 0.9)`, the outer 10% of the length at each contact is excluded; set it to `(0.0, 1.0)` to use the whole length, or to something like `(0.2, 0.8)` when the contact regions are more pronounced. The linear fit shown in `Temperature profile.pdf` uses the same range.
+
+➡️ `TEMPERATURE_PROFILE_X_RANGE` : tuple\
+This parameter defines the band of the structure length, as a pair of fractions between 0 and 1, over which the lateral temperature profile across the width is accumulated. The default `(0.0, 1.0)` averages over the whole sample. A narrow band such as `(0.45, 0.55)` instead reproduces a measurement that only probes one depth, for example a buried sensor layer or a thermometer line placed partway along the structure. The cell volume used in the conversion is reduced to match the band, so the result remains a temperature rather than an accumulated energy. The pair must satisfy 0 ≤ start < end ≤ 1, and the simulation stops with an error otherwise.
 
 #### Structure plots
 
