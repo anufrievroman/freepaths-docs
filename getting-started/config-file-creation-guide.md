@@ -437,19 +437,20 @@ A few plots display information in segments along the y-axis like `Scattering ra
 
 #### Animation
 
-{% hint style="danger" %}
-Animations are currently not working. See [this issue](https://github.com/anufrievroman/freepaths/issues/7).
-{% endhint %}
-
 Note that `NUMBER_OF_TIMESTEPS` should not be too large, otherwise the generation of animation may take a very long time because one frame for each time step will be created. A few hundred time steps is a reasonable value.
 
 ```python
 OUTPUT_PATH_ANIMATION = False
 OUTPUT_ANIMATION_FPS = 24
+LOW_MEMORY_USAGE = False
 ```
 
 ➡️ `OUTPUT_PATH_ANIMATION` : bool\
-Set this to `True` to generate an animation.
+Set this to `True` to generate an animation. The result is written as `Animated paths XY.gif` in the results folder, assembled from the individual frames in the `Frames` subfolder, which is removed afterwards.
 
 ➡️ `OUTPUT_ANIMATION_FPS` : int\
-Each timestep corresponds to one frame. This parameter determines the playback speed of the frames in the generated video. Please note that all particles will start flying at the beginning of the video.
+Each timestep corresponds to one frame. This parameter determines the playback speed of the frames in the generated video. Please note that all particles will start flying at the beginning of the video. The GIF format stores frame delays in hundredths of a second, so the requested rate is rounded to the nearest such step: 24 frames per second, for instance, is stored as 40 ms per frame and plays back at 25.
+
+{% hint style="warning" %}
+Animations require `LOW_MEMORY_USAGE = False`. In the low memory mode the particle position is not recorded at the timesteps where scattering occurs, so the saved trajectories are incomplete and the particles lose the common time base that the frames are built on.
+{% endhint %}
