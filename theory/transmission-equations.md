@@ -65,19 +65,29 @@ Both must lie in $$[-1, 1]$$, otherwise the code sends a specular reflection.
 
 **Specular (AMM-like) transmission.**
 
-For the specular specularity we use the classical AMM form with acoustic impedances&#x20;
+For the specular transmission we use the classical AMM form with acoustic impedances&#x20;
 
 $$Z_m=\rho_m v_{g,m}$$&#x20;
 
-(which is simplified Eq. 25 in \[1]):
+(Eq. 20 in \[1], which that paper writes as $$4AB/(A+B)^2$$ with $$A=Z_j/Z_i$$ and $$B=\cos\theta_j/\cos\theta_i$$):
 
 $$
 \alpha^{\mathrm{Spec}}_{i\to j}(\theta_i,\omega,p) =
 \frac{4 Z_i Z_j |\cos\theta_i|\,|\cos\theta_j|}
-{(Z_i |\cos\theta_i| + Z_j |\cos\theta_j|)^2}
+{(Z_i |\cos\theta_j| + Z_j |\cos\theta_i|)^2}
 $$
 
 where $$\theta_j$$ is obtained from Snell’s law.
+
+Note that the cosines in the denominator are **crossed**: $$\theta_j$$ pairs with $$Z_i$$ and $$\theta_i$$ with $$Z_j$$. This is the standard oblique-incidence acoustic result $$4W_iW_j/(W_i+W_j)^2$$ written with the angle-corrected impedances $$W_m = Z_m/\cos\theta_m$$. The uncrossed form agrees at normal incidence but over-estimates transmission at oblique incidence (for Si/SiGe LA at 1 THz, 0.990 instead of 0.928 at 60°). FreePATHS used the uncrossed denominator until 2026-09-25; results produced with `VerticalPlane` or `RectangularBulk` before that date are slightly under-reflective at oblique incidence.
+
+The MTM detailed-balance prefactor of Eq. 25 in \[1],
+
+$$
+\min\!\left\{1,\;\frac{P_j C_j v_{g,j}^3}{P_i C_i v_{g,i}^3}\right\},
+$$
+
+is **not** applied — a deliberate simplification. For Si/SiGe it equals 0.98, 0.91 and 0.70 at 0.5, 1 and 2 THz, so omitting it makes the layer slightly more transmissive at low frequency (of order 3 percentage points in $$R$$ at 1 THz).
 
 **Diffuse (DMM-like) transmission.**
 
@@ -138,6 +148,7 @@ In practice, we compute wave vectors from the tabulated dispersions, then wavele
 * **Total internal reflection (TIR):** if $$(v_{g,i}/v_{g,j})\sin\theta_i > 1$$, then $$\alpha^{\mathrm{Spec}}_{i\to j}=0$$ and only the diffuse formula contributes.
 * **Independent sequential events:** the two interfaces (entry/exit) are treated as independent; coherent interference and internal multiple reflections are neglected for simplicity; this matches the intended use for thin, rough, incoherent mini-layers.
 * **Angle handling:** $$|\cos\theta|$$ is used in the AMM formula to avoid sign issues for grazing angles in numerical implementation.
+* **MTM prefactor omitted:** the specular channel implements Eq. 20 of \[1], not the MTM-corrected Eqs. 25–26; see the note under *Specular (AMM-like) transmission* above.
 
 ***
 
